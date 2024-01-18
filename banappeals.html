@@ -99,7 +99,7 @@
             const commentsContainer = document.getElementById('comments-container');
 
             // Listen for changes to the comments collection
-            db.collection('YOUR_COLLECTION_NAME').orderBy('timestamp', 'desc').onSnapshot(function(snapshot) {
+            db.collection('comments section').orderBy('timestamp', 'desc').onSnapshot(function(snapshot) {
                 commentsContainer.innerHTML = ''; // Clear previous comments
 
                 snapshot.forEach(function(doc) {
