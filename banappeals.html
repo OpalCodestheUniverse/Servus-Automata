@@ -57,7 +57,7 @@
 
             if (commentText !== '') {
                 // Add the comment to Firestore
-                db.collection('comments').add({
+                db.collection('comments section').add({
                     text: commentText,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 })
