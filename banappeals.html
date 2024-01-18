@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ban Appeals</title>
     <style>
+        /* Add your styling here */
         body {
             background-color: #111;
             color: #b8b8b8;
@@ -110,29 +111,8 @@
             color: #b8b8b8;
         }
     </style>
-</head>
-<body>
-    <h1>Ban Appeals</h1>
 
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="#ban-appeals">Ban Appeals</a>
-        <a href="#recipes">Recipes</a>
-        <a href="#blog-posts">Blog Posts</a>
-        <a href="#socials">Socials</a>
-    </nav>
-
-    <p>Drop your discord down below with all information relevant to your ban, and I'll get to it personally or forward it to the appropriate staff member as soon as possible. Thank you!</p>
-
-    <div class="comment-section">
-        <textarea id="comment" placeholder="Write your comment here..." required></textarea>
-        <button id="submit-comment">Submit Comment</button>
-    </div>
-
-    <div class="comments" id="comments-section">
-        <!-- Comments will be displayed here -->
-    </div>
-
+    <!-- Include your Firebase configuration script here -->
     <script src="https://www.gstatic.com/firebasejs/9.6.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"></script>
 
@@ -155,27 +135,23 @@
         const db = firebase.firestore();
 
         document.addEventListener('DOMContentLoaded', function () {
-            const commentForm = document.getElementById('comment-form');
+            const commentInput = document.getElementById('comment');
+            const submitButton = document.getElementById('submit-comment');
             const commentsSection = document.getElementById('comments-section');
 
-            commentForm.addEventListener('submit', function (e) {
-                e.preventDefault();
+            submitButton.addEventListener('click', function () {
+                const commentText = commentInput.value.trim();
 
-                const commentInput = document.getElementById('comment');
-
-                const comment = commentInput.value;
-
-                if (comment) {
+                if (commentText !== '') {
                     // Add the comment to Firestore
                     db.collection('comments').add({
-                        comment: comment,
+                        text: commentText,
                         timestamp: firebase.firestore.FieldValue.serverTimestamp()
                     })
                     .then(function (docRef) {
                         console.log("Comment written with ID: ", docRef.id);
                         // Clear the input field
                         commentInput.value = '';
-                        // You can update the UI to display the comment immediately if needed
                     })
                     .catch(function (error) {
                         console.error("Error adding comment: ", error);
@@ -192,11 +168,14 @@
                         const commentData = doc.data();
                         const commentDiv = document.createElement('div');
                         commentDiv.classList.add('comment');
-                        commentDiv.innerHTML = '<p>' + commentData.comment + '</p>';
+                        commentDiv.innerHTML = '<p>' + commentData.text + '</p>';
                         commentsSection.appendChild(commentDiv);
                     });
                 });
         });
     </script>
+</head>
+<body>
+    <!-- Your existing HTML body content here -->
 </body>
 </html>
