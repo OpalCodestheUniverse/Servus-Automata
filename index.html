@@ -6,35 +6,79 @@
     <title>Servus Automata</title>
     <style>
         body {
+            background-color: #111;
+            color: #b8b8b8;
+            font-family: 'Old English Text MT', sans-serif;
+            text-align: center;
             margin: 0;
             padding: 0;
         }
 
-        .title-block {
-            background-color: #0f0f0f; /* Dark background color */
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: #dcdcdc; /* Light text color */
-            font-family: 'Old English Text MT', sans-serif;
-            text-align: center;
-        }
-
-        .title-text {
+        h1 {
             font-size: 3em;
-            text-transform: uppercase;
             margin: 20px;
             padding: 10px;
-            border: 2px solid #dcdcdc; /* Light border color */
+            border: 2px solid #b8b8b8;
             display: inline-block;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin: 20px;
+            padding: 10px;
+        }
+
+        h2 {
+            font-size: 2em;
+            margin: 20px;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px;
+        }
+
+        .gallery img {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body>
-    <div class="title-block">
-        <h1 class="title-text">Elden Ring</h1>
+    <h1>Servus Automata</h1>
+
+    <p>
+        Live and drink, Elden Ring Discord member or otherwise. If you're here, you were either interested in the link in my discord profile, or you were banned and someone pointed you here. Either way, welcome. Feel free to either head to the ban appeals section and read up, browse the recipes or blog posts section, or just listen to the background music I picked out for the landing page. Either way, your thirst is mine, my water is yours. Live and drink.
+    </p>
+
+    <h2>Community Art</h2>
+
+    <div class="gallery">
+        <img src="image1.jpg" alt="Community Art 1">
+        <img src="image2.jpg" alt="Community Art 2">
+        <img src="image3.jpg" alt="Community Art 3">
+        <!-- Add more images as needed -->
+    </div>
+
+    <h2>Community Screenshots</h2>
+
+    <div class="gallery">
+        <img src="screenshot1.jpg" alt="Community Screenshot 1">
+        <img src="screenshot2.jpg" alt="Community Screenshot 2">
+        <img src="screenshot3.jpg" alt="Community Screenshot 3">
+        <!-- Add more screenshots as needed -->
     </div>
 </body>
 </html>
