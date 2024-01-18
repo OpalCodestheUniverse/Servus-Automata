@@ -115,6 +115,22 @@
     <!-- Include your Firebase configuration script here -->
     <script src="https://www.gstatic.com/firebasejs/9.6.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"></script>
+</head>
+<body>
+    <h1>Ban Appeals</h1>
+
+    <!-- Your navigation bar code here -->
+
+    <p>Drop your discord down below with all information relevant to your ban, and I'll get to it personally or forward it to the appropriate staff member as soon as possible. Thank you!</p>
+
+    <!-- Comment section -->
+    <div class="comment-section">
+        <textarea id="comment-input" placeholder="Write your comment here..."></textarea>
+        <button onclick="submitComment()">Submit Comment</button>
+    </div>
+
+    <!-- Display comments -->
+    <div id="comments-container"></div>
 
     <script>
         // Paste your Firebase configuration here
@@ -134,48 +150,48 @@
         // Reference to the Firestore database
         const db = firebase.firestore();
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const commentInput = document.getElementById('comment');
-            const submitButton = document.getElementById('submit-comment');
-            const commentsSection = document.getElementById('comments-section');
+        // Function to submit a comment
+        function submitComment() {
+            const commentInput = document.getElementById('comment-input');
+            const commentText = commentInput.value.trim();
 
-            submitButton.addEventListener('click', function () {
-                const commentText = commentInput.value.trim();
-
-                if (commentText !== '') {
-                    // Add the comment to Firestore
-                    db.collection('comments').add({
-                        text: commentText,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                    })
-                    .then(function (docRef) {
-                        console.log("Comment written with ID: ", docRef.id);
-                        // Clear the input field
-                        commentInput.value = '';
-                    })
-                    .catch(function (error) {
-                        console.error("Error adding comment: ", error);
-                    });
-                }
-            });
-
-            // Real-time listener for comments
-            db.collection('comments')
-                .orderBy('timestamp', 'desc')
-                .onSnapshot(function (snapshot) {
-                    commentsSection.innerHTML = '';
-                    snapshot.forEach(function (doc) {
-                        const commentData = doc.data();
-                        const commentDiv = document.createElement('div');
-                        commentDiv.classList.add('comment');
-                        commentDiv.innerHTML = '<p>' + commentData.text + '</p>';
-                        commentsSection.appendChild(commentDiv);
-                    });
+            if (commentText !== '') {
+                // Add the comment to Firestore
+                db.collection('comments').add({
+                    text: commentText,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                })
+                .then(function (docRef) {
+                    console.log("Comment written with ID: ", docRef.id);
+                    // Clear the input field
+                    commentInput.value = '';
+                })
+                .catch(function (error) {
+                    console.error("Error adding comment: ", error);
                 });
-        });
+            }
+        }
+
+        // Function to display comments
+        function displayComments() {
+            const commentsContainer = document.getElementById('comments-container');
+
+            // Listen for changes to the comments collection
+            db.collection('comments').orderBy('timestamp', 'desc').onSnapshot(function (snapshot) {
+                commentsContainer.innerHTML = ''; // Clear previous comments
+
+                snapshot.forEach(function (doc) {
+                    const commentData = doc.data();
+                    const commentElement = document.createElement('div');
+                    commentElement.classList.add('comment');
+                    commentElement.innerHTML = '<p>' + commentData.text + '</p>';
+                    commentsContainer.appendChild(commentElement);
+                });
+            });
+        }
+
+        // Call the displayComments function
+        displayComments();
     </script>
-</head>
-<body>
-    <!-- Your existing HTML body content here -->
 </body>
 </html>
