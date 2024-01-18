@@ -91,13 +91,26 @@
             background-color: #ddd;
             color: black;
         }
-
-        .comment-item {
-            margin-top: 15px;
-            text-align: left;
-        }
     </style>
-    <!-- Add Firebase scripts here -->
+</head>
+<body>
+    <h1>Ban Appeals</h1>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="#ban-appeals">Ban Appeals</a>
+        <a href="#recipes">Recipes</a>
+        <a href="#blog-posts">Blog Posts</a>
+        <a href="#socials">Socials</a>
+    </nav>
+
+    <p>Drop your discord down below with all information relevant to your ban, and I'll get to it personally or forward it to the appropriate staff member as soon as possible. Thank you!</p>
+
+    <div class="comment-section">
+        <textarea id="comment" placeholder="Write your comment here..." required></textarea>
+        <button id="submit-comment">Submit Comment</button>
+    </div>
+
     <script src="https://www.gstatic.com/firebasejs/9.6.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"></script>
 
@@ -121,74 +134,33 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             const commentForm = document.getElementById('comment-form');
-            const commentList = document.getElementById('comment-list');
 
             commentForm.addEventListener('submit', function (e) {
                 e.preventDefault();
 
-                const nameInput = document.getElementById('name');
                 const commentInput = document.getElementById('comment');
 
-                const name = nameInput.value;
                 const comment = commentInput.value;
 
-                if (name && comment) {
+                if (comment) {
                     // Add the comment to Firestore
                     db.collection('comments').add({
-                        name: name,
                         comment: comment,
                         timestamp: firebase.firestore.FieldValue.serverTimestamp()
                     })
                     .then(function (docRef) {
                         console.log("Comment written with ID: ", docRef.id);
-                        // Clear the input fields
-                        nameInput.value = '';
+                        // Clear the input field
                         commentInput.value = '';
+                        // You can update the UI to display the comment immediately if needed
                     })
                     .catch(function (error) {
                         console.error("Error adding comment: ", error);
                     });
                 }
             });
-
-            // Fetch comments from Firestore and update UI
-            db.collection('comments').orderBy('timestamp', 'desc').onSnapshot(function (snapshot) {
-                commentList.innerHTML = ''; // Clear existing comments
-                snapshot.forEach(function (doc) {
-                    const commentData = doc.data();
-                    const commentItem = document.createElement('div');
-                    commentItem.classList.add('comment-item');
-                    commentItem.innerHTML = `<strong>${commentData.name}:</strong> ${commentData.comment}`;
-                    commentList.appendChild(commentItem);
-                });
-            });
         });
     </script>
-</head>
-<body>
-    <h1>Ban Appeals</h1>
-
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="#ban-appeals">Ban Appeals</a>
-        <a href="#recipes">Recipes</a>
-        <a href="#blog-posts">Blog Posts</a>
-        <a href="#socials">Socials</a>
-    </nav>
-
-    <p>Drop your discord down below with all information relevant to your ban, and I'll get to it personally or forward it to the appropriate staff member as soon as possible. Thank you!</p>
-
-    <!-- Display comments here -->
-    <div id="comment-list" class="comment-section"></div>
-
-    <form id="comment-form">
-        <label for="name">Your Name:</label>
-        <input type="text" id="name" required>
-        
-        <label for="comment">Your Comment:</label>
-        <textarea id="comment" placeholder="Write your comment here..." required></textarea>
-        
-        <button type="submit">Submit Comment</button>
-    </form>
 </body>
 </html>
+
