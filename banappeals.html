@@ -1,122 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ban Appeals</title>
-    <style>
-        /* Your existing styling */
-        /* ... */
-
-        .comments-section {
-            width: 70%;
-            margin: 20px;
-            padding: 20px;
-            border: 2px solid #b8b8b8;
-            border-radius: 5px;
-            background-color: #333;
-            text-align: left;
-            color: #b8b8b8;
-        }
-
-        #comments-container {
-            margin-top: 10px;
-        }
-
-        .comment {
-            border: 1px solid #b8b8b8;
-            padding: 10px;
-            margin: 10px 0;
-            background-color: #333;
-            border-radius: 5px;
-        }
-
-        .comment p {
-            margin: 0;
-            color: #b8b8b8;
-        }
-    </style>
+    <title>Servus Automata - Ban Appeals</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-    <!-- Your existing HTML content -->
-    <!-- ... -->
+    <div class="container">
+        <h1>Servus Automata</h1>
 
-    <!-- Comments section -->
-    <div class="comments-section">
-        <textarea id="comment-input" placeholder="Write your comment here..."></textarea>
-        <button onclick="submitComment()">Submit Comment</button>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Ban Appeals</a>
+            <a href="#">Recipes</a>
+            <a href="#">Blog Posts</a>
+            <a href="#">Socials</a>
+        </nav>
 
-        <!-- Display comments -->
-        <div id="comments-container"></div>
+        <p>Welcome to Servus Automata: Under Maintenance.</p>
     </div>
-
-    <!-- Include Firebase scripts -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.3/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"></script>
-
-    <script>
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDeC1ORaJFKaPvvAKEBwrSGF1JruRFzamI",
-            authDomain: "servus-automata.firebaseapp.com",
-            projectId: "servus-automata",
-            storageBucket: "servus-automata.appspot.com",
-            messagingSenderId: "225457163878",
-            appId: "1:225457163878:web:75d902f20dec546e6127a7",
-            measurementId: "G-GPVVRHNGQH"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        // Function to submit a comment
-        function submitComment() {
-            const commentInput = document.getElementById('comment-input');
-            const commentText = commentInput.value.trim();
-
-            if (commentText !== '') {
-                // Add the comment to Firestore
-                db.collection('YOUR_COLLECTION_NAME').add({
-                        text: commentText,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                    })
-                    .then(function(docRef) {
-                        console.log("Comment written with ID: ", docRef.id);
-                        // Clear the input field
-                        commentInput.value = '';
-                    })
-                    .catch(function(error) {
-                        console.error("Error adding comment: ", error);
-                    });
-            }
-        }
-
-        // Function to display comments
-        function displayComments() {
-            const commentsContainer = document.getElementById('comments-container');
-
-            // Listen for changes to the comments collection
-            db.collection('comments section').orderBy('timestamp', 'desc').onSnapshot(function(snapshot) {
-                commentsContainer.innerHTML = ''; // Clear previous comments
-
-                snapshot.forEach(function(doc) {
-                    const commentData = doc.data();
-                    const commentElement = document.createElement('div');
-                    commentElement.classList.add('comment');
-                    commentElement.innerHTML = '<p>' + commentData.text + '</p>';
-                    commentsContainer.appendChild(commentElement);
-                });
-            });
-        }
-
-        // Call the displayComments function
-        displayComments();
-    </script>
 </body>
-
 </html>
 
 
