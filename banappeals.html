@@ -32,21 +32,9 @@
 
     <script src="https://www.gstatic.com/firebasejs/9.6.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"></script>
+    <script src="firebase-config.js"></script> <!-- Make sure to include your Firebase configuration file -->
+
     <script>
-        // Paste your Firebase configuration here
-        const firebaseConfig = {
-            apiKey: "AIzaSyDeC1ORaJFKaPvvAKEBwrSGF1JruRFzamI",
-            authDomain: "servus-automata.firebaseapp.com",
-            projectId: "servus-automata",
-            storageBucket: "servus-automata.appspot.com",
-            messagingSenderId: "225457163878",
-            appId: "1:225457163878:web:75d902f20dec546e6127a7",
-            measurementId: "G-GPVVRHNGQH"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-
         // Reference to the Firestore database
         const db = firebase.firestore();
 
@@ -76,8 +64,8 @@
         function displayComments() {
             const commentsContainer = document.getElementById('comments-container');
 
-            // Listen for changes to the comments collection
-            db.collection('comments').orderBy('timestamp', 'desc').onSnapshot(function (snapshot) {
+            // Listen for changes to the 'comments section' collection
+            db.collection('comments section').orderBy('timestamp', 'desc').onSnapshot(function (snapshot) {
                 commentsContainer.innerHTML = ''; // Clear previous comments
 
                 snapshot.forEach(function (doc) {
@@ -95,6 +83,7 @@
     </script>
 </body>
 </html>
+
 
 
 
