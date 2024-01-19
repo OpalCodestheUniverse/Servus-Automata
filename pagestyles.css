@@ -10,12 +10,17 @@ body {
     align-items: center;
 }
 
-h1 {
+h1, h2 {
     font-size: 3em;
     margin: 20px;
     padding: 10px;
     border: 2px solid #b8b8b8;
     text-transform: uppercase;
+}
+
+audio {
+    margin: 20px;
+    align-self: flex-end;
 }
 
 nav {
@@ -48,8 +53,26 @@ p {
     font-size: 1.2em;
     margin: 20px;
     padding: 10px;
-    border: 2px solid #b8b8b8;
 }
 
-/* Add additional styling as needed */
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px;
+}
+
+.gallery img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.gallery img:hover {
+    transform: scale(1.1);
+}
 
