@@ -1,6 +1,6 @@
 body {
     background-image: url('https://chickenspace815072624.files.wordpress.com/2024/01/kenshi_original-1920x1080-1.jpg');
-    color: #b8b8b8;
+    color: #fff; /* Brighter text color */
     font-family: 'Old English Text MT', sans-serif;
     text-align: center;
     margin: 0;
@@ -14,7 +14,7 @@ h1, h2 {
     font-size: 3em;
     margin: 20px;
     padding: 10px;
-    border: 2px solid #b8b8b8;
+    border: 2px solid #fff; /* Border color matches text color for contrast */
     text-transform: uppercase;
 }
 
@@ -38,7 +38,7 @@ nav a {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-    border: 2px solid #b8b8b8;
+    border: 2px solid #fff; /* Border color matches text color for contrast */
     margin: 0 10px;
     background-color: #555;
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
