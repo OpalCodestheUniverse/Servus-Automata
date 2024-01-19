@@ -4,25 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servus Automata - Ban Appeals</title>
-    <link rel="stylesheet" href="pagestyles".css">
+    <link rel="stylesheet" href="pagestyles.css">
 </head>
 <body>
-    <h1>Servus Automata</h1>
+    <div class="container">
+        <h1>Servus Automata</h1>
 
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="banappeals.html">Ban Appeals</a>
-        <a href="recipes.html">Recipes</a>
-        <a href="blogposts.html">Blog Posts</a>
-        <a href="socials.html">Socials</a>
-    </nav>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="banappeals.html">Ban Appeals</a>
+            <a href="recipes.html">Recipes</a>
+            <a href="blogposts.html">Blog Posts</a>
+            <a href="socials.html">Socials</a>
+        </nav>
 
-    <p>Live and Drink, Wanderer. Welcome to the Ban Appeals section. Drop your discord below.</p>
+        <p>Welcome to Servus Automata: Ban Appeals. Please list your Discord below, and Opal or the appropriate staff member will get in touch with you via Discord as soon as possible. Thank you for your cooperation.</p>
+        
+        <!-- Comment Section -->
+        <div id="comments-container" class="comment-section">
+            <!-- Comments will be displayed here -->
+        </div>
 
-    <!-- Content of the Ban Appeals page goes here -->
+        <!-- Comment Submission Box -->
+        <div class="comment-section">
+            <input type="text" id="comment-input" placeholder="Write your comment here...">
+            <button onclick="submitComment()">Submit Comment</button>
+        </div>
+    </div>
 
+    <!-- Link to Firebase Integration -->
+    <script src="comments.js"></script>
+
+    <!-- Link to Comment Submission Script -->
+    <script src="commentinflow.js"></script>
 </body>
 </html>
+
 
 
 
