@@ -65,8 +65,8 @@ p {
 }
 
 .gallery img {
-    max-width: 1200px;
-    max-height: 800px;
+    max-width: 400px; /* Adjust max image width as needed */
+    max-height: 300px; /* Adjust max image height as needed */
     object-fit: cover;
     margin: 10px;
     border-radius: 5px;
@@ -91,8 +91,8 @@ p {
 }
 
 .recipe img {
-    max-width: 1200px;
-    max-height: 800px;
+    max-width: 400px; /* Adjust max image width as needed */
+    max-height: 300px; /* Adjust max image height as needed */
     width: 100%;
     height: auto;
     margin: 10px 0;
@@ -119,4 +119,11 @@ p {
 .recipe a:hover {
     background-color: #ddd;
     color: black;
+}
+
+/* Text styling for art pieces */
+.art-text {
+    font-size: 1em;
+    color: #fff;
+    margin-top: 5px;
 }
