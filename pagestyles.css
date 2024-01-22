@@ -1,6 +1,6 @@
 body {
     background-image: url('https://chickenspace815072624.files.wordpress.com/2024/01/kenshi_original-1920x1080-1.jpg');
-    color: #fff;
+    color: #ffd700; /* Elden Ring gold */
     font-family: 'Old English Text MT', sans-serif;
     text-align: center;
     margin: 0;
@@ -14,7 +14,7 @@ h1, h2 {
     font-size: 3em;
     margin: 20px;
     padding: 10px;
-    border: 2px solid #fff;
+    border: 2px solid #ffd700; /* Elden Ring gold */
     text-transform: uppercase;
 }
 
@@ -24,7 +24,7 @@ audio {
 }
 
 nav {
-    background-color: #333;
+    background-color: #000; /* Black */
     overflow: hidden;
     margin-bottom: 20px;
     display: flex;
@@ -38,7 +38,7 @@ nav a {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-    border: 2px solid #fff;
+    border: 2px solid #ffd700; /* Elden Ring gold */
     margin: 0 10px;
     background-color: #555;
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
@@ -53,7 +53,8 @@ p {
     font-size: 1.2em;
     margin: 20px;
     padding: 10px;
-    background-color: #eee; /* Light background for text */
+    background-color: #000; /* Black */
+    color: #ffd700; /* Elden Ring gold */
 }
 
 .gallery {
@@ -64,8 +65,8 @@ p {
 }
 
 .gallery img {
-    width: 300px;
-    height: 200px;
+    max-width: 1200px;
+    max-height: 800px;
     object-fit: cover;
     margin: 10px;
     border-radius: 5px;
@@ -81,12 +82,14 @@ p {
 .recipe {
     margin: 20px;
     padding: 20px;
-    border: 2px solid #fff;
-    background-color: #eee; /* Light background for recipe elements */
+    border: 2px solid #ffd700; /* Elden Ring gold */
+    background-color: #000; /* Black */
     text-align: left;
 }
 
 .recipe img {
+    max-width: 1200px;
+    max-height: 800px;
     width: 100%;
     height: auto;
     margin: 10px 0;
@@ -102,9 +105,9 @@ p {
 .recipe a {
     display: block;
     margin-top: 10px;
-    color: #fff;
+    color: #ffd700; /* Elden Ring gold */
     text-decoration: none;
-    border: 2px solid #fff;
+    border: 2px solid #ffd700; /* Elden Ring gold */
     padding: 10px 16px;
     background-color: #555;
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
