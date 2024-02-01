@@ -1,47 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Forum Page</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Cy Banner</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    .banner {
+      background-color: #FEDD00; /* Yellow color */
+      padding: 20px;
+      text-align: center;
+      position: relative;
+      width: 400px;
+      height: 200px;
+    }
+    .banner::before {
+      content: "";
+      position: absolute;
+      top: -20px;
+      left: 0;
+      border-left: 200px solid transparent;
+      border-right: 200px solid transparent;
+      border-bottom: 20px solid #1976D2; /* Blue color */
+    }
+    h1 {
+      margin: 0;
+      padding: 0;
+      font-size: 36px;
+      color: #fff; /* White color */
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Forum Title</h1>
-    </header>
-
-    <nav>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Categories</a></li>
-            <li><a href="#">Latest Posts</a></li>
-            <li><a href="#">Login</a></li>
-        </ul>
-    </nav>
-
-    <section id="content">
-        <article class="post">
-            <h2>Post Title</h2>
-            <p class="author">Posted by: John Doe</p>
-            <p class="timestamp">Posted on: January 1, 2024</p>
-            <p>This is the content of the post. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <button>Reply</button>
-        </article>
-
-        <!-- More posts go here -->
-
-        <div id="pagination">
-            <a href="#">« Previous</a>
-            <span>1</span>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">Next »</a>
-        </div>
-    </section>
-
-    <footer>
-        <p>&copy; 2024 Forum Name. All rights reserved.</p>
-    </footer>
+  <div class="banner">
+    <h1>Team Cy</h1>
+  </div>
 </body>
 </html>
