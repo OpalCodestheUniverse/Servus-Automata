@@ -1,5 +1,9 @@
 body {
     background-image: url('https://cdn.discordapp.com/attachments/778427281617977357/1234278608621797528/ezgif-3-de05d0483e.gif?ex=66302708&is=662ed588&hm=04a8ff95c4a39d03caff4f6ad9d039c2e98188f7c62a68eedd427ad3d1ea505a&');
+    background-position: center; /* Center the background image */
+    background-size: cover; /* Scale the background to cover the element */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    height: 100vh; /* Optional: Set the height of the body to 100% of the viewport height */
     color: #fff; /* White text color */
     font-family: 'Old English Text MT', sans-serif;
     text-align: center;
