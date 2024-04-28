@@ -4,44 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servus Automata</title>
-    <link rel="stylesheet" href="pagestyles.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+        .sidebar {
+            height: 100%;
+            width: 200px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #333;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+        }
+        .sidebar a:hover {
+            background-color: #555;
+        }
+        .top-bar {
+            height: 50px;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            text-align: left;
+            font-size: 24px;
+            position: fixed;
+            top: 0;
+            left: 200px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 2px -2px gray;
+        }
+        .content {
+            margin-left: 200px;
+            margin-top: 50px;
+            padding: 20px;
+            height: calc(100% - 50px);
+            background: url('your-background-image.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .text-box {
+            background-color: black;
+            color: white;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        iframe {
+            display: block;
+            margin: 0 auto;
+            margin-top: 50px;
+            width: 70%;
+            height: 400px;
+        }
+        @media screen and (max-width: 600px) {
+            .sidebar, .top-bar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            .sidebar a, .top-bar {
+                text-align: center;
+            }
+            .content {
+                margin: 0;
+                margin-top: 20px;
+            }
+            iframe {
+                width: 90%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Servus Automata</h1>
-
-    <audio controls autoplay loop>
-        <source src="https://chickenspace815072624.files.wordpress.com/2023/12/kenshi_-scorching-wind-more-extended-1.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
-    </audio>
-
-    <nav>
+    <div class="sidebar">
+        <a href="index.html">Home</a>
         <a href="banappeals.html">Ban Appeals</a>
-        <a href="recipes.html">Recipes</a>
         <a href="#blog-posts">Blog Posts</a>
-        <a href="socials.html">Socials</a>
-    </nav>
-
-    <p>
-        Live and drink, Elden Ring Discord member or otherwise. If you're here, you were either interested in the link in my discord profile, or you were banned and someone pointed you here. Either way, welcome. Feel free to either head to the ban appeals section and read up, browse the recipes or blog posts section, or just listen to the background music I picked out for the landing page. Either way, your thirst is mine, my water is yours. Live and drink. Also, hi mom, look I'm a programmer!
-    </p>
-
-    <h2>Community Art</h2>
-
-    <div class="gallery">
-        <img src="https://chickenspace815072624.files.wordpress.com/2024/01/img_0126.jpg" alt="Community Art 1">
-        <p>"Lol, lmao" -Anonymous Artist</p>
-        <img src="image2.jpg" alt="Community Art 2">
-        <img src="image3.jpg" alt="Community Art 3">
-        <!-- Add more images as needed -->
     </div>
-
-    <h2>Community Screenshots</h2>
-
-    <div class="gallery">
-        <img src="screenshot1.jpg" alt="Community Screenshot 1">
-        <img src="screenshot2.jpg" alt="Community Screenshot 2">
-        <img src="screenshot3.jpg" alt="Community Screenshot 3">
-        <!-- Add more screenshots as needed -->
+    <div class="top-bar">Servus Automata</div>
+    <div class="content">
+        <div class="text-box">
+            <p>Write your text here...</p>
+        </div>
+        <!-- Add your Twitch player here -->
+        <iframe src="https://player.twitch.tv/?channel=dragonbloggers" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>
+        <!-- Links section -->
+        <div class="links">
+            <a href="https://twitter.com/izmarvelous?lang=en">Twitter</a> |
+            <a href="https://www.twitch.tv/dragonbloggers">Twitch</a> |
+            <a href="https://discord.com/eldenring">Discord</a>
+        </div>
     </div>
 </body>
 </html>
