@@ -92,9 +92,9 @@
 <body>
     <div class="header">Servus Automata</div>
     <div class="button-container">
-        <button class="button" id="dynamicText" onmouseover="startTextChange(this)" onmouseout="stopTextChange(this)">Home</button>
-        <button class="button" id="dynamicText2" onmouseover="startSpecialTextChange(this)" onmouseout="stopTextChange(this)">Ban Appeals</button>
-        <button class="button" id="dynamicText3" onmouseover="startTextChange(this)" onmouseout="stopTextChange(this)">Blog Posts</button>
+        <button class="button" id="dynamicText" onmouseover="startTextChange(this, 'Home')" onmouseout="stopTextChange(this, 'Home')">Home</button>
+        <button class="button" id="dynamicText2" onmouseover="startSpecialTextChange(this)" onmouseout="stopTextChange(this, 'Ban Appeals')">Ban Appeals</button>
+        <button class="button" id="dynamicText3" onmouseover="startTextChange(this, 'Blog Posts')" onmouseout="stopTextChange(this, 'Blog Posts')">Blog Posts</button>
     </div>
     <div class="content">
         <!-- Placeholder for any text or additional content -->
@@ -121,7 +121,7 @@
             return result;
         }
 
-        function startTextChange(button) {
+        function startTextChange(button, originalText) {
             intervalId = setInterval(() => {
                 button.textContent = generateRandomString(textLength);
             }, 300); // Change text more frequently
@@ -138,12 +138,11 @@
             }, 300);
         }
 
-        function stopTextChange(button) {
+        function stopTextChange(button, originalText) {
             clearInterval(intervalId);
-            button.textContent = button.id === 'dynamicText2' ? 'Ban Appeals' : button.textContent;
+            button.textContent = originalText;
         }
     </script>
 </body>
 </html>
-
 
