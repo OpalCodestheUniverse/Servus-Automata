@@ -1,6 +1,3 @@
-Certainly! Let's take the button styling I've designed earlier, which mimics a heraldic scroll with shifting gibberish text, and apply it to the buttons on your landing page. Below is the updated HTML with the enhanced button styling incorporated into your current design:
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -95,9 +92,9 @@ Certainly! Let's take the button styling I've designed earlier, which mimics a h
 <body>
     <div class="header">Servus Automata</div>
     <div class="button-container">
-        <button class="button" id="dynamicText">Home</button>
-        <button class="button" id="dynamicText2">Ban Appeals</button>
-        <button class="button" id="dynamicText3">Blog Posts</button>
+        <button class="button" id="dynamicText" onmouseover="startTextChange(this)" onmouseout="stopTextChange(this)">Home</button>
+        <button class="button" id="dynamicText2" onmouseover="startSpecialTextChange(this)" onmouseout="stopTextChange(this)">Ban Appeals</button>
+        <button class="button" id="dynamicText3" onmouseover="startTextChange(this)" onmouseout="stopTextChange(this)">Blog Posts</button>
     </div>
     <div class="content">
         <!-- Placeholder for any text or additional content -->
@@ -113,6 +110,8 @@ Certainly! Let's take the button styling I've designed earlier, which mimics a h
     </div>
     <script>
         const textLength = 8;
+        let intervalId;
+
         function generateRandomString(length) {
             const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
             let result = '';
@@ -122,13 +121,29 @@ Certainly! Let's take the button styling I've designed earlier, which mimics a h
             return result;
         }
 
-        setInterval(() => {
-            document.getElementById('dynamicText').textContent = generateRandomString(textLength);
-            document.getElementById('dynamicText2').textContent = generateRandomString(textLength);
-            document.getElementById('dynamicText3').textContent = generateRandomString(textLength);
-        }, 1000); // Change text every second
+        function startTextChange(button) {
+            intervalId = setInterval(() => {
+                button.textContent = generateRandomString(textLength);
+            }, 300); // Change text more frequently
+        }
+
+        function startSpecialTextChange(button) {
+            const specialWords = ["heretic", "kinslayer", "traitor"];
+            intervalId = setInterval(() => {
+                if (Math.random() < 0.5) { // 50% chance to display a special word
+                    button.textContent = specialWords[Math.floor(Math.random() * specialWords.length)];
+                } else {
+                    button.textContent = generateRandomString(textLength);
+                }
+            }, 300);
+        }
+
+        function stopTextChange(button) {
+            clearInterval(intervalId);
+            button.textContent = button.id === 'dynamicText2' ? 'Ban Appeals' : button.textContent;
+        }
     </script>
 </body>
 </html>
-```
+
 
