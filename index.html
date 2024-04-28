@@ -1,3 +1,6 @@
+Certainly! Let's take the button styling I've designed earlier, which mimics a heraldic scroll with shifting gibberish text, and apply it to the buttons on your landing page. Below is the updated HTML with the enhanced button styling incorporated into your current design:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +13,7 @@
             padding: 0;
             height: 100%;
             font-family: 'Arial', sans-serif;
-            background: url('https://cdn.discordapp.com/attachments/778427281617977357/1234278608621797528/ezgif-3-de05d0483e.gif?ex=66302708&is=662ed588&hm=04a8ff95c4a39d03caff4f6ad9d039c2e98188f7c62a68eedd427ad3d1ea505a&') no-repeat center center fixed;
+            background: url('https://cdn.discordapp.com/attachments/778427281617977357/1234278608621797528/ezgif-3-de05d0483e.gif') no-repeat center center fixed;
             background-size: cover;
         }
         .header {
@@ -28,19 +31,40 @@
             margin-top: 20px;
         }
         .button {
-            padding: 15px 30px;
+            padding: 15px 40px;
             margin: 10px;
-            font-size: 20px;
-            border: none;
-            border-radius: 25px; /* Rounded edges for a bubbly look */
-            background-color: #008CBA; /* Bright color for the button */
-            color: white;
+            font-size: 16px;
+            color: black;
+            border: 2px solid #774411;
+            background-color: #fff8dc;
+            border-radius: 15px;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .button::before, .button::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 100%;
+            background-color: #fff8dc;
+            top: 0;
+            z-index: -1;
+            border-radius: 10px;
+        }
+        .button::before {
+            left: -10px;
+            transform: rotate(-15deg);
+        }
+        .button::after {
+            right: -10px;
+            transform: rotate(15deg);
         }
         .button:hover {
-            background-color: #005f7a;
-            transform: scale(1.1); /* Slightly larger on hover */
+            background-color: #eee8d5;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
         .content {
             padding: 20px;
@@ -71,9 +95,9 @@
 <body>
     <div class="header">Servus Automata</div>
     <div class="button-container">
-        <button onclick="window.location.href='index.html'" class="button">Home</button>
-        <button onclick="window.location.href='banappeals.html'" class="button">Ban Appeals</button>
-        <button onclick="window.location.href='#blog-posts'" class="button">Blog Posts</button>
+        <button class="button" id="dynamicText">Home</button>
+        <button class="button" id="dynamicText2">Ban Appeals</button>
+        <button class="button" id="dynamicText3">Blog Posts</button>
     </div>
     <div class="content">
         <!-- Placeholder for any text or additional content -->
@@ -87,6 +111,24 @@
             <a href="https://discord.com/eldenring" style="color: #7289da;">Discord</a>
         </div>
     </div>
+    <script>
+        const textLength = 8;
+        function generateRandomString(length) {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
+        }
+
+        setInterval(() => {
+            document.getElementById('dynamicText').textContent = generateRandomString(textLength);
+            document.getElementById('dynamicText2').textContent = generateRandomString(textLength);
+            document.getElementById('dynamicText3').textContent = generateRandomString(textLength);
+        }, 1000); // Change text every second
+    </script>
 </body>
 </html>
+```
 
