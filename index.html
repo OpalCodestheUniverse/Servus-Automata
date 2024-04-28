@@ -9,89 +9,58 @@
             margin: 0;
             padding: 0;
             height: 100%;
-            font-family: Arial, sans-serif;
-        }
-        .sidebar {
-            height: 50%; /* Adjusted to cut off halfway */
-            width: 200px;
-            position: fixed;
-            z-index: 1;
-            top: 50%; /* Aligns the top of the sidebar to the middle of the page */
-            transform: translateY(-50%); /* Centers the sidebar vertically based on its height */
-            left: 0;
-            background-color: #333;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.5); /* Optional shadow for better visibility */
-        }
-        .sidebar a {
-            padding: 15px 15px;
-            text-decoration: none;
-            font-size: 20px; /* Larger text size */
-            color: white;
-            display: block;
-            border-bottom: 1px solid #444; /* Adds a subtle separator */
-        }
-        .sidebar a:last-child {
-            border-bottom: none;
-        }
-        .sidebar a:hover {
-            background-color: #555;
-        }
-        .top-bar {
-            height: 50px;
-            width: 100%;
-            background-color: #333;
-            color: white;
-            padding: 10px 20px;
-            text-align: left;
-            font-size: 24px;
-            position: fixed;
-            top: 0;
-            left: 200px;
-            display: flex;
-            align-items: center;
-            box-shadow: 0 4px 2px -2px gray;
-        }
-        .content {
-            margin-left: 200px;
-            margin-top: 50px;
-            padding: 20px;
-            height: calc(100% - 50px);
+            font-family: 'Arial', sans-serif;
             background: url('your-background-image.jpg') no-repeat center center fixed;
             background-size: cover;
         }
-        .text-box {
-            background-color: black;
+        .header {
+            width: 100%;
+            background-color: #333;
             color: white;
-            padding: 20px;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 4px 2px -2px gray;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
             margin-top: 20px;
+        }
+        .button {
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 20px;
+            border: none;
+            border-radius: 25px; /* Rounded edges for a bubbly look */
+            background-color: #008CBA; /* Bright color for the button */
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .button:hover {
+            background-color: #005f7a;
+            transform: scale(1.1); /* Slightly larger on hover */
+        }
+        .content {
+            padding: 20px;
+            text-align: center;
+            color: white;
         }
         iframe {
             display: block;
             margin: 0 auto;
-            margin-top: 50px;
             width: 70%;
             height: 400px;
+            margin-top: 50px;
         }
         @media screen and (max-width: 600px) {
-            .sidebar, .top-bar {
-                width: 100%;
-                height: auto;
-                position: relative;
+            .header {
+                font-size: 24px;
             }
-            .sidebar {
-                top: 0;
-                transform: none;
-                height: auto;
-            }
-            .sidebar a, .top-bar {
-                text-align: center;
-            }
-            .content {
-                margin: 0;
-                margin-top: 20px;
+            .button {
+                font-size: 18px;
+                padding: 12px 24px;
             }
             iframe {
                 width: 90%;
@@ -100,23 +69,22 @@
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <a href="index.html">Home</a>
-        <a href="banappeals.html">Ban Appeals</a>
-        <a href="#blog-posts">Blog Posts</a>
+    <div class="header">Servus Automata</div>
+    <div class="button-container">
+        <button onclick="window.location.href='index.html'" class="button">Home</button>
+        <button onclick="window.location.href='banappeals.html'" class="button">Ban Appeals</button>
+        <button onclick="window.location.href='#blog-posts'" class="button">Blog Posts</button>
     </div>
-    <div class="top-bar">Servus Automata</div>
     <div class="content">
-        <div class="text-box">
-            <p>Write your text here...</p>
-        </div>
-        <!-- Add your Twitch player here -->
+        <!-- Placeholder for any text or additional content -->
+        <p>This is a placeholder area where you can add your own content.</p>
+        <!-- Twitch player -->
         <iframe src="https://player.twitch.tv/?channel=dragonbloggers" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>
-        <!-- Links section -->
+        <!-- External links -->
         <div class="links">
-            <a href="https://twitter.com/izmarvelous?lang=en">Twitter</a> |
-            <a href="https://www.twitch.tv/dragonbloggers">Twitch</a> |
-            <a href="https://discord.com/eldenring">Discord</a>
+            <a href="https://twitter.com/izmarvelous?lang=en" style="color: #00acee;">Twitter</a> |
+            <a href="https://www.twitch.tv/dragonbloggers" style="color: #6441a5;">Twitch</a> |
+            <a href="https://discord.com/eldenring" style="color: #7289da;">Discord</a>
         </div>
     </div>
 </body>
