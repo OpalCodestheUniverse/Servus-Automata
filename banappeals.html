@@ -5,92 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servus Automata - Ban Appeals</title>
     <link rel="stylesheet" href="pagestyles.css">
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: "Courier New", Courier, monospace;
-            background: url('https://cdn.discordapp.com/attachments/778427281617977357/1234278608621797528/ezgif-3-de05d0483e.gif?ex=66302708&is=662ed588&hm=04a8ff95c4a39d03caff4f6ad9d039c2e98188f7c62a68eedd427ad3d1ea505a&') no-repeat center center fixed;
-            background-size: cover;
-        }
-        .header {
-            background-color: black;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-            font-size: 30px;
-        }
-        nav {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .button {
-            padding: 10px 20px;
-            margin: 0 10px;
-            background-color: #333;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .button:hover {
-            background-color: #555;
-        }
-        p {
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-    </style>
+    <script src="https://www.gstatic.com/firebasejs/9.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.8/firebase-firestore.js"></script>
+    <script src="comments.js"></script>
 </head>
 <body>
-    <div class="header">Servus Automata - Ban Appeals</div>
-    <nav>
-        <a href="index.html" class="button" id="homeButton">Home</a>
-        <a href="banappeals.html" class="button" id="banAppealsButton">Ban Appeals</a>
-        <a href="blogposts.html" class="button" id="blogPostsButton">Blog Posts</a>
-    </nav>
-    <p>Welcome to Servus Automata: Ban Appeals. Please list your Discord below, and Opal or the appropriate staff member will get in touch with you via Discord as soon as possible. Thank you for your cooperation.</p>
-    <script src="https://utteranc.es/client.js"
-            repo="opalcodestheuniverse/Servus-Automata"
-            issue-term="pathname"
-            theme="github-light"
-            crossorigin="anonymous"
-            async>
-    </script>
-    <script>
-        // Dynamic text effect for buttons with consistent special messages
-        const buttons = document.querySelectorAll('.button');
-        const specialWords = ["Welcome", "Hello", "Discover", "Explore"]; // Example special words
+    <div class="container">
+        <h1>Servus Automata</h1>
+        
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="banappeals.html">Ban Appeals</a>
+            <a href="recipes.html">Recipes</a>
+            <a href="blogposts.html">Blog Posts</a>
+            <a href="socials.html">Socials</a>
+        </nav>
 
-        function generateRandomString(length) {
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            let result = '';
-            for (let i = 0; i < length; i++) {
-                result += characters.charAt(Math.floor(Math.random() * characters.length));
-            }
-            return result;
-        }
+        <p>Welcome to Servus Automata: Ban Appeals. Please list your Discord below, and Opal or the appropriate staff member will get in touch with you via Discord as soon as possible. Thank you for your cooperation.</p>
+        
+  <!-- Add this script to your HTML file -->
+<script src="https://utteranc.es/client.js"
+        repo="opalcodestheuniverse/Servus-Automata"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 
-        buttons.forEach(button => {
-            button.addEventListener('mouseover', () => {
-                const originalText = button.textContent;
-                let intervalId = setInterval(() => {
-                    if (Math.random() < 0.5) { // 50% chance to show a special word
-                        button.textContent = specialWords[Math.floor(Math.random() * specialWords.length)];
-                    } else {
-                        button.textContent = generateRandomString(8);
-                    }
-                }, 300);
-                
-                button.addEventListener('mouseout', () => {
-                    clearInterval(intervalId);
-                    button.textContent = originalText;
-                });
-            });
-        });
-    </script>
-</body>
-</html>
