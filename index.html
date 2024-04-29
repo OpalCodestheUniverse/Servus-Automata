@@ -15,12 +15,14 @@
         }
         .header {
             width: 100%;
-            background-color: #333;
-            color: white;
+            background-color: white;
+            color: red;
             padding: 20px 0;
             text-align: center;
             font-size: 30px;
             box-shadow: 0 4px 2px -2px gray;
+            font-family: 'Impact', sans-serif;
+            -webkit-text-stroke: 1px black;
         }
         .button-container {
             display: flex;
@@ -31,22 +33,24 @@
             padding: 15px 40px;
             margin: 10px;
             font-size: 16px;
-            color: black;
+            color: red;
             border: 2px solid #774411;
-            background-color: #fff8dc;
+            background-color: white;
             border-radius: 15px;
             cursor: pointer;
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-family: 'Impact', sans-serif;
+            -webkit-text-stroke: 1px black; /* Black outline around text */
         }
         .button::before, .button::after {
             content: '';
             position: absolute;
             width: 25px;
             height: 100%;
-            background-color: #fff8dc;
+            background-color: white;
             top: 0;
             z-index: -1;
             border-radius: 10px;
@@ -60,7 +64,7 @@
             transform: rotate(15deg);
         }
         .button:hover {
-            background-color: #eee8d5;
+            background-color: #eee8d5; /* A light beige on hover */
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
         .content {
@@ -97,11 +101,8 @@
         <button class="button" id="dynamicText3" onmouseover="startTextChange(this, 'Blog Posts')" onmouseout="stopTextChange(this, 'Blog Posts')">Blog Posts</button>
     </div>
     <div class="content">
-        <!-- Placeholder for any text or additional content -->
         <p>This is a placeholder area where you can add your own content.</p>
-        <!-- Twitch player -->
         <iframe src="https://player.twitch.tv/?channel=dragonbloggers" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>
-        <!-- External links -->
         <div class="links">
             <a href="https://twitter.com/izmarvelous?lang=en" style="color: #00acee;">Twitter</a> |
             <a href="https://www.twitch.tv/dragonbloggers" style="color: #6441a5;">Twitch</a> |
@@ -124,13 +125,13 @@
         function startTextChange(button, originalText) {
             intervalId = setInterval(() => {
                 button.textContent = generateRandomString(textLength);
-            }, 300); // Change text more frequently
+            }, 300);
         }
 
         function startSpecialTextChange(button) {
             const specialWords = ["heretic", "kinslayer", "traitor"];
             intervalId = setInterval(() => {
-                if (Math.random() < 0.5) { // 50% chance to display a special word
+                if (Math.random() < 0.5) {
                     button.textContent = specialWords[Math.floor(Math.random() * specialWords.length)];
                 } else {
                     button.textContent = generateRandomString(textLength);
@@ -145,4 +146,5 @@
     </script>
 </body>
 </html>
+
 
