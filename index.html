@@ -16,18 +16,17 @@
         .header {
             width: calc(100% - 40px);
             background-color: black;
-            color: crimson;
+            color: white; /* Default text color changed to white */
             padding: 20px 20px;
             text-align: center;
             font-size: 36px;
             letter-spacing: 2px;
-            -webkit-text-stroke: 1px black;
+            -webkit-text-stroke: 1px black; /* Black border for the text */
             border-radius: 15px;
             margin: 20px auto;
             display: block;
             background-image: url('https://cdn.discordapp.com/attachments/778427281617977357/1234307234494812311/giphy.gif?ex=663041b1&is=662ef031&hm=1def3ac629d1f85e34f3ddeb4da8d91b117954e6e5131a5e8e08bf8fd15247f4&');
             background-size: cover;
-            transition: background-color 1s, color 1s;
         }
         .button-container {
             display: flex;
@@ -72,7 +71,7 @@
         <a href="#blog-posts" class="button" id="blogPostsButton" onmouseover="startTextChange(this, 'Blog Posts', ['knowledge', 'history', 'time'])" onmouseout="stopTextChange(this, 'Blog Posts')">Blog Posts</a>
     </div>
     <div class="content">
-        <p>Use the ban appeals section like a soapbox at your own peril. Or just post your ban appeal and be done with it.</p>
+        <p>This is a placeholder area where you can add your own content.</p>
         <div class="links">
             <a href="https://twitter.com/izmarvelous?lang=en" style="color: #00acee;">Twitter</a> |
             <a href="https://www.twitch.tv/dragonbloggers" style="color: #6441a5;">Twitch</a> |
@@ -94,6 +93,8 @@
 
         function startTextChange(link, originalText, specialWords = []) {
             intervalId = setInterval(() => {
+
+
                 if (Math.random() < 0.3) { // 30% chance to display a special word
                     link.textContent = specialWords[Math.floor(Math.random() * specialWords.length)];
                 } else {
@@ -122,15 +123,15 @@
         setTimeout(() => {
             const header = document.getElementById('header');
             header.style.backgroundColor = 'white';
-            header.style.color =
-
- 'black';
+            header.style.color = 'crimson';
             header.textContent = 'Your final test is in ban appeals';
+            header.style.webkitTextStroke = '0';  // Remove the text stroke
             
             setTimeout(() => {
                 header.style.backgroundColor = 'black';
-                header.style.color = 'crimson';
+                header.style.color = 'white';
                 header.textContent = 'Servus Automata';
+                header.style.webkitTextStroke = '1px black'; // Add text stroke back
             }, 5000); // Show the special message for 5 seconds
         }, 60000); // After 1 minute of user landing on the page
     </script>
