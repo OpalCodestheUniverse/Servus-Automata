@@ -20,8 +20,12 @@
             padding: 20px 0;
             text-align: center;
             font-size: 30px;
-            transition: opacity 1s ease;
-            opacity: 0.9; /* Adjust for desired visibility */
+            transition: transform 0.3s, background-color 0.3s;
+            cursor: pointer;
+        }
+        .header:hover {
+            background-size: cover;
+            transform: scale(1.05);
         }
         .button-container {
             display: flex;
@@ -84,50 +88,5 @@
             <a href="https://discord.com/eldenring" style="color: #7289da;">Discord</a>
         </div>
     </div>
-    <script>
-        const header = document.getElementById('header');
-        setTimeout(() => {
-            header.style.backgroundImage = 'url("https://cdn.discordapp.com/attachments/778427281617977357/1234309424793911408/White_Background_White_Screen_Blank_Page_Bright_White_Flashlight.gif?ex=663043bb&is=662ef23b&hm=97a8a1304472dd82899cad85075c671eac3843632e628e0236977d0c1f7650d4&")';
-            setTimeout(() => {
-                header.style.backgroundImage = 'url("https://cdn.discordapp.com/attachments/778427281617977357/1234307234494812311/giphy.gif?ex=663041b1&is=662ef031&hm=1def3ac629d1f85e34f3ddeb4da8d91b117954e6e5131a5e8e08bf8fd15247f4&")';
-            }, 5000); // Display the white screen for 5 seconds
-        }, 5000); // Initial static display time
-
-        const textLength = 8;
-        let intervalId;
-
-        function generateRandomString(length) {
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            let result = '';
-            for (let i = 0; i < length; i++) {
-                result += characters.charAt(Math.floor(Math.random() * characters.length));
-            }
-            return result;
-        }
-
-        function startTextChange(link, originalText) {
-            intervalId = setInterval(() => {
-                link.textContent = generateRandomString(textLength);
-            }, 300);
-        }
-
-        function startSpecialTextChange(link) {
-            const specialWords = ["heretic", "kinslayer", "traitor"];
-            intervalId = setInterval(() => {
-                if (Math.random() < 0.5) {
-                    link.textContent = specialWords[Math.floor(Math.random() * specialWords.length)];
-               
-
- } else {
-                    link.textContent = generateRandomString(textLength);
-                }
-            }, 300);
-        }
-
-        function stopTextChange(link, originalText) {
-            clearInterval(intervalId);
-            link.textContent = originalText;
-        }
-    </script>
 </body>
 </html>
