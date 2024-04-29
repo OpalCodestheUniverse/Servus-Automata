@@ -27,7 +27,6 @@
             display: block;
             background-image: url('https://cdn.discordapp.com/attachments/778427281617977357/1234307234494812311/giphy.gif?ex=663041b1&is=662ef031&hm=1def3ac629d1f85e34f3ddeb4da8d91b117954e6e5131a5e8e08bf8fd15247f4&');
             background-size: cover;
-            transition: all 1s ease;
         }
         .button-container {
             display: flex;
@@ -77,7 +76,9 @@
     <div class="content">
         <div class="rules" id="rulesText">
             <p>Rules</p>
-            <p>Do not use the ban appeals</p>
+            <p>Do not use the
+
+ ban appeals</p>
             <p>section as a soapbox.</p>
         </div>
         <div class="links">
@@ -87,46 +88,43 @@
         </div>
     </div>
     <script>
-        const originalText = [
-            'Rules',
-            'Do not use the ban appeals',
-            'section as a soapbox.'
-        ];
+        let rulesTextElements = document.querySelectorAll('#rulesText p');
         const connectionInfo = [
-            'Your IP: Fetching...', // Placeholder until IP is fetched
-            'Your Location: Fetching...',
-            'Your ISP: Fetching...'
+            'IP: Fetching...',
+            'Location: Fetching...',
+            'ISP: Fetching...'
         ];
 
-        function cycleInformation() {
-            const rulesText = document.getElementById('rulesText');
-            let i = 0;
-
-            function displayNextPiece() {
-                rulesText.innerHTML = `<p style="color: crimson;">${connectionInfo[i]}</p>`;
-                i = (i + 1) % connectionInfo.length;
-                setTimeout(() => {
-                    if (i === 0) {
-                        rulesText.innerHTML = originalText.map(text => `<p>${text}</p>`).join('');
-                    } else {
-                        displayNextPiece();
-                    }
-                }, 1000 + Math.random() * 2000); // Randomly between 1 and 3 seconds
-            }
-
-            displayNextPiece();
+        function fetchConnectionInfo() {
+            fetch('https://api64.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    connectionInfo[0] = `IP: ${data.ip}`;
+                    connectionInfo[1] = 'Location: Your location';
+                    connectionInfo[2] = 'ISP: Your ISP';
+                })
+                .catch(error => {
+                    console.log('Error fetching IP:', error);
+                });
         }
 
-        // Fetch IP address and then start cycling information after 1 minute
-        fetch('https://api64.ipify.org?format=json')
-            .then(response => response.json())
-            .then(data => {
-                connectionInfo[0] = `Your IP: ${data.ip}`;
-                setTimeout(cycleInformation, 60000); // Start after 1 minute
-            })
-            .catch(() => {
-                connectionInfo[0] = 'Unable to fetch IP address';
+        function cycleInformation() {
+            rulesTextElements.forEach((element, index) => {
+                setTimeout(() => {
+                    const originalText = element.textContent;
+                    element.textContent = connectionInfo[index % connectionInfo.length];
+                    element.style.color = 'crimson';
+
+                    setTimeout(() => {
+                        element.textContent = originalText;
+                        element.style.color = 'white';
+                    }, 1000 + Math.random() * 2000); // Show connection info for 1-3 seconds
+                }, index * 3000);
             });
+        }
+
+        fetchConnectionInfo();
+        setInterval(cycleInformation, 15000); // Refresh every 15 seconds
     </script>
 </body>
 </html>
