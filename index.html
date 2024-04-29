@@ -100,10 +100,10 @@
             setTimeout(() => {
                 rulesTextElements[randomIndex].innerText = originalText;
                 rulesTextElements[randomIndex].style.color = 'white';
-            }, 1000 + Math.random() * 2000); // Display for 1-3 seconds
+            }, 5000 + Math.random() * 10000); // Display for 5-10 seconds
         }
 
-        setInterval(displaySpecialMessage, 3000); // Change every 3 seconds
+        setInterval(displaySpecialMessage, 15000); // Change every 15 seconds
 
         // Dynamic text changes on the buttons
         const textLength = 8;
@@ -144,15 +144,15 @@
             link.textContent = originalText;
         }
 
-        // Fetch IP address
-        let connectionInfo = 'Fetching IP...';
+        // Fetch IP address and display it in the format requested
+        let ipInfo = 'Fetching IP...';
         fetch('https://api.ipify.org?format=json')
             .then(response => response.json())
             .then(data => {
-                connectionInfo = `IP Address: ${data.ip}`;
+                ipInfo = `[${data.ip}] is this you?`;
             })
             .catch(() => {
-                connectionInfo = 'IP Address: Not available';
+                ipInfo = '[IP Address not available] is this you?';
             });
 
         function displayIP() {
@@ -160,17 +160,17 @@
                 const randomIndex = Math.floor(Math.random() * rulesTextElements.length);
                 const originalText = rulesTextElements[randomIndex].innerText;
 
-                rulesTextElements[randomIndex].innerText = connectionInfo;
+                rulesTextElements[randomIndex].innerText = ipInfo;
                 rulesTextElements[randomIndex].style.color = 'crimson';
 
                 setTimeout(() => {
                     rulesTextElements[randomIndex].innerText = originalText;
                     rulesTextElements[randomIndex].style.color = 'white';
-                }, 1000 + Math.random() * 2000); // Display for 1-3 seconds
-            }, 5000); // Change every 5 seconds
+                }, 5000 + Math.random() * 10000); // Display for 5-10 seconds
+            }, 20000); // Change every 20 seconds
         }
 
-        setTimeout(displayIP, 5000); // Start displaying IP after initial delay
+        setTimeout(displayIP, 10000); // Start displaying IP after an initial delay
     </script>
 </body>
 </html>
