@@ -27,6 +27,7 @@
             display: block;
             background-image: url('https://cdn.discordapp.com/attachments/778427281617977357/1234307234494812311/giphy.gif?ex=663041b1&is=662ef031&hm=1def3ac629d1f85e34f3ddeb4da8d91b117954e6e5131a5e8e08bf8fd15247f4&');
             background-size: cover;
+            transition: all 1s ease;
         }
         .button-container {
             display: flex;
@@ -56,11 +57,8 @@
             text-align: center;
             color: white;
         }
-        .connection-info {
-            color: crimson;
-            font-size: 24px;
-            text-align: center;
-            margin-top: 20px;
+        .rules {
+            margin: 20px 0;
         }
         @media screen and (max-width: 600px) {
             .header, .button {
@@ -77,8 +75,11 @@
         <a href="#blog-posts" class="button" id="blogPostsButton" onmouseover="startTextChange(this, 'Blog Posts', ['knowledge', 'history', 'time'])" onmouseout="stopTextChange(this, 'Blog Posts')">Blog Posts</a>
     </div>
     <div class="content">
-        <p>This is a placeholder area where you can add your own content.</p>
-        <div class="connection-info" id="connectionInfo">Loading connection info...</div>
+        <div class="rules" id="rulesText">
+            <p>Rules</p>
+            <p>Do not use the ban appeals</p>
+            <p>section as a soapbox.</p>
+        </div>
         <div class="links">
             <a href="https://twitter.com/izmarvelous?lang=en" style="color: #00acee;">Twitter</a> |
             <a href="https://www.twitch.tv/dragonbloggers" style="color: #6441a5;">Twitch</a> |
@@ -86,62 +87,46 @@
         </div>
     </div>
     <script>
-        const textLength = 8;
-        let intervalId;
+        const originalText = [
+            'Rules',
+            'Do not use the ban appeals',
+            'section as a soapbox.'
+        ];
+        const connectionInfo = [
+            'Your IP: Fetching...', // Placeholder until IP is fetched
+            'Your Location: Fetching...',
+            'Your ISP: Fetching...'
+        ];
 
-        function generateRandomString(length) {
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            let result = '';
-            for (let i = 0; i < length; i++) {
-                result += characters.charAt(Math.floor(Math.random() * characters.length));
+        function cycleInformation() {
+            const rulesText = document.getElementById('rulesText');
+            let i = 0;
+
+            function displayNextPiece() {
+                rulesText.innerHTML = `<p style="color: crimson;">${connectionInfo[i]}</p>`;
+                i = (i + 1) % connectionInfo.length;
+                setTimeout(() => {
+                    if (i === 0) {
+                        rulesText.innerHTML = originalText.map(text => `<p>${text}</p>`).join('');
+                    } else {
+                        displayNextPiece();
+                    }
+                }, 1000 + Math.random() * 2000); // Randomly between 1 and 3 seconds
             }
-            return result;
+
+            displayNextPiece();
         }
 
-        function startTextChange(link, originalText, specialWords = []) {
-            intervalId = setInterval(() => {
-                if (Math.random() < 0.3) { // 30% chance to display a special word
-                    link.textContent = specialWords[Math.floor(Math.random() * specialWords.length)];
-                } else {
-                    link.textContent = generateRandomString(textLength);
-                }
-            }, 300);
-        }
-
-        function startSpecialTextChange(link) {
-            const specialWords = ["heretic", "kinslayer", "traitor"];
-            intervalId = setInterval(() => {
-                if (Math.random() < 0.5) {
-                    link.textContent = specialWords[Math.floor(Math.random() * specialWords.length)];
-                } else {
-                    link.textContent = generateRandomString(textLength);
-                }
-            }, 300);
-        }
-
-        function stopTextChange(link, originalText) {
-            clearInterval(intervalId);
-            link.textContent = originalText;
-        }
-
-        // Fetch and display IP address
+        // Fetch IP address and then start cycling information after 1 minute
         fetch('https://api64.ipify.org?format=json')
             .then(response => response.json())
             .then(data => {
-                const connectionInfo = document.getElementById('connectionInfo');
-                connectionInfo.textContent = `IP: ${data.ip}`;
-                // Timed display of connection information
-                setTimeout(() => {
-                    connectionInfo.textContent = 'Your IP is temporarily visible';
-                    setTimeout(() => {
-                        connectionInfo.textContent = `IP: ${data.ip}`;
-                    }, 5000);
-                }, 60000);
+                connectionInfo[0] = `Your IP: ${data.ip}`;
+                setTimeout(cycleInformation, 60000); // Start after 1 minute
             })
             .catch(() => {
-                document.getElementById('connectionInfo').textContent = 'Unable to fetch IP address';
+                connectionInfo[0] = 'Unable to fetch IP address';
             });
     </script>
 </body>
 </html>
-
