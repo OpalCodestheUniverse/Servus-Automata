@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,42 +13,43 @@
             background: url('https://cdn.discordapp.com/attachments/778427281617977357/1234278608621797528/ezgif-3-de05d0483e.gif?ex=66302708&is=662ed588&hm=04a8ff95c4a39d03caff4f6ad9d039c2e98188f7c62a68eedd427ad3d1ea505a&') no-repeat center center fixed;
             background-size: cover;
         }
-        .header {
-            width: 100%;
+        .header, .button {
+            background-color: black; /* Simulates the TV's plastic case */
+            border-radius: 15px; /* Rounded corners */
+            padding: 10px;
+            box-shadow: 0px 0px 20px 5px #333; /* Simulates depth */
+            position: relative;
+            text-align: center;
+            margin: 20px auto; /* Centering */
+        }
+        .screen {
             background-color: white;
             color: red;
             padding: 20px 0;
-            text-align: center;
-            font-size: 30px;
+            border-radius: 10px;
             -webkit-text-stroke: 1px black;
+            display: inline-block; /* Allows padding and width similar to a screen */
+            width: calc(100% - 20px); /* Adjust width based on padding */
         }
         .button-container {
             display: flex;
             justify-content: center;
-            margin-top: 20px;
+            flex-wrap: wrap;
         }
         .button {
-            padding: 15px 40px;
             margin: 10px;
             font-size: 16px;
-            color: red;
-            background-color: white;
-            border: none;
-            border-radius: 15px;
             cursor: pointer;
             text-decoration: none; /* Remove underline from links */
-            -webkit-text-stroke: 0.5px black;
-            transition: background-color 0.3s, transform 0.3s;
-            display: inline-block; /* Allows padding and width similar to a button */
+            transition: transform 0.3s;
         }
         .button:hover {
-            background-color: #eee8d5;
-            transform: scale(1.1);
+            transform: scale(1.1); /* Button animation on hover */
         }
         .content {
-            padding: 20px;
-            text-align: center;
             color: white;
+            text-align: center;
+            padding: 20px;
         }
         iframe {
             display: block;
@@ -57,12 +59,8 @@
             margin-top: 50px;
         }
         @media screen and (max-width: 600px) {
-            .header {
-                font-size: 24px;
-            }
-            .button {
+            .header, .button {
                 font-size: 18px;
-                padding: 12px 24px;
             }
             iframe {
                 width: 90%;
@@ -71,11 +69,19 @@
     </style>
 </head>
 <body>
-    <div class="header">Servus Automata</div>
+    <div class="header">
+        <div class="screen">Servus Automata</div>
+    </div>
     <div class="button-container">
-        <a href="index.html" class="button" id="homeButton" onmouseover="startTextChange(this, 'Home')" onmouseout="stopTextChange(this, 'Home')">Home</a>
-        <a href="banappeals.html" class="button" id="banAppealsButton" onmouseover="startSpecialTextChange(this)" onmouseout="stopTextChange(this, 'Ban Appeals')">Ban Appeals</a>
-        <a href="#blog-posts" class="button" id="blogPostsButton" onmouseover="startTextChange(this, 'Blog Posts')" onmouseout="stopTextChange(this, 'Blog Posts')">Blog Posts</a>
+        <a href="index.html" class="button" onmouseover="startTextChange(this, 'Home')" onmouseout="stopTextChange(this, 'Home')">
+            <div class="screen">Home</div>
+        </a>
+        <a href="banappeals.html" class="button" onmouseover="startSpecialTextChange(this)" onmouseout="stopTextChange(this, 'Ban Appeals')">
+            <div class="screen">Ban Appeals</div>
+        </a>
+        <a href="#blog-posts" class="button" onmouseover="startTextChange(this, 'Blog Posts')" onmouseout="stopTextChange(this, 'Blog Posts')">
+            <div class="screen">Blog Posts</div>
+        </a>
     </div>
     <div class="content">
         <p>This is a placeholder area where you can add your own content.</p>
@@ -86,40 +92,5 @@
             <a href="https://discord.com/eldenring" style="color: #7289da;">Discord</a>
         </div>
     </div>
-    <script>
-        const textLength = 8;
-        let intervalId;
-
-        function generateRandomString(length) {
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            let result = '';
-            for (let i = 0; i < length; i++) {
-                result += characters.charAt(Math.floor(Math.random() * characters.length));
-            }
-            return result;
-        }
-
-        function startTextChange(link, originalText) {
-            intervalId = setInterval(() => {
-                link.textContent = generateRandomString(textLength);
-            }, 300);
-        }
-
-        function startSpecialTextChange(link) {
-            const specialWords = ["heretic", "kinslayer", "traitor"];
-            intervalId = setInterval(() => {
-                if (Math.random() < 0.5) {
-                    link.textContent = specialWords[Math.floor(Math.random() * specialWords.length)];
-                } else {
-                    link.textContent = generateRandomString(textLength);
-                }
-            }, 300);
-        }
-
-        function stopTextChange(link, originalText) {
-            clearInterval(intervalId);
-            link.textContent = originalText;
-        }
-    </script>
 </body>
 </html>
