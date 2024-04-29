@@ -9,20 +9,18 @@
             margin: 0;
             padding: 0;
             height: 100%;
-            font-family: 'Arial', sans-serif;
-            background: url(https://cdn.discordapp.com/attachments/778427281617977357/1234278608621797528/ezgif-3-de05d0483e.gif) no-repeat center center fixed;
+            font-family: 'Impact', sans-serif; /* Consistent font for the whole page */
+            background: url('https://cdn.discordapp.com/attachments/778427281617977357/1234278608621797528/ezgif-3-de05d0483e.gif') no-repeat center center fixed;
             background-size: cover;
         }
         .header {
             width: 100%;
             background-color: white;
-            color: crimson;
+            color: red;
             padding: 20px 0;
             text-align: center;
             font-size: 30px;
-            box-shadow: 0 4px 2px -2px gray;
-            font-family: 'Impact', sans-serif;
-            -webkit-text-stroke: 1px black;
+            -webkit-text-stroke: 1px black; /* Black border around text */
         }
         .button-container {
             display: flex;
@@ -34,38 +32,15 @@
             margin: 10px;
             font-size: 16px;
             color: red;
-            border: 2px solid #774411;
             background-color: white;
             border-radius: 15px;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            font-family: 'Impact', sans-serif;
-            -webkit-text-stroke: 1px black; /* Black outline around text */
-        }
-        .button::before, .button::after {
-            content: '';
-            position: absolute;
-            width: 25px;
-            height: 100%;
-            background-color: white;
-            top: 0;
-            z-index: -1;
-            border-radius: 10px;
-        }
-        .button::before {
-            left: -10px;
-            transform: rotate(-15deg);
-        }
-        .button::after {
-            right: -10px;
-            transform: rotate(15deg);
+            -webkit-text-stroke: 0.5px black; /* Slightly thinner stroke for button text */
+            transition: background-color 0.3s, transform 0.3s;
         }
         .button:hover {
-            background-color: #eee8d5; /* A light beige on hover */
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            background-color: #eee8d5;
+            transform: scale(1.1);
         }
         .content {
             padding: 20px;
@@ -96,12 +71,12 @@
 <body>
     <div class="header">Servus Automata</div>
     <div class="button-container">
-        <button class="button" id="dynamicText" onmouseover="startTextChange(this, 'Home')" onmouseout="stopTextChange(this, 'Home')">Home</button>
-        <button class="button" id="dynamicText2" onmouseover="startSpecialTextChange(this)" onmouseout="stopTextChange(this, 'Ban Appeals')">Ban Appeals</button>
-        <button class="button" id="dynamicText3" onmouseover="startTextChange(this, 'Blog Posts')" onmouseout="stopTextChange(this, 'Blog Posts')">Blog Posts</button>
+        <button class="button" id="homeButton" onmouseover="startTextChange(this, 'Home')" onmouseout="stopTextChange(this, 'Home')">Home</button>
+        <button class="button" id="banAppealsButton" onmouseover="startSpecialTextChange(this)" onmouseout="stopTextChange(this, 'Ban Appeals')">Ban Appeals</button>
+        <button class="button" id="blogPostsButton" onmouseover="startTextChange(this, 'Blog Posts')" onmouseout="stopTextChange(this, 'Blog Posts')">Blog Posts</button>
     </div>
     <div class="content">
-        <p>Live and Drink. I coded this place both for myself, and so we could occasionally revive long banned folks from the Elden Ring discord. Find the section for that, or my yapping by clicking the buttons above.</p>
+        <p>This is a placeholder area where you can add your own content.</p>
         <iframe src="https://player.twitch.tv/?channel=dragonbloggers" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>
         <div class="links">
             <a href="https://twitter.com/izmarvelous?lang=en" style="color: #00acee;">Twitter</a> |
@@ -146,5 +121,6 @@
     </script>
 </body>
 </html>
+
 
 
