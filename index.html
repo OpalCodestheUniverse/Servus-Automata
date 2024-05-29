@@ -1,273 +1,96 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servus Automata</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: "Courier New", Courier, monospace;
-            background: url('https://cdn.discordapp.com/attachments/778427281617977357/1234278608621797528/ezgif-3-de05d0483e.gif?ex=66317888&is=66302708&hm=e3c917d917e0d14709446fc99377af028eee960c650a2e9455ed8a1c1ceff0fd&') no-repeat center center fixed;
-            background-size: cover;
-        }
-        .header {
-            width: calc(100% - 40px);
-            background-color: black;
-            color: white;
-            padding: 20px 20px;
-            text-align: center;
-            font-size: 36px;
-            letter-spacing: 2px;
-            -webkit-text-stroke: 1px black;
-            border-radius: 15px;
-            margin: 20px auto;
-            display: block;
-            background-image: url('https://cdn.discordapp.com/attachments/778427281617977357/1234307234494812311/giphy.gif?ex=663041b1&is=662ef031&hm=1def3ac629d1f85e34f3ddeb4da8d91b117954e6e5131a5e8e08bf8fd15247f4&');
-            background-size: cover;
-        }
-        .button-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        .button {
-            padding: 15px 40px;
-            margin: 10px;
-            font-size: 16px;
-            color: white;
-            background-color: black;
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: transform 0.3s, background-color 0.3s;
-            display: inline-block;
-        }
-        .button:hover {
-            background-image: url('https://cdn.discordapp.com/attachments/778427281617977357/1234307234494812311/giphy.gif?ex=663041b1&is=662ef031&hm=1def3ac629d1f85e34f3ddeb4da8d91b117954e6e5131a5e8e08bf8fd15247f4&');
-            background-size: cover;
-            transform: scale(1.1);
-        }
-        .content {
-            padding: 20px;
-            text-align: center;
-            color: white;
-        }
-        .rules {
-            margin: 20px 0;
-        }
-        .table-container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .table-container table {
-            margin: 10px;
-            border-collapse: collapse;
-            color: white;
-        }
-        .table-container th, .table-container td {
-            border: 1px solid white;
-            padding: 8px 12px;
-            text-align: center;
-        }
-        @media screen and (max-width: 600px) {
-            .header, .button {
-                font-size: 18px;
+const BASE_URL = 'https://eldenring.wiki.fextralife.com/';
+
+function fetchPageContent(keyword) {
+    const formattedKeyword = keyword.replace(' ', '+');
+    const url = `${BASE_URL}${formattedKeyword}`;
+
+    return fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
+            return response.text();
+        })
+        .catch(error => {
+            console.error('Error fetching content:', error);
+            return null;
+        });
+}
+
+function extractHeadersAndParagraphs(content) {
+    const parser = new DOMParser();
+    const htmlDoc = parser.parseFromString(content, 'text/html');
+
+    const headersAndParagraphs = [];
+
+    const headers = htmlDoc.querySelectorAll('h1, h2, h3');
+    headers.forEach(header => {
+        const headerText = header.textContent.trim();
+        let paragraphText = '';
+        let nextElement = header.nextElementSibling;
+        while (nextElement && !['h1', 'h2', 'h3'].includes(nextElement.tagName.toLowerCase())) {
+            paragraphText += nextElement.textContent.trim() + '\n\n';
+            nextElement = nextElement.nextElementSibling;
         }
-    </style>
-</head>
-<body>
-    <div class="header" id="header">Servus Automata</div>
-    <div class="button-container">
-        <a href="index.html" class="button" id="homeButton" onmouseover="startTextChange(this, 'Home', ['welcome', 'greetings', 'hello'])" onmouseout="stopTextChange(this, 'Home')">Home</a>
-        <a href="banappeals.html" class="button" id="banAppealsButton" onmouseover="startSpecialTextChange(this)" onmouseout="stopTextChange(this, 'Ban Appeals')">Ban Appeals</a>
-        <a href="#blog-posts" class="button" id="blogPostsButton" onmouseover="startTextChange(this, 'Blog Posts', ['knowledge', 'history', 'time'])" onmouseout="stopTextChange(this, 'Blog Posts')">Blog Posts</a>
-    </div>
-    <div class="content">
-        <div class="rules" id="rulesText">
-            <p>Rules</p>
-            <p>Do not use the ban appeals</p>
-            <p>section as a soapbox.</p>
-        </div>
-        <div class="links">
-            <a href="https://twitter.com/izmarvelous?lang=en" style="color: #00acee;">Twitter</a> |
-            <a href="https://www.twitch.tv/dragonbloggers" style="color: #6441a5;">Twitch</a> |
-            <a href="https://discord.com/eldenring" style="color: #7289da;">Discord</a>
-        </div>
-        <div class="table-container" id="tableContainer"></div>
-    </div>
-    <script>
-        const rulesTextElements = document.querySelectorAll('.rules p');
-        const specialMessages = ["hi", "I see you", "look behind you"];
+        headersAndParagraphs.push([headerText, paragraphText]);
+    });
 
-        function displaySpecialMessage() {
-            const randomIndex = Math.floor(Math.random() * rulesTextElements.length);
-            const randomMessageIndex = Math.floor(Math.random() * specialMessages.length);
-            const originalText = rulesTextElements[randomIndex].innerText;
+    return headersAndParagraphs;
+}
 
-            rulesTextElements[randomIndex].innerText = specialMessages[randomMessageIndex];
-            rulesTextElements[randomIndex].style.color = 'crimson';
+function formatContent(headersAndParagraphs) {
+    let formattedContent = '';
+    headersAndParagraphs.forEach(([header, paragraph]) => {
+        formattedContent += `**${header}**\n\n${paragraph}\n`;
+    });
+    return formattedContent;
+}
 
-            setTimeout(() => {
-                rulesTextElements[randomIndex].innerText = originalText;
-                rulesTextElements[randomIndex].style.color = 'white';
-            }, 5000 + Math.random() * 10000); // Display for 5-10 seconds
-        }
-
-        setInterval(displaySpecialMessage, 15000); // Change every 15 seconds
-
-        // Dynamic text changes on the buttons
-        const textLength = 8;
-        let intervalId;
-
-        function generateRandomString(length) {
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            let result = '';
-            for (let i = 0; i < length; i++) {
-                result += characters.charAt(Math.floor(Math.random() * characters.length));
+function fetchAndDisplayInfo(keyword) {
+    fetchPageContent(keyword)
+        .then(content => {
+            if (content) {
+                const headersAndParagraphs = extractHeadersAndParagraphs(content);
+                const formattedContent = formatContent(headersAndParagraphs);
+                console.log(formattedContent);
+                console.log("Another query, simpleton?");
+            } else {
+                console.log("No content fetched.");
             }
-            return result;
+        });
+}
+
+function exitProgram() {
+    console.log("I suppose you're on your own then, dolt.");
+    setTimeout(() => {
+        process.exit();
+    }, 10000); // Wait for 10 seconds before exiting
+}
+
+function main() {
+    const readlineSync = require('readline-sync');
+
+    const asciiArt = `
+    Place your ASCII art here.
+    `;
+
+    const asciiLines = asciiArt.split('\n');
+    const longestLineLength = asciiLines.reduce((maxLength, line) => Math.max(maxLength, line.length), 0);
+
+    const horizontalPadding = ' '.repeat(Math.floor((process.stdout.columns - longestLineLength) / 2));
+
+    console.log(horizontalPadding);
+    asciiLines.forEach(line => console.log(horizontalPadding + line));
+
+    console.log("\nYou have summoned me. What knowledge do you seek, Tarnished?");
+    while (true) {
+        const keyword = readlineSync.question("Enter your query (Enter 'exit' to quit): ");
+        if (keyword.toLowerCase() === 'exit') {
+            exitProgram();
+            break;
         }
+        fetchAndDisplayInfo(keyword);
+    }
+}
 
-        function startTextChange(link, originalText, specialWords = []) {
-            intervalId = setInterval(() => {
-                if (Math.random() < 0.3) { // 30% chance to display a special word
-                    link.textContent = specialWords[Math.floor(Math.random() * specialWords.length)];
-                } else {
-                    link.textContent = generateRandomString(textLength);
-                }
-            }, 300);
-        }
-
-        function startSpecialTextChange(link) {
-            const specialWords = ["heretic", "kinslayer", "traitor"];
-            intervalId = setInterval(() => {
-                if (Math.random() < 0.5) {
-                    link.textContent = specialWords[Math.floor(Math.random() * specialWords.length)];
-                } else {
-                    link.textContent = generateRandomString(textLength);
-                }
-            }, 300);
-        }
-
-        function stopTextChange(link, originalText) {
-            clearInterval(intervalId);
-            link.textContent = originalText;
-        }
-
-        // Fetch IP address and display it in the format requested
-        let ipInfo = 'Fetching IP...';
-        fetch('https://api.ipify.org?format=json')
-            .then(response => response.json())
-            .then(data => {
-                ipInfo = `[${data.ip}] is this you?`;
-            })
-            .catch(() => {
-                ipInfo = '[IP Address not available] is this you?';
-            });
-
-        function displayIP() {
-            setInterval(() => {
-                const randomIndex = Math.floor(Math.random() * rulesTextElements.length);
-                const originalText = rulesTextElements[randomIndex].innerText;
-
-                rulesTextElements[randomIndex].innerText = ipInfo;
-                rulesTextElements[randomIndex].style.color = 'crimson';
-
-                setTimeout(() => {
-                    rulesTextElements[randomIndex].innerText = originalText;
-                    rulesTextElements[randomIndex].style.color = 'white';
-                }, 5000 + Math.random() * 10000); // Display for 5-10 seconds
-            }, 20000); // Change every 20 seconds
-        }
-
-        setTimeout(displayIP, 10000); // Start displaying IP after an initial delay
-
-        // Function to format and display table data
-        function formatTableData() {
-            const tableContainer = document.getElementById('tableContainer');
-            const tableData = `
-                Attack Power
-                Stat Scaling
-                Passive Effects
-                Damage Reduction (%)
-                Misericorde
-                Phy
-                Mag
-                Fir
-                Lit
-                Hol
-                Sta
-                Str
-                Dex
-                Int
-                Fai
-                Arc
-                Any
-                Phy
-                Mag
-                Fir
-                Lit
-                Hol
-                Boost
-                190
-                0
-                0
-                0
-                0
-                45
-                E
-                C
-                -
-                -
-                -
-                0
-                0.0
-                0.0
-                0.0
-                0.0
-                0.0
-                0.0
-                0.0
-            `;
-            const rows = tableData.trim().split(/\s+/);
-
-            // Assume first row is the header
-            const headerRow = rows.slice(0, 6);
-            const columns = headerRow.length;
-
-            let table = `<table><thead><tr>`;
-            headerRow.forEach(header => {
-                table += `<th>${header}</th>`;
-            });
-            table += `</tr></thead><tbody>`;
-
-            // Process remaining rows
-            let bodyRows = [];
-            for (let i = 6; i < rows.length; i += columns) {
-                const row = rows.slice(i, i + columns);
-                bodyRows.push(row);
-            }
-
-            bodyRows.forEach(row => {
-                table += `<tr>`;
-                row.forEach(cell => {
-                    table += `<td>${cell}</td>`;
-                });
-                table += `</tr>`;
-            });
-
-            table += `</tbody></table>`;
-            tableContainer.innerHTML = table;
-        }
-
-        // Call the function to format and display the table data on load
-        document.addEventListener('DOMContentLoaded', formatTableData);
-    </script>
-</body>
-</html>
+main();
