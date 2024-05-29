@@ -22,14 +22,13 @@ function extractHeadersAndParagraphs(content) {
     const htmlDoc = parser.parseFromString(content, 'text/html');
 
     const headersAndParagraphs = [];
-
     const headers = htmlDoc.querySelectorAll('h1, h2, h3');
     headers.forEach(header => {
         const headerText = header.textContent.trim();
         let paragraphText = '';
         let nextElement = header.nextElementSibling;
         while (nextElement && !['h1', 'h2', 'h3'].includes(nextElement.tagName.toLowerCase())) {
-            paragraphText += nextElement.textContent.trim() + '\n\n';
+            paragraphText += nextElement.textContent.trim() + '<br><br>';
             nextElement = nextElement.nextElementSibling;
         }
         headersAndParagraphs.push([headerText, paragraphText]);
@@ -41,7 +40,7 @@ function extractHeadersAndParagraphs(content) {
 function formatContent(headersAndParagraphs) {
     let formattedContent = '';
     headersAndParagraphs.forEach(([header, paragraph]) => {
-        formattedContent += `**${header}**\n\n${paragraph}\n`;
+        formattedContent += `<strong>${header}</strong><br>${paragraph}<br>`;
     });
     return formattedContent;
 }
@@ -52,10 +51,9 @@ function fetchAndDisplayInfo(keyword) {
             if (content) {
                 const headersAndParagraphs = extractHeadersAndParagraphs(content);
                 const formattedContent = formatContent(headersAndParagraphs);
-                console.log(formattedContent);
-                console.log("Another query, simpleton?");
+                document.getElementById('output').innerHTML = formattedContent;
             } else {
-                console.log("No content fetched.");
+                document.getElementById('output').innerHTML = "No content fetched.";
             }
         });
 }
@@ -63,34 +61,40 @@ function fetchAndDisplayInfo(keyword) {
 function exitProgram() {
     console.log("I suppose you're on your own then, dolt.");
     setTimeout(() => {
-        process.exit();
+        window.close();
     }, 10000); // Wait for 10 seconds before exiting
 }
 
 function main() {
-    const readlineSync = require('readline-sync');
-
-    const asciiArt = `
-    Place your ASCII art here.
-    `;
-
+    const asciiArt = `Place your ASCII art here.`;
     const asciiLines = asciiArt.split('\n');
     const longestLineLength = asciiLines.reduce((maxLength, line) => Math.max(maxLength, line.length), 0);
+    const horizontalPadding = ' '.repeat(Math.floor((window.innerWidth - longestLineLength) / 2));
 
-    const horizontalPadding = ' '.repeat(Math.floor((process.stdout.columns - longestLineLength) / 2));
+    const asciiElement = document.getElementById('ascii');
+    asciiLines.forEach(line => {
+        const lineElement = document.createElement('div');
+        lineElement.textContent = horizontalPadding + line;
+        asciiElement.appendChild(lineElement);
+    });
 
-    console.log(horizontalPadding);
-    asciiLines.forEach(line => console.log(horizontalPadding + line));
+    const inputElement = document.createElement('input');
+    inputElement.type = 'text';
+    inputElement.placeholder = "Enter your query (Enter 'exit' to quit)";
+    document.body.appendChild(inputElement);
 
-    console.log("\nYou have summoned me. What knowledge do you seek, Tarnished?");
-    while (true) {
-        const keyword = readlineSync.question("Enter your query (Enter 'exit' to quit): ");
+    const buttonElement = document.createElement('button');
+    buttonElement.textContent = 'Submit';
+    buttonElement.addEventListener('click', () => {
+        const keyword = inputElement.value;
         if (keyword.toLowerCase() === 'exit') {
             exitProgram();
-            break;
+        } else {
+            fetchAndDisplayInfo(keyword);
         }
-        fetchAndDisplayInfo(keyword);
-    }
+    });
+    document.body.appendChild(buttonElement);
 }
 
 main();
+
