@@ -59,6 +59,21 @@
         .rules {
             margin: 20px 0;
         }
+        .table-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .table-container table {
+            margin: 10px;
+            border-collapse: collapse;
+            color: white;
+        }
+        .table-container th, .table-container td {
+            border: 1px solid white;
+            padding: 8px 12px;
+            text-align: center;
+        }
         @media screen and (max-width: 600px) {
             .header, .button {
                 font-size: 18px;
@@ -84,6 +99,7 @@
             <a href="https://www.twitch.tv/dragonbloggers" style="color: #6441a5;">Twitch</a> |
             <a href="https://discord.com/eldenring" style="color: #7289da;">Discord</a>
         </div>
+        <div class="table-container" id="tableContainer"></div>
     </div>
     <script>
         const rulesTextElements = document.querySelectorAll('.rules p');
@@ -171,7 +187,87 @@
         }
 
         setTimeout(displayIP, 10000); // Start displaying IP after an initial delay
+
+        // Function to format and display table data
+        function formatTableData() {
+            const tableContainer = document.getElementById('tableContainer');
+            const tableData = `
+                Attack Power
+                Stat Scaling
+                Passive Effects
+                Damage Reduction (%)
+                Misericorde
+                Phy
+                Mag
+                Fir
+                Lit
+                Hol
+                Sta
+                Str
+                Dex
+                Int
+                Fai
+                Arc
+                Any
+                Phy
+                Mag
+                Fir
+                Lit
+                Hol
+                Boost
+                190
+                0
+                0
+                0
+                0
+                45
+                E
+                C
+                -
+                -
+                -
+                0
+                0.0
+                0.0
+                0.0
+                0.0
+                0.0
+                0.0
+                0.0
+            `;
+            const rows = tableData.trim().split(/\s+/);
+
+            // Assume first row is the header
+            const headerRow = rows.slice(0, 6);
+            const columns = headerRow.length;
+
+            let table = `<table><thead><tr>`;
+            headerRow.forEach(header => {
+                table += `<th>${header}</th>`;
+            });
+            table += `</tr></thead><tbody>`;
+
+            // Process remaining rows
+            let bodyRows = [];
+            for (let i = 6; i < rows.length; i += columns) {
+                const row = rows.slice(i, i + columns);
+                bodyRows.push(row);
+            }
+
+            bodyRows.forEach(row => {
+                table += `<tr>`;
+                row.forEach(cell => {
+                    table += `<td>${cell}</td>`;
+                });
+                table += `</tr>`;
+            });
+
+            table += `</tbody></table>`;
+            tableContainer.innerHTML = table;
+        }
+
+        // Call the function to format and display the table data on load
+        document.addEventListener('DOMContentLoaded', formatTableData);
     </script>
 </body>
 </html>
-
