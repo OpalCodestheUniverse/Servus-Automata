@@ -4,66 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servus Automata - Ban Appeals</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: "Courier New", Courier, monospace;
-            background: url('https://cdn.discordapp.com/attachments/778427281617977357/1234278608621797528/ezgif-3-de05d0483e.gif?ex=66317888&is=66302708&hm=e3c917d917e0d14709446fc99377af028eee960c650a2e9455ed8a1c1ceff0fd&') no-repeat center center fixed;
-            background-size: cover;
-        }
-        .header {
-            width: calc(100% - 40px);
-            background-color: black;
-            color: white;
-            padding: 20px 20px;
-            text-align: center;
-            font-size: 36px;
-            letter-spacing: 2px;
-            -webkit-text-stroke: 1px black;
-            border-radius: 15px;
-            margin: 20px auto;
-            display: block;
-            background-image: url('https://cdn.discordapp.com/attachments/778427281617977357/1234307234494812311/giphy.gif?ex=663041b1&is=662ef031&hm=1def3ac629d1f85e34f3ddeb4da8d91b117954e6e5131a5e8e08bf8fd15247f4&');
-            background-size: cover;
-        }
-        .button-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        .button {
-            padding: 15px 40px;
-            margin: 10px;
-            font-size: 16px;
-            color: white;
-            background-color: black;
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: transform 0.3s, background-color 0.3s;
-            display: inline-block;
-        }
-        .button:hover {
-            background-color: #555;
-            transform: scale(1.1);
-        }
-        .content {
-            padding: 20px;
-            text-align: center;
-            color: white;
-        }
-        .rules {
-            margin: 20px 0;
-        }
-        @media screen and (max-width: 600px) {
-            .header, .button {
-                font-size: 18px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="header" id="header">Servus Automata</div>
@@ -84,8 +25,7 @@
     </script>
     <script>
         const buttons = document.querySelectorAll('.button');
-        // Specifying messages from the landing page
-        const specialWords = ["heretic", "kinslayer", "traitor"]; // Adjusted for accuracy with the landing page
+        const specialWords = ["heretic", "kinslayer", "traitor"]; 
 
         function generateRandomString(length) {
             const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -100,7 +40,7 @@
             button.addEventListener('mouseover', () => {
                 const originalText = button.textContent;
                 let intervalId = setInterval(() => {
-                    if (Math.random() < 0.5) { // 50% chance to show a special word
+                    if (Math.random() < 0.5) { 
                         button.textContent = specialWords[Math.floor(Math.random() * specialWords.length)];
                     } else {
                         button.textContent = generateRandomString(8);
