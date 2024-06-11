@@ -70,4 +70,79 @@
         }
 
         .result-container {
-            margin-top: 50px
+            margin-top: 50px;
+            text-align: left;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .result-header {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .result-paragraph {
+            margin: 10px 0;
+        }
+
+        .error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="header" id="header">Servus Automata</div>
+    <div class="content">
+        <div class="search-container">
+            <form id="search-form" action="/search" method="post">
+                <input type="text" class="search-input" name="keyword" placeholder="Enter your query" required>
+                <button type="submit" class="search-button">Search</button>
+            </form>
+        </div>
+        <div class="result-container" id="result-container"></div>
+        <div class="error-message" id="error-message"></div>
+    </div>
+
+    <script>
+        document.getElementById('search-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const keyword = document.querySelector('.search-input').value;
+            fetch('/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ keyword: keyword }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultContainer = document.getElementById('result-container');
+                resultContainer.innerHTML = '';
+                const errorMessage = document.getElementById('error-message');
+                errorMessage.textContent = '';
+                if (data.title) {
+                    const header = document.createElement('h2');
+                    header.className = 'result-header';
+                    header.textContent = data.title;
+                    resultContainer.appendChild(header);
+                }
+                data.headers_and_paragraphs.forEach(item => {
+                    const header = document.createElement('h3');
+                    header.textContent = item[0];
+                    const paragraph = document.createElement('p');
+                    paragraph.className = 'result-paragraph';
+                    paragraph.textContent = item[1];
+                    resultContainer.appendChild(header);
+                    resultContainer.appendChild(paragraph);
+                });
+            })
+            .catch(error => {
+                const errorMessage = document.getElementById('error-message');
+                errorMessage.textContent = 'An error occurred while fetching the data. Please try again later.';
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
