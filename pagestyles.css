@@ -1,3 +1,4 @@
+/* General Styling */
 body {
     background-image: url('https://cdn.discordapp.com/attachments/778427281617977357/1234278608621797528/ezgif-3-de05d0483e.gif?ex=66302708&is=662ed588&hm=04a8ff95c4a39d03caff4f6ad9d039c2e98188f7c62a68eedd427ad3d1ea505a&');
     background-position: center; /* Center the background image */
@@ -12,6 +13,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    cursor: url('761409677917290496.webp'), auto; /* Custom cursor */
 }
 
 h1, h2 {
@@ -28,7 +30,7 @@ audio {
 }
 
 nav {
-   background-color: rgba(0, 0, 0, 0.0);
+    background-color: rgba(0, 0, 0, 0.0);
     overflow: hidden;
     margin-bottom: 20px;
     display: flex;
@@ -135,37 +137,47 @@ p {
     color: #fff; /* White text color */
     margin-top: 5px;
 }
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
 
+/* Banner Styling */
 .banner {
-  background-color: #FEDD00; /* Yellow color */
-  padding: 20px;
-  text-align: center;
-  position: relative;
-  width: 400px;
-  height: 200px;
+    background-color: #FEDD00; /* Yellow color */
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    width: 400px;
+    height: 200px;
 }
 
 .banner::before {
-  content: "";
-  position: absolute;
-  top: -20px;
-  left: 0;
-  border-left: 200px solid transparent;
-  border-right: 200px solid transparent;
-  border-bottom: 20px solid #1976D2; /* Blue color */
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: 0;
+    border-left: 200px solid transparent;
+    border-right: 200px solid transparent;
+    border-bottom: 20px solid #1976D2; /* Blue color */
 }
 
-h1 {
-  margin: 0;
-  padding: 0;
-  font-size: 36px;
-  color: #fff; /* White color */
-  text-transform: uppercase;
-  letter-spacing: 3px;
+.banner h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 36px;
+    color: #fff; /* White color */
+    text-transform: uppercase;
+    letter-spacing: 3px;
 }
 
+/* Ban Appeal Page Specific Styling */
+.ban-appeal {
+    background-image: url('aleksandr-konev-logic-bb.jpg');
+    background-position: center; /* Center the background image */
+    background-size: cover; /* Scale the background to cover the element */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    height: 100vh; /* Set the height to 100% of the viewport height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff; /* White text color */
+    font-family: Arial, sans-serif;
+}
