@@ -1,84 +1,149 @@
-from flask import Flask, request, jsonify, render_template
-from bs4 import BeautifulSoup
-import requests
-import re
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servus Automata - Search</title>
+    <link rel="stylesheet" href="static/pagestyles.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: "Courier New", Courier, monospace;
+            background: url('https://github.com/OpalCodestheuniverse/Servus-Automata/blob/main/aleksandr-konev-logic-bb.jpg?raw=true') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            text-align: center;
+            cursor: url('https://raw.githubusercontent.com/OpalCodestheuniverse/Servus-Automata/main/761409677917290496.webp') 16 16, auto;
+        }
 
-app = Flask(__name__)
+        .header {
+            width: calc(100% - 40px);
+            background-color: black;
+            color: white;
+            padding: 20px 20px;
+            text-align: center;
+            font-size: 36px;
+            letter-spacing: 2px;
+            -webkit-text-stroke: 1px black;
+            border-radius: 15px;
+            margin: 20px auto;
+            display: block;
+            background-image: url('https://cdn.discordapp.com/attachments/778427281617977357/1234307234494812311/giphy.gif?ex=663041b1&is=662ef031&hm=1def3ac629d1f85e34f3ddeb4da8d91b117954e6e5131a5e8e08bf8fd15247f4&');
+            background-size: cover;
+        }
 
-BASE_URL = 'https://eldenring.wiki.fextralife.com/'
+        .content {
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
 
-displayed_content = []
+        .search-container {
+            margin-top: 50px;
+        }
 
-def fetch_page_content(keyword):
-    keyword = keyword.replace(' ', '+')
-    url = BASE_URL + keyword
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-        return response.content
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching content from {url}: {e}")
-        return None
+        .search-input {
+            padding: 10px;
+            width: 300px;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+        }
 
-def extract_headers_and_paragraphs(content):
-    soup = BeautifulSoup(content, 'html.parser')
-    title = soup.title.string if soup.title else "No Title"
-    headers_and_paragraphs = []
-    headers = soup.find_all(['h1', 'h2', 'h3'])
-    tagged_pages_container = soup.find('div', id='tagged-pages-container')
-    if tagged_pages_container:
-        tagged_pages_container.decompose()
+        .search-button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            font-size: 16px;
+            color: white;
+            background-color: black;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+        }
 
-    ignore_content = False
-    for header in headers:
-        if any(text in header.get_text() for text in ['Edit', 'Create new page', 'History', 'Recent Changes', 'Rename', 'Redirect', 'Lock', 'Unlock',
-                                                      'Permissions', 'Javascript', 'Tags', 'Edit Open Graph', 'Clear page cache', 'Clear comments cache',
-                                                      'File Manager', 'Page Manager', 'Wiki Templates', 'Comments Approval', 'Wiki Settings', 'Wiki Manager',
-                                                      'Delete']):
-            continue
-        if "Upgrades in Elden Ring" in header.get_text():
-            ignore_content = True
-            continue
-        header_text = header.get_text().strip()
-        paragraph_text = ""
-        if not ignore_content and "video" not in header_text.lower():
-            next_element = header.find_next_sibling()
-            while next_element and next_element.name not in ['h1', 'h2', 'h3']:
-                if any(text in next_element.get_text() for text in ['Edit', 'Create new page', 'History', 'Recent Changes', 'Rename', 'Redirect', 'Lock', 'Unlock',
-                                                                    'Permissions', 'Javascript', 'Tags', 'Edit Open Graph', 'Clear page cache', 'Clear comments cache',
-                                                                    'File Manager', 'Page Manager', 'Wiki Templates', 'Comments Approval', 'Wiki Settings', 'Wiki Manager',
-                                                                    'Delete']):
-                    next_element = next_element.find_next_sibling()
-                    continue
-                if next_element.name == 'table':
-                    paragraph_text += next_element.get_text()
-                else:
-                    paragraph_text += next_element.get_text().strip() + "\n\n"
-                next_element = next_element.find_next_sibling()
-            combined_text = header_text + paragraph_text
-            if combined_text not in displayed_content:
-                headers_and_paragraphs.append((header_text, paragraph_text))
-                displayed_content.append(combined_text)
-            ignore_content = False
-    return title, headers_and_paragraphs
+        .search-button:hover {
+            background-color: #555;
+            transform: scale(1.1);
+        }
 
-@app.route('/')
-def home():
-    return render_template('index.html')
+        .result-container {
+            margin-top: 50px;
+            text-align: left;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-@app.route('/search', methods=['POST'])
-def search():
-    data = request.get_json()
-    keyword = data.get('keyword')
-    if not keyword:
-        return jsonify({'title': 'Error', 'headers_and_paragraphs': []}), 400
+        .result-header {
+            font-size: 24px;
+            font-weight: bold;
+        }
 
-    content = fetch_page_content(keyword)
-    if content:
-        title, headers_and_paragraphs = extract_headers_and_paragraphs(content)
-        return jsonify({'title': title, 'headers_and_paragraphs': headers_and_paragraphs})
-    else:
-        return jsonify({'title': 'Error', 'headers_and_paragraphs': []}), 500
+        .result-paragraph {
+            margin: 10px 0;
+        }
 
-if __name__ == '__main__':
-    app.run(debug=True)
+        .error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="header" id="header">Servus Automata</div>
+    <div class="content">
+        <div class="search-container">
+            <form id="search-form" action="/search" method="post">
+                <input type="text" class="search-input" name="keyword" placeholder="Enter your query" required>
+                <button type="submit" class="search-button">Search</button>
+            </form>
+        </div>
+        <div class="result-container" id="result-container"></div>
+        <div class="error-message" id="error-message"></div>
+    </div>
+
+    <script>
+        document.getElementById('search-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const keyword = document.querySelector('.search-input').value;
+            fetch('/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ keyword: keyword }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultContainer = document.getElementById('result-container');
+                resultContainer.innerHTML = '';
+                const errorMessage = document.getElementById('error-message');
+                errorMessage.textContent = '';
+                if (data.title) {
+                    const header = document.createElement('h2');
+                    header.className = 'result-header';
+                    header.textContent = data.title;
+                    resultContainer.appendChild(header);
+                }
+                data.headers_and_paragraphs.forEach(item => {
+                    const header = document.createElement('h3');
+                    header.textContent = item[0];
+                    const paragraph = document.createElement('p');
+                    paragraph.className = 'result-paragraph';
+                    paragraph.textContent = item[1];
+                    resultContainer.appendChild(header);
+                    resultContainer.appendChild(paragraph);
+                });
+            })
+            .catch(error => {
+                const errorMessage = document.getElementById('error-message');
+                errorMessage.textContent = 'An error occurred while fetching the data. Please try again later.';
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
+
