@@ -4,11 +4,11 @@ body, html {
     padding: 0;
     height: 100%;
     font-family: "Courier New", Courier, monospace;
-    background: url('aleksandr-konev-logic-bb.jpg') no-repeat center center fixed;
+    background: url('https://github.com/OpalCodestheUniverse/Servus-Automata/blob/main/aleksandr-konev-logic-bb.jpg?raw=true') no-repeat center center fixed;
     background-size: cover;
     color: white;
     text-align: center;
-    cursor: url('761409677917290496.webp') 16 16, auto; /* Scaled down cursor */
+    cursor: url('https://raw.githubusercontent.com/OpalCodestheUniverse/Servus-Automata/main/761409677917290496.webp') 16 16, auto; /* Scaled down cursor */
 }
 
 /* Header Styling */
@@ -40,7 +40,8 @@ body, html {
     margin: 10px;
     font-size: 16px;
     color: white;
-    background-color: black;
+    background: url('https://github.com/OpalCodestheUniverse/Servus-Automata/blob/main/ezgif-6-7bd0ddff61.gif?raw=true') no-repeat center center;
+    background-size: cover;
     border: none;
     border-radius: 15px;
     cursor: pointer;
@@ -50,7 +51,7 @@ body, html {
 }
 
 .button:hover {
-    background-color: #555;
+    background-color: rgba(0, 0, 0, 0.7);
     transform: scale(1.1);
 }
 
