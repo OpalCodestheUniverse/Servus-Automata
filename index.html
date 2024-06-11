@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,6 +12,7 @@
             font-family: "Courier New", Courier, monospace;
             background: url('https://cdn.discordapp.com/attachments/778427281617977357/1234278608621797528/ezgif-3-de05d0483e.gif?ex=66317888&is=66302708&hm=e3c917d917e0d14709446fc99377af028eee960c650a2e9455ed8a1c1ceff0fd&') no-repeat center center fixed;
             background-size: cover;
+            cursor: url('761409677917290496.webp'), auto;
         }
         .header {
             width: calc(100% - 40px);
@@ -79,6 +80,21 @@
                 font-size: 18px;
             }
         }
+
+        /* Ban Appeal Page Specific Styling */
+        .ban-appeal {
+            background-image: url('aleksandr-konev-logic-bb.jpg');
+            background-position: center; /* Center the background image */
+            background-size: cover; /* Scale the background to cover the element */
+            background-repeat: no-repeat; /* Do not repeat the image */
+            height: 100vh; /* Set the height to 100% of the viewport height */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff; /* White text color */
+            font-family: Arial, sans-serif;
+        }
     </style>
 </head>
 <body>
@@ -101,6 +117,12 @@
         </div>
         <div class="table-container" id="tableContainer"></div>
     </div>
+
+    <div class="ban-appeal">
+        <h1>Ban Appeal</h1>
+        <p>If you believe you have been banned unfairly, please submit a ban appeal request.</p>
+    </div>
+
     <script>
         const rulesTextElements = document.querySelectorAll('.rules p');
         const specialMessages = ["hi", "I see you", "look behind you"];
@@ -187,3 +209,6 @@
         }
 
         setTimeout(displayIP, 10000); // Start displaying IP after an initial delay
+    </script>
+</body>
+</html>
