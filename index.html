@@ -4,105 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servus Automata</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: "Courier New", Courier, monospace;
-            background: url('https://cdn.discordapp.com/attachments/778427281617977357/1234278608621797528/ezgif-3-de05d0483e.gif?ex=66317888&is=66302708&hm=e3c917d917e0d14709446fc99377af028eee960c650a2e9455ed8a1c1ceff0fd&') no-repeat center center fixed;
-            background-size: cover;
-            cursor: url('761409677917290496.webp'), auto;
-        }
-        .header {
-            width: calc(100% - 40px);
-            background-color: black;
-            color: white;
-            padding: 20px 20px;
-            text-align: center;
-            font-size: 36px;
-            letter-spacing: 2px;
-            -webkit-text-stroke: 1px black;
-            border-radius: 15px;
-            margin: 20px auto;
-            display: block;
-            background-image: url('https://cdn.discordapp.com/attachments/778427281617977357/1234307234494812311/giphy.gif?ex=663041b1&is=662ef031&hm=1def3ac629d1f85e34f3ddeb4da8d91b117954e6e5131a5e8e08bf8fd15247f4&');
-            background-size: cover;
-        }
-        .button-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        .button {
-            padding: 15px 40px;
-            margin: 10px;
-            font-size: 16px;
-            color: white;
-            background-color: black;
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: transform 0.3s, background-color 0.3s;
-            display: inline-block;
-        }
-        .button:hover {
-            background-image: url('https://cdn.discordapp.com/attachments/778427281617977357/1234307234494812311/giphy.gif?ex=663041b1&is=662ef031&hm=1def3ac629d1f85e34f3ddeb4da8d91b117954e6e5131a5e8e08bf8fd15247f4&');
-            background-size: cover;
-            transform: scale(1.1);
-        }
-        .content {
-            padding: 20px;
-            text-align: center;
-            color: white;
-        }
-        .rules {
-            margin: 20px 0;
-        }
-        .table-container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .table-container table {
-            margin: 10px;
-            border-collapse: collapse;
-            color: white;
-        }
-        .table-container th, .table-container td {
-            border: 1px solid white;
-            padding: 8px 12px;
-            text-align: center;
-        }
-        @media screen and (max-width: 600px) {
-            .header, .button {
-                font-size: 18px;
-            }
-        }
-
-        /* Ban Appeal Page Specific Styling */
-        .ban-appeal {
-            background-image: url('aleksandr-konev-logic-bb.jpg');
-            background-position: center; /* Center the background image */
-            background-size: cover; /* Scale the background to cover the element */
-            background-repeat: no-repeat; /* Do not repeat the image */
-            height: 100vh; /* Set the height to 100% of the viewport height */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #fff; /* White text color */
-            font-family: Arial, sans-serif;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="header" id="header">Servus Automata</div>
     <div class="button-container">
-        <a href="index.html" class="button" id="homeButton" onmouseover="startTextChange(this, 'Home', ['welcome', 'greetings', 'hello'])" onmouseout="stopTextChange(this, 'Home')">Home</a>
-        <a href="banappeals.html" class="button" id="banAppealsButton" onmouseover="startSpecialTextChange(this)" onmouseout="stopTextChange(this, 'Ban Appeals')">Ban Appeals</a>
-        <a href="#blog-posts" class="button" id="blogPostsButton" onmouseover="startTextChange(this, 'Blog Posts', ['knowledge', 'history', 'time'])" onmouseout="stopTextChange(this, 'Blog Posts')">Blog Posts</a>
+        <a href="index.html" class="button" id="homeButton">Home</a>
+        <a href="banappeals.html" class="button" id="banAppealsButton">Ban Appeals</a>
+        <a href="blog-posts.html" class="button" id="blogPostsButton">Blog Posts</a>
     </div>
     <div class="content">
         <div class="rules" id="rulesText">
@@ -118,12 +27,8 @@
         <div class="table-container" id="tableContainer"></div>
     </div>
 
-    <div class="ban-appeal">
-        <h1>Ban Appeal</h1>
-        <p>If you believe you have been banned unfairly, please submit a ban appeal request.</p>
-    </div>
-
     <script>
+        // JavaScript for dynamic text changes and IP address display
         const rulesTextElements = document.querySelectorAll('.rules p');
         const specialMessages = ["hi", "I see you", "look behind you"];
 
@@ -166,17 +71,6 @@
             }, 300);
         }
 
-        function startSpecialTextChange(link) {
-            const specialWords = ["heretic", "kinslayer", "traitor"];
-            intervalId = setInterval(() => {
-                if (Math.random() < 0.5) {
-                    link.textContent = specialWords[Math.floor(Math.random() * specialWords.length)];
-                } else {
-                    link.textContent = generateRandomString(textLength);
-                }
-            }, 300);
-        }
-
         function stopTextChange(link, originalText) {
             clearInterval(intervalId);
             link.textContent = originalText;
@@ -210,5 +104,8 @@
 
         setTimeout(displayIP, 10000); // Start displaying IP after an initial delay
     </script>
+</body>
+</html>
+
 </body>
 </html>
