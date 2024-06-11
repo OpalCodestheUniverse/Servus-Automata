@@ -1,0 +1,84 @@
+from flask import Flask, request, jsonify, render_template
+from bs4 import BeautifulSoup
+import requests
+import re
+
+app = Flask(__name__)
+
+BASE_URL = 'https://eldenring.wiki.fextralife.com/'
+
+displayed_content = []
+
+def fetch_page_content(keyword):
+    keyword = keyword.replace(' ', '+')
+    url = BASE_URL + keyword
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        return response.content
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching content from {url}: {e}")
+        return None
+
+def extract_headers_and_paragraphs(content):
+    soup = BeautifulSoup(content, 'html.parser')
+    title = soup.title.string if soup.title else "No Title"
+    headers_and_paragraphs = []
+    headers = soup.find_all(['h1', 'h2', 'h3'])
+    tagged_pages_container = soup.find('div', id='tagged-pages-container')
+    if tagged_pages_container:
+        tagged_pages_container.decompose()
+
+    ignore_content = False
+    for header in headers:
+        if any(text in header.get_text() for text in ['Edit', 'Create new page', 'History', 'Recent Changes', 'Rename', 'Redirect', 'Lock', 'Unlock',
+                                                      'Permissions', 'Javascript', 'Tags', 'Edit Open Graph', 'Clear page cache', 'Clear comments cache',
+                                                      'File Manager', 'Page Manager', 'Wiki Templates', 'Comments Approval', 'Wiki Settings', 'Wiki Manager',
+                                                      'Delete']):
+            continue
+        if "Upgrades in Elden Ring" in header.get_text():
+            ignore_content = True
+            continue
+        header_text = header.get_text().strip()
+        paragraph_text = ""
+        if not ignore_content and "video" not in header_text.lower():
+            next_element = header.find_next_sibling()
+            while next_element and next_element.name not in ['h1', 'h2', 'h3']:
+                if any(text in next_element.get_text() for text in ['Edit', 'Create new page', 'History', 'Recent Changes', 'Rename', 'Redirect', 'Lock', 'Unlock',
+                                                                    'Permissions', 'Javascript', 'Tags', 'Edit Open Graph', 'Clear page cache', 'Clear comments cache',
+                                                                    'File Manager', 'Page Manager', 'Wiki Templates', 'Comments Approval', 'Wiki Settings', 'Wiki Manager',
+                                                                    'Delete']):
+                    next_element = next_element.find_next_sibling()
+                    continue
+                if next_element.name == 'table':
+                    paragraph_text += next_element.get_text()
+                else:
+                    paragraph_text += next_element.get_text().strip() + "\n\n"
+                next_element = next_element.find_next_sibling()
+            combined_text = header_text + paragraph_text
+            if combined_text not in displayed_content:
+                headers_and_paragraphs.append((header_text, paragraph_text))
+                displayed_content.append(combined_text)
+            ignore_content = False
+    return title, headers_and_paragraphs
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/search', methods=['POST'])
+def search():
+    data = request.get_json()
+    keyword = data.get('keyword')
+    if not keyword:
+        return jsonify({'title': 'Error', 'headers_and_paragraphs': []}), 400
+
+    content = fetch_page_content(keyword)
+    if content:
+        title, headers_and_paragraphs = extract_headers_and_paragraphs(content)
+        return jsonify({'title': title, 'headers_and_paragraphs': headers_and_paragraphs})
+    else:
+        return jsonify({'title': 'Error', 'headers_and_paragraphs': []}), 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
