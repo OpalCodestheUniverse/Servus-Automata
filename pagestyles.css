@@ -1,4 +1,3 @@
-/* General Styling */
 body, html {
     margin: 0;
     padding: 0;
@@ -11,7 +10,6 @@ body, html {
     cursor: url('https://raw.githubusercontent.com/OpalCodestheUniverse/Servus-Automata/main/761409677917290496.webp') 16 16, auto; /* Scaled down cursor */
 }
 
-/* Header Styling */
 .header {
     width: calc(100% - 40px);
     background-color: black;
