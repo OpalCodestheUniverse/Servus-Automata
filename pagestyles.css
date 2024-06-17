@@ -1,98 +1,130 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Posts</title>
-    <link rel="stylesheet" href="pagestyles.css">
-    <style>
-        /* General Styling */
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: "Courier New", Courier, monospace;
-            background: url('https://github.com/OpalCodestheuniverse/Servus-Automata/blob/main/aleksandr-konev-logic-bb.jpg?raw=true') no-repeat center center fixed;
-            background-size: cover;
-            color: white;
-            text-align: center;
-            cursor: url('https://raw.githubusercontent.com/OpalCodestheuniverse/Servus-Automata/main/761409677917290496.webp') 16 16, auto; /* Scaled down cursor */
-        }
+/* General Styling */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: "Courier New", Courier, monospace;
+    background: url('https://github.com/OpalCodestheuniverse/Servus-Automata/blob/main/aleksandr-konev-logic-bb.jpg?raw=true') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    text-align: center;
+    cursor: url('https://raw.githubusercontent.com/OpalCodestheuniverse/Servus-Automata/main/761409677917290496.webp') 16 16, auto; /* Scaled down cursor */
+}
 
-        /* Header Styling */
-        .header {
-            width: calc(100% - 40px);
-            background-color: black;
-            color: white;
-            padding: 20px 20px;
-            text-align: center;
-            font-size: 36px;
-            letter-spacing: 2px;
-            -webkit-text-stroke: 1px black;
-            border-radius: 15px;
-            margin: 20px auto;
-            display: block;
-            background-image: url('https://cdn.discordapp.com/attachments/778427281617977357/1234307234494812311/giphy.gif?ex=663041b1&is=662ef031&hm=1def3ac629d1f85e34f3ddeb4da8d91b117954e6e5131a5e8e08bf8fd15247f4&');
-            background-size: cover;
-        }
+/* Header Styling */
+.header {
+    width: calc(100% - 40px);
+    background-color: black;
+    color: white;
+    padding: 20px 20px;
+    text-align: center;
+    font-size: 36px;
+    letter-spacing: 2px;
+    -webkit-text-stroke: 1px black;
+    border-radius: 15px;
+    margin: 20px auto;
+    display: block;
+    background-image: url('https://cdn.discordapp.com/attachments/778427281617977357/1234307234494812311/giphy.gif?ex=663041b1&is=662ef031&hm=1def3ac629d1f85e34f3ddeb4da8d91b117954e6e5131a5e8e08bf8fd15247f4&');
+    background-size: cover;
+}
 
-        /* Content Styling */
-        .blog-post {
-            border-bottom: 1px solid #ccc;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 20px;
-            border-radius: 15px;
-        }
+/* Button Styling */
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
 
-        .blog-post h2 a {
-            color: white;
-            text-decoration: none;
-        }
+.button {
+    padding: 15px 40px;
+    margin: 10px;
+    font-size: 16px;
+    color: white;
+    background: url('https://github.com/OpalCodestheuniverse/Servus-Automata/blob/main/ezgif-6-7bd0ddff61.gif?raw=true') no-repeat center center;
+    background-size: cover;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.3s, background-color 0.3s;
+    display: inline-block;
+}
 
-        .blog-post p {
-            margin: 10px 0;
-            color: white;
-        }
+.button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+    transform: scale(1.1);
+}
 
-        .read-more {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 10px 15px;
-            color: white;
-            background: url('https://github.com/OpalCodestheuniverse/Servus-Automata/blob/main/ezgif-6-7bd0ddff61.gif?raw=true') no-repeat center center;
-            background-size: cover;
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: transform 0.3s, background-color 0.3s;
-        }
+/* Content Styling */
+.content {
+    padding: 20px;
+    text-align: center;
+    color: white;
+}
 
-        .read-more:hover {
-            background-color: rgba(0, 0, 0, 0.7);
-            transform: scale(1.1);
-        }
+.rules {
+    margin: 20px 0;
+}
 
-        /* Media Queries for Responsive Design */
-        @media screen and (max-width: 600px) {
-            .header, .read-more {
-                font-size: 18px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="header">Blog Posts</div>
+/* Links Styling */
+.links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
 
-    <div class="blog-post">
-        <h2><a href="kaiju-wars-review.html">Kaiju Wars: A Must-Play Strategy Game for Kaiju Enthusiasts and Strategy Fans Alike</a></h2>
-        <p><strong>Kaiju Wars</strong> has stomped its way into the strategy gaming scene with a roar, bringing a brilliant sense of style, a distinct setting, and tight tactical gameplay. If you're a fan of strategy games or anything kaiju, monstrous, and wondrous, Kaiju Wars deserves a prime spot in your gaming library...</p>
-        <a class="read-more" href="kaiju-wars-review.html">Read More</a>
-    </div>
+.links a:hover {
+    text-decoration: underline;
+}
 
-    <!-- Add more blog post snippets here as needed -->
-    
-</body>
-</html>
+.table-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Blog Post Styling */
+.blog-post {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.blog-post h2 a {
+    color: white;
+    text-decoration: none;
+}
+
+.blog-post p {
+    margin: 10px 0;
+    color: white;
+}
+
+.read-more {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    color: white;
+    background: url('https://github.com/OpalCodestheuniverse/Servus-Automata/blob/main/ezgif-6-7bd0ddff61.gif?raw=true') no-repeat center center;
+    background-size: cover;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.read-more:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+    transform: scale(1.1);
+}
+
+/* Media Queries for Responsive Design */
+@media screen and (max-width: 600px) {
+    .header, .read-more {
+        font-size: 18px;
+    }
+}
