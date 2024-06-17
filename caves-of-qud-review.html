@@ -20,25 +20,43 @@
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .header {
-            font-size: 2em;
-            text-align: center;
-            margin-bottom: 20px;
-        }
         .blog-post h1, .blog-post h2 {
             text-align: center;
         }
         .left-padding {
             padding-left: 40px;
         }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            color: white;
+            background-color: #007BFF;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
-    <div class="header">Caves of Qud Review</div>
 
     <div class="content">
         <div class="blog-post">
             <h1>Caves of Qud: A Science Fantasy Roguelike Epic</h1>
+            
+            <div class="button-container">
+                <a href="index.html" class="button" id="homeButton">Home</a>
+                <a href="banappeals.html" class="button" id="banAppealsButton">Ban Appeals</a>
+                <a href="blogposts.html" class="button" id="blogPostsButton">Blog Posts</a>
+            </div>
 
             <p>“There’s a sense of magnificent history to dredge from its depths.” — Kill Screen</p>
             <p>“Caves of Qud is one of the best roguelikes in years, packed with evocative prose and featuring a captivating world of arcane secrets to explore.” — Kotaku</p>
@@ -92,5 +110,83 @@
             <p>Caves of Qud is a project of epic proportions that's been in development for over fifteen years, since 2007. It began as the science fantasy roguelike dream of co-creators Jason Grinblat and Brian Bucklew, who released the first beta in 2010. Since then, it's accrued a few more contributors who have enriched the project by helping to add visual effects, sound effects, an original soundtrack, a new UI, new game systems, new lore, and half a world of content. Caves of Qud has grown into a wild garden of emergent narrative, where a handwritten story weaves a path through rich physical, social, and historical simulations. The result is a hybrid handcrafted and procedurally-generated world that's alive in a way few games are.</p>
         </div>
     </div>
+
+    <script>
+        // JavaScript for dynamic text changes and IP address display
+        const rulesTextElements = document.querySelectorAll('.rules p');
+        const specialMessages = ["hi", "I see you", "look behind you"];
+
+        function displaySpecialMessage() {
+            const randomIndex = Math.floor(Math.random() * rulesTextElements.length);
+            const randomMessageIndex = Math.floor(Math.random() * specialMessages.length);
+            const originalText = rulesTextElements[randomIndex].innerText;
+
+            rulesTextElements[randomIndex].innerText = specialMessages[randomMessageIndex];
+            rulesTextElements[randomIndex].style.color = 'crimson';
+
+            setTimeout(() => {
+                rulesTextElements[randomIndex].innerText = originalText;
+                rulesTextElements[randomIndex].style.color = 'white';
+            }, 5000 + Math.random() * 10000); // Display for 5-10 seconds
+        }
+
+        setInterval(displaySpecialMessage, 15000); // Change every 15 seconds
+
+        // Dynamic text changes on the buttons
+        const textLength = 8;
+        let intervalId;
+
+        function generateRandomString(length) {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
+        }
+
+        function startTextChange(link, originalText, specialWords = []) {
+            intervalId = setInterval(() => {
+                if (Math.random() < 0.3) { // 30% chance to display a special word
+                    link.textContent = specialWords[Math.floor(Math.random() * specialWords.length)];
+                } else {
+                    link.textContent = generateRandomString(textLength);
+                }
+            }, 300);
+        }
+
+        function stopTextChange(link, originalText) {
+            clearInterval(intervalId);
+            link.textContent = originalText;
+        }
+
+        // Fetch IP address and display it in the format requested
+        let ipInfo = 'Fetching IP...';
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                ipInfo = `[${data.ip}] is this you?`;
+            })
+            .catch(() => {
+                ipInfo = '[IP Address not available] is this you?';
+            });
+
+        function displayIP() {
+            setInterval(() => {
+                const randomIndex = Math.floor(Math.random() * rulesTextElements.length);
+                const originalText = rulesTextElements[randomIndex].innerText;
+
+                rulesTextElements[randomIndex].innerText = ipInfo;
+                rulesTextElements[randomIndex].style.color = 'crimson';
+
+                setTimeout(() => {
+                    rulesTextElements[randomIndex].innerText = originalText;
+                    rulesTextElements[randomIndex].style.color = 'white';
+                }, 5000 + Math.random() * 10000); // Display for 5-10 seconds
+            }, 20000); // Change every 20 seconds
+        }
+
+        setTimeout(displayIP, 10000); // Start displaying IP after an initial delay
+    </script>
 </body>
 </html>
