@@ -85,6 +85,14 @@
 
         document.onmousemove = resetIdleTime;
         document.onkeypress = resetIdleTime;
+
+        // Play jump scare when user alt-tabs back into the page
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                playJumpScare();
+            }
+        });
     </script>
 </body>
 </html>
+
