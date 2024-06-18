@@ -23,6 +23,10 @@
             crossorigin="anonymous"
             async>
     </script>
+    <video id="jumpscareVideo" style="display:none;" width="100%" height="100%">
+        <source src="Untitled video - Made with Clipchamp (6).mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
     <script>
         const buttons = document.querySelectorAll('.button');
         const specialWords = ["heretic", "kinslayer", "traitor"]; 
@@ -53,6 +57,34 @@
                 });
             });
         });
+
+        // Idle timer for the jump scare
+        let idleTime = 0;
+        const idleInterval = setInterval(timerIncrement, 60000); // 1 minute
+
+        function timerIncrement() {
+            idleTime++;
+            if (idleTime > 1) { // 2 minutes
+                playJumpScare();
+            }
+        }
+
+        function resetIdleTime() {
+            idleTime = 0;
+        }
+
+        function playJumpScare() {
+            const video = document.getElementById('jumpscareVideo');
+            video.style.display = "block";
+            video.play();
+            video.addEventListener('ended', () => {
+                video.style.display = "none";
+                resetIdleTime();
+            });
+        }
+
+        document.onmousemove = resetIdleTime;
+        document.onkeypress = resetIdleTime;
     </script>
 </body>
 </html>
