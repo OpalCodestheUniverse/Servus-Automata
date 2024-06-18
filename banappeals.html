@@ -6,7 +6,7 @@
     <title>Servus Automata - Ban Appeals</title>
     <link rel="stylesheet" href="pagestyles.css">
     <style>
-        #jumpscareVideo {
+        #jumpscareImage {
             display: none;
             position: fixed;
             bottom: 0;
@@ -35,10 +35,11 @@
             crossorigin="anonymous"
             async>
     </script>
-    <video id="jumpscareVideo">
-        <source src="jumpscare.png" type="image">
-        Your browser does not support the video tag.
-    </video>
+    <img id="jumpscareImage" src="jumpscare.png" alt="Jumpscare Image">
+    <audio id="jumpscareAudio">
+        <source src="jumpscare.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
     <script>
         const buttons = document.querySelectorAll('.button');
         const specialWords = ["heretic", "kinslayer", "traitor"]; 
@@ -86,12 +87,12 @@
         }
 
         function playJumpScare() {
-            const video = document.getElementById('jumpscareVideo');
-            video.style.display = "block";
-            video.play();
-            video.addEventListener('ended', () => {
-                video.style.display = "none";
-                video.currentTime = 0; // Reset video to start
+            const image = document.getElementById('jumpscareImage');
+            const audio = document.getElementById('jumpscareAudio');
+            image.style.display = "block";
+            audio.play();
+            audio.addEventListener('ended', () => {
+                image.style.display = "none";
                 resetIdleTime();
             });
         }
