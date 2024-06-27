@@ -17,13 +17,11 @@
             background-color: rgba(0, 0, 0, 0.8);
             padding: 1rem;
             text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
             border-radius: 0.5rem;
             margin: 0.5rem auto;
             max-width: fit-content;
-        }
-
-        .header img {
-            width: 50%; /* Downscale the image */
         }
 
         .button-container {
@@ -145,8 +143,21 @@
 
         /* Responsive design with media queries */
         @media (max-width: 600px) {
-            .header img {
-                width: 80%;
+            .header {
+                font-size: 2rem;
+            }
+
+            .button {
+                padding: 0.4rem 0.8rem;
+            }
+
+            .content {
+                padding: 0.5rem;
+            }
+
+            .rules, .links, .table-container, .utterances-container {
+                padding: 0.4rem;
+                margin: 0.5rem auto;
             }
         }
 
@@ -162,9 +173,7 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <img src="Servus_Automata_Banner.png" alt="Servus Automata">
-    </div>
+    <div class="header" id="header">Servus Automata</div>
     <div class="button-container">
         <a href="index.html" class="button" id="homeButton">Home</a>
         <a href="banappeals.html" class="button" id="banAppealsButton">Ban Appeals</a>
@@ -281,7 +290,7 @@
         function changeTextColor(active) {
             const elements = document.querySelectorAll('body, body *');
             if (active) {
-                const randomColor = rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)});
+                const randomColor = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
                 elements.forEach(el => {
                     el.style.color = randomColor;
                 });
@@ -302,3 +311,4 @@
     </script>
 </body>
 </html>
+
