@@ -242,7 +242,38 @@
                 playJumpScare();
             }
         });
+
+        // Konami code logic
+        const konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+        let konamiIndex = 0;
+        let konamiActive = false;
+
+        document.addEventListener('keydown', function(e) {
+            if (e.keyCode === konamiCode[konamiIndex]) {
+                konamiIndex++;
+                if (konamiIndex === konamiCode.length) {
+                    konamiActive = !konamiActive;
+                    changeTextColor(konamiActive);
+                    konamiIndex = 0;
+                }
+            } else {
+                konamiIndex = 0;
+            }
+        });
+
+        function changeTextColor(active) {
+            const elements = document.querySelectorAll('body, body *');
+            if (active) {
+                const randomColor = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+                elements.forEach(el => {
+                    el.style.color = randomColor;
+                });
+            } else {
+                elements.forEach(el => {
+                    el.style.color = '';
+                });
+            }
+        }
     </script>
 </body>
 </html>
-
