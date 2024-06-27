@@ -67,6 +67,16 @@
             max-width: fit-content;
         }
 
+        .utterances-container {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            margin: 0.5rem auto;
+            max-width: fit-content;
+            width: 100%;
+        }
+
         .links {
             background-color: rgba(0, 0, 0, 0.8);
             padding: 0.5rem;
@@ -121,7 +131,7 @@
                 padding: 0.5rem;
             }
 
-            .rules, .links, .table-container {
+            .rules, .links, .table-container, .utterances-container {
                 padding: 0.4rem;
                 margin: 0.5rem auto;
             }
@@ -132,7 +142,7 @@
                 padding: 0.5rem;
             }
 
-            .rules, .links, .table-container {
+            .rules, .links, .table-container, .utterances-container {
                 padding: 0.4rem;
             }
         }
@@ -146,15 +156,21 @@
         <a href="blogposts.html" class="button" id="blogPostsButton">Blog Posts</a>
     </div>
     <div class="content">
-        <p>Welcome to Servus Automata: Ban Appeals. Please list your Discord below, and Opal or the appropriate staff member will get in touch with you via Discord as soon as possible. Thank you for your cooperation.</p>
+        <div class="rules">
+            <p>Welcome to Servus Automata: Ban Appeals.</p>
+            <p>Please list your Discord below, and Opal or the appropriate staff member will get in touch with you via Discord as soon as possible.</p>
+            <p>Thank you for your cooperation.</p>
+        </div>
+        <div class="utterances-container">
+            <script src="https://utteranc.es/client.js"
+                    repo="opalcodestheuniverse/Servus-Automata"
+                    issue-term="pathname"
+                    theme="github-light"
+                    crossorigin="anonymous"
+                    async>
+            </script>
+        </div>
     </div>
-    <script src="https://utteranc.es/client.js"
-            repo="opalcodestheuniverse/Servus-Automata"
-            issue-term="pathname"
-            theme="github-light"
-            crossorigin="anonymous"
-            async>
-    </script>
     <img id="jumpscareImage" src="jumpscare.png" alt="Jumpscare Image">
     <audio id="jumpscareAudio">
         <source src="jumpscare.mp3" type="audio/mpeg">
