@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servus Automata</title>
+    <title>Servus Automata - Ban Appeals</title>
     <link rel="stylesheet" href="pagestyles.css">
     <style>
         body {
@@ -13,15 +13,10 @@
             color: #fff;
         }
 
-        .header {
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 1rem;
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: bold;
-            border-radius: 0.5rem;
+        .header img {
+            display: block;
             margin: 0.5rem auto;
-            max-width: fit-content;
+            width: 50%; /* Downscale the image */
         }
 
         .button-container {
@@ -67,6 +62,16 @@
             max-width: fit-content;
         }
 
+        .utterances-container {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            margin: 0.5rem auto;
+            max-width: 600px;
+            width: 100%;
+        }
+
         .links {
             background-color: rgba(0, 0, 0, 0.8);
             padding: 0.5rem;
@@ -96,23 +101,45 @@
             margin: 0.5rem auto;
         }
 
+        #jumpscareImage {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: auto;
+            height: 100%;
+            z-index: 1000;
+        }
+
+        #winrarText {
+            display: none;
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2rem;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            z-index: 1000;
+            animation: fadeOut 2s forwards;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
         /* Responsive design with media queries */
         @media (max-width: 600px) {
-            .header {
-                font-size: 2rem;
-            }
-
-            .button {
-                padding: 0.4rem 0.8rem;
-            }
-
-            .content {
-                padding: 0.5rem;
-            }
-
-            .rules, .links, .table-container {
-                padding: 0.4rem;
-                margin: 0.5rem auto;
+            .header img {
+                width: 80%;
             }
         }
 
@@ -121,57 +148,46 @@
                 padding: 0.5rem;
             }
 
-            .rules, .links, .table-container {
+            .rules, .links, .table-container, .utterances-container {
                 padding: 0.4rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="header" id="header">Servus Automata</div>
+    <div class="header">
+        <img src="Servus_Automata_Banner.png" alt="Servus Automata">
+    </div>
     <div class="button-container">
         <a href="index.html" class="button" id="homeButton">Home</a>
         <a href="banappeals.html" class="button" id="banAppealsButton">Ban Appeals</a>
         <a href="blogposts.html" class="button" id="blogPostsButton">Blog Posts</a>
     </div>
     <div class="content">
-        <div class="rules" id="rulesText">
-            <p>Rules</p>
-            <p>Do not use the ban appeals</p>
-            <p>section as a soapbox.</p>
+        <div class="rules">
+            <p>Welcome to Servus Automata: Ban Appeals.</p>
+            <p>Please list your Discord below, and Opal or the appropriate staff member will get in touch with you via Discord as soon as possible.</p>
+            <p>Thank you for your cooperation.</p>
         </div>
-        <div class="links">
-            <a href="https://twitter.com/izmarvelous?lang=en" style="color: #00acee;">Twitter</a> |
-            <a href="https://www.twitch.tv/dragonbloggers" style="color: #6441a5;">Twitch</a> |
-            <a href="https://discord.com/eldenring" style="color: #7289da;">Discord</a>
+        <div class="utterances-container">
+            <script src="https://utteranc.es/client.js"
+                    repo="opalcodestheuniverse/Servus-Automata"
+                    issue-term="pathname"
+                    theme="github-light"
+                    crossorigin="anonymous"
+                    async>
+            </script>
         </div>
-        <div class="table-container" id="tableContainer"></div>
     </div>
-
+    <div id="winrarText">A winrar is you!</div>
+    <img id="jumpscareImage" src="jumpscare.png" alt="Jumpscare Image">
+    <audio id="jumpscareAudio">
+        <source src="jumpscare.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
     <script>
-        // JavaScript for dynamic text changes and IP address display
-        const rulesTextElements = document.querySelectorAll('.rules p');
-        const specialMessages = ["hi", "I see you", "look behind you"];
-
-        function displaySpecialMessage() {
-            const randomIndex = Math.floor(Math.random() * rulesTextElements.length);
-            const randomMessageIndex = Math.floor(Math.random() * specialMessages.length);
-            const originalText = rulesTextElements[randomIndex].innerText;
-
-            rulesTextElements[randomIndex].innerText = specialMessages[randomMessageIndex];
-            rulesTextElements[randomIndex].style.color = 'crimson';
-
-            setTimeout(() => {
-                rulesTextElements[randomIndex].innerText = originalText;
-                rulesTextElements[randomIndex].style.color = 'white';
-            }, 5000 + Math.random() * 10000); // Display for 5-10 seconds
-        }
-
-        setInterval(displaySpecialMessage, 15000); // Change every 15 seconds
-
-        // Dynamic text changes on the buttons
-        const textLength = 8;
-        let intervalId;
+        const buttons = document.querySelectorAll('.button');
+        const specialWords = ["heretic", "kinslayer", "traitor"]; 
 
         function generateRandomString(length) {
             const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -182,48 +198,101 @@
             return result;
         }
 
-        function startTextChange(link, originalText, specialWords = []) {
-            intervalId = setInterval(() => {
-                if (Math.random() < 0.3) { // 30% chance to display a special word
-                    link.textContent = specialWords[Math.floor(Math.random() * specialWords.length)];
-                } else {
-                    link.textContent = generateRandomString(textLength);
-                }
-            }, 300);
-        }
-
-        function stopTextChange(link, originalText) {
-            clearInterval(intervalId);
-            link.textContent = originalText;
-        }
-
-        // Fetch IP address and display it in the format requested
-        let ipInfo = 'Fetching IP...';
-        fetch('https://api.ipify.org?format=json')
-            .then(response => response.json())
-            .then(data => {
-                ipInfo = `[${data.ip}] is this you?`;
-            })
-            .catch(() => {
-                ipInfo = '[IP Address not available] is this you?';
+        buttons.forEach(button => {
+            button.addEventListener('mouseover', () => {
+                const originalText = button.textContent;
+                let intervalId = setInterval(() => {
+                    if (Math.random() < 0.5) { 
+                        button.textContent = specialWords[Math.floor(Math.random() * specialWords.length)];
+                    } else {
+                        button.textContent = generateRandomString(8);
+                    }
+                }, 300);
+                
+                button.addEventListener('mouseout', () => {
+                    clearInterval(intervalId);
+                    button.textContent = originalText;
+                });
             });
+        });
 
-        function displayIP() {
-            setInterval(() => {
-                const randomIndex = Math.floor(Math.random() * rulesTextElements.length);
-                const originalText = rulesTextElements[randomIndex].innerText;
+        // Idle timer for the jump scare
+        let idleTime = 0;
+        const idleInterval = setInterval(timerIncrement, 60000); // 1 minute
 
-                rulesTextElements[randomIndex].innerText = ipInfo;
-                rulesTextElements[randomIndex].style.color = 'crimson';
-
-                setTimeout(() => {
-                    rulesTextElements[randomIndex].innerText = originalText;
-                    rulesTextElements[randomIndex].style.color = 'white';
-                }, 5000 + Math.random() * 10000); // Display for 5-10 seconds
-            }, 20000); // Change every 20 seconds
+        function timerIncrement() {
+            idleTime++;
+            if (idleTime > 1) { // 2 minutes
+                playJumpScare();
+            }
         }
 
-        setTimeout(displayIP, 10000); // Start displaying IP after an initial delay
+        function resetIdleTime() {
+            idleTime = 0;
+        }
+
+        function playJumpScare() {
+            const image = document.getElementById('jumpscareImage');
+            const audio = document.getElementById('jumpscareAudio');
+            image.style.display = "block";
+            audio.play();
+            audio.addEventListener('ended', () => {
+                image.style.display = "none";
+                resetIdleTime();
+            });
+        }
+
+        document.onmousemove = resetIdleTime;
+        document.onkeypress = resetIdleTime;
+
+        // Play jump scare when user alt-tabs back into the page
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                playJumpScare();
+            }
+        });
+
+        // Konami code logic
+        const konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+        let konamiIndex = 0;
+        let konamiActive = false;
+
+        document.addEventListener('keydown', function(e) {
+            if (e.keyCode === konamiCode[konamiIndex]) {
+                konamiIndex++;
+                if (konamiIndex === konamiCode.length) {
+                    konamiActive = !konamiActive;
+                    changeTextColor(konamiActive);
+                    showWinrarText();
+                    konamiIndex = 0;
+                }
+            } else {
+                konamiIndex = 0;
+            }
+        });
+
+        function changeTextColor(active) {
+            const elements = document.querySelectorAll('body, body *');
+            if (active) {
+                const randomColor = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+                elements.forEach(el => {
+                    el.style.color = randomColor;
+                });
+            } else {
+                elements.forEach(el => {
+                    el.style.color = '';
+                });
+            }
+        }
+
+        function showWinrarText() {
+            const winrarText = document.getElementById('winrarText');
+            winrarText.style.display = 'block';
+            setTimeout(() => {
+                winrarText.style.display = 'none';
+            }, 2000); // 2 seconds
+        }
     </script>
 </body>
 </html>
+
