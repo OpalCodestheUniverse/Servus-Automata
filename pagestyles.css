@@ -28,10 +28,10 @@ body, html {
     background-size: cover;
 }
 
-/* Title Image Styling */
 .header img {
     max-width: 100%;
     height: auto;
+    width: 50%; /* Downscale the image */
 }
 
 /* Button Styling */
@@ -68,7 +68,17 @@ body, html {
     color: white;
 }
 
-.rules {
+.rules, .utterances-container {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    margin: 0.5rem auto;
+    max-width: 600px;
+    width: 100%;
+}
+
+.rules p, .utterances-container {
     margin: 20px 0;
 }
 
@@ -132,5 +142,9 @@ body, html {
 @media screen and (max-width: 600px) {
     .header, .read-more {
         font-size: 18px;
+    }
+
+    .header img {
+        width: 80%; /* Downscale more for smaller screens */
     }
 }
