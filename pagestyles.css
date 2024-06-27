@@ -28,6 +28,12 @@ body, html {
     background-size: cover;
 }
 
+/* Title Image Styling */
+.header img {
+    max-width: 100%;
+    height: auto;
+}
+
 /* Button Styling */
 .button-container {
     display: flex;
