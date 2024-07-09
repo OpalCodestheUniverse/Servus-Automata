@@ -216,16 +216,8 @@
             });
         });
 
-        // Idle timer for the jump scare
-        let idleTime = 0;
-        const idleInterval = setInterval(timerIncrement, 60000); // 1 minute
-
-        function timerIncrement() {
-            idleTime++;
-            if (idleTime > 1) { // 2 minutes
-                playJumpScare();
-            }
-        }
+        // Remove idle timer for the jump scare
+        // const idleInterval = setInterval(timerIncrement, 60000); // 1 minute
 
         function resetIdleTime() {
             idleTime = 0;
@@ -234,6 +226,7 @@
         function playJumpScare() {
             const image = document.getElementById('jumpscareImage');
             const audio = document.getElementById('jumpscareAudio');
+            audio.volume = 0.65; // Set volume to 65% of original
             image.style.display = "block";
             audio.play();
             audio.addEventListener('ended', () => {
