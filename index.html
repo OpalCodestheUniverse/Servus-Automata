@@ -1,32 +1,53 @@
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const textElements = document.querySelectorAll('h1, h2, p, footer');
+<!DOCTYPE html>
+<html lang="en">
 
-        // Add hover effect for all text elements
-        textElements.forEach(element => {
-            element.addEventListener('mouseover', function () {
-                element.style.fontFamily = "'JMH Cthulhumbus Arcade UG'";
-                element.style.transition = 'font-family 0.5s ease'; // Smooth transition effect
-                element.style.pointerEvents = 'none'; // Keeps hover effect tight around the text
-            });
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servus Automata</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the external CSS file -->
+</head>
 
-            // Font loading feedback
-            const fontA = new FontFace('Lovecraft\'s Diary', 'url(https://raw.githubusercontent.com/OpalCodestheUniverse/Servus-Automata/refs/heads/main/LovecraftsDiary.woff)');
-            const fontB = new FontFace('JMH Cthulhumbus Arcade UG', 'url(https://raw.githubusercontent.com/OpalCodestheUniverse/Servus-Automata/refs/heads/main/JMHCthulhumbusArcadeUG-Regular.woff)');
+<body>
+    <!-- Main Content -->
+    <main></main>
+    <h1 id="main-title">Servus Automata Portal Network</h1>
+    <h2 id="subtitle">Your Access to Logics Arcane Services</h2>
+    <p>This site has been a long time coming, be prepared for many changes as I decide what to do with it.</p>
+    <footer>All deals of any nature with Logic are subject to change at any time.</footer>
 
-            fontA.load().then(function () {
-                document.fonts.add(fontA);
-                console.log('Lovecraft\'s Diary loaded.');
-            }).catch(function () {
-                console.error('Failed to load Lovecraft\'s Diary.');
-            });
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const textElements = document.querySelectorAll('h1, h2, p, footer');
 
-            fontB.load().then(function () {
-                document.fonts.add(fontB);
-                console.log('JMH Cthulhumbus Arcade UG loaded.');
-            }).catch(function () {
-                console.error('Failed to load JMH Cthulhumbus Arcade UG.');
+            // Add hover effect for all text elements
+            textElements.forEach(element => {
+                element.addEventListener('mouseover', function () {
+                    element.style.fontFamily = "'JMH Cthulhumbus Arcade UG'";
+                    element.style.transition = 'font-family 0.5s ease'; // Smooth transition effect
+                    element.style.pointerEvents = 'none'; // Keeps hover effect tight around the text
+                });
+
+                // Font loading feedback
+                const fontA = new FontFace('Lovecraft\'s Diary', 'url(https://raw.githubusercontent.com/OpalCodestheUniverse/Servus-Automata/refs/heads/main/LovecraftsDiary.woff)');
+                const fontB = new FontFace('JMH Cthulhumbus Arcade UG', 'url(https://raw.githubusercontent.com/OpalCodestheUniverse/Servus-Automata/refs/heads/main/JMHCthulhumbusArcadeUG-Regular.woff)');
+
+                fontA.load().then(function () {
+                    document.fonts.add(fontA);
+                    console.log('Lovecraft\'s Diary loaded.');
+                }).catch(function () {
+                    console.error('Failed to load Lovecraft\'s Diary.');
+                });
+
+                fontB.load().then(function () {
+                    document.fonts.add(fontB);
+                    console.log('JMH Cthulhumbus Arcade UG loaded.');
+                }).catch(function () {
+                    console.error('Failed to load JMH Cthulhumbus Arcade UG.');
+                });
             });
         });
-    });
-</script>
+    </script>
+</body>
+
+</html>
