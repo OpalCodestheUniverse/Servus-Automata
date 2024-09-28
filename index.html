@@ -1,71 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servus Automata</title>
+/* 1. Correct font-face loading with specified formats */
+@font-face {
+    font-family: 'JMH Cthulhumbus Arcade UG';
+    src: url('https://raw.githubusercontent.com/OpalCodestheUniverse/Servus-Automata/refs/heads/main/JMHCthulhumbusArcadeUG-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
 
-    <!-- Link to external CSS file -->
-    <link rel="stylesheet" href="styles.css">
+@font-face {
+    font-family: 'Lovecraft\'s Diary';
+    src: url('https://raw.githubusercontent.com/OpalCodestheUniverse/Servus-Automata/refs/heads/main/LovecraftsDiary.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
 
-    <!-- Preload fonts to ensure faster loading -->
-    <link rel="preload" href="https://opalcodestheuniverse.github.io/servus-automata/lovecrafts-diary.regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
-    <link rel="preload" href="https://opalcodestheuniverse.github.io/servus-automata/jmh-cthulhumbus-arcade.cthulhumbusarcadeug-regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
-</head>
-<body>
-    <!-- Main Content -->
-    <main></main>
-    <h1 id="main-title">Servus Automata Portal Network</h1>
-    <h2 id="subtitle">Your Access to Logics Arcane Services</h2>
-    <p>This site has been a long time coming, be prepared for many changes as I decide what to do with it.</p>
-    <footer>All deals of any nature with Logic are subject to change at any time.</footer>
+/* 2. General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    <script>
-        // JavaScript to handle hover font change
-        document.addEventListener('DOMContentLoaded', function () {
-            const mainTitle = document.getElementById('main-title');
-            const subtitle = document.getElementById('subtitle');
+body {
+    margin: 0;
+    background-image: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a80ce302-40cd-4d8d-81bf-f3d49237fe25/dg2yl5i-cb78d499-e85d-4216-869b-adb69c774ff7.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: 'Lovecraft\'s Diary';
+}
 
-            // Add hover effect for changing fonts
-            mainTitle.addEventListener('mouseover', function() {
-                mainTitle.style.fontFamily = "'Cthulhumbus Arcade', sans-serif";
-            });
+/* 3. Heading Styles */
+h1, h2 {
+    font-family: 'Lovecraft\'s Diary';
+    color: black;
+    text-shadow: 2px 2px 4px white;
+    text-align: center;
+    transition: font-family 0.5s ease; /* Smooth transition for font-family */
+}
 
-            mainTitle.addEventListener('mouseout', function() {
-                mainTitle.style.fontFamily = "'Lovecrafts Diary', sans-serif";
-            });
+h1 {
+    margin: 20px;
+    font-size: 3rem;
+}
 
-            subtitle.addEventListener('mouseover', function() {
-                subtitle.style.fontFamily = "'Cthulhumbus Arcade', sans-serif";
-            });
+h2 {
+    margin: 10px;
+    font-size: 2rem;
+}
 
-            subtitle.addEventListener('mouseout', function() {
-                subtitle.style.fontFamily = "'Lovecrafts Diary', sans-serif";
-            });
+/* 4. Paragraph Style */
+p {
+    color: white;
+    text-shadow: 2px 2px 4px black;
+    text-align: center;
+    margin: 5px;
+    font-size: 1.2rem;
+}
 
-            // Font loading feedback (optional, but gives better feedback on load success)
-            const fontA = new FontFace('Lovecrafts Diary', 'url(https://opalcodestheuniverse.github.io/servus-automata/lovecrafts-diary.regular.ttf)');
-            const fontB = new FontFace('Cthulhumbus Arcade', 'url(https://opalcodestheuniverse.github.io/servus-automata/jmh-cthulhumbus-arcade.cthulhumbusarcadeug-regular.ttf)');
+/* 5. Footer Style */
+footer {
+    color: white;
+    text-align: center;
+    margin: 20px;
+}
 
-            fontA.load().then(function() {
-                document.fonts.add(fontA);
-                console.log('Lovecrafts Diary loaded.');
-            }).catch(function() {
-                console.error('Failed to load Lovecrafts Diary.');
-            });
-
-            fontB.load().then(function() {
-                document.fonts.add(fontB);
-                console.log('Cthulhumbus Arcade loaded.');
-            }).catch(function() {
-                console.error('Failed to load Cthulhumbus Arcade.');
-            });
-        });
-    </script>
-</body>
-</html>
-
-
-
-
+/* 6. Main Pseudo-element Background */
+main:before {
+    content: ""; /* Pseudo-element requires content */
+    display: block;
+    width: 100%; /* Full width */
+    height: 165px; /* Fixed height */
+    margin-bottom: 20px;
+    background-image: url('https://xsmultimedia.com/wp-content/uploads/2022/06/photo_2022-06-21_09-57-44.jpg');
+    background-position: center center;
+    background-size: cover;
+    border: 2px double black;
+}
 
