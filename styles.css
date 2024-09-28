@@ -27,7 +27,29 @@ body {
     background-image: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a80ce302-40cd-4d8d-81bf-f3d49237fe25/dg2yl5i-cb78d499-e85d-4216-869b-adb69c774ff7.jpg");
     background-attachment: fixed;
     background-size: cover;
+    background-position: center;
     font-family: 'Lovecraft\'s Diary', sans-serif;
+    min-height: 100vh;
+}
+
+/* Title Card Styles */
+.title-card {
+    background-image: url("https://xsmultimedia.com/wp-content/uploads/2022/06/photo_2022-06-21_09-57-44.jpg");
+    background-size: cover;
+    background-position: top center;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.site-title {
+    font-family: 'JMH Cthulhumbus Arcade UG', sans-serif;
+    color: white;
+    font-size: 4rem;
+    text-shadow: 3px 3px 6px black;
+    text-align: center;
+    margin: 0;
 }
 
 /* Heading Styles */
@@ -67,3 +89,4 @@ footer {
 h1.hover-effect, h2.hover-effect, p.hover-effect, footer.hover-effect {
     font-family: 'JMH Cthulhumbus Arcade UG';
 }
+
