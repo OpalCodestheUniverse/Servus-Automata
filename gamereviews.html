@@ -4,13 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Posts</title>
+
+    <!-- Font Loading -->
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/lovecrafts-diary" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/jmh-cthulhumbus-arcade-ug" rel="stylesheet">
+
     <style>
         /* General Styling */
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            font-family: 'Lovecraft\'s Diary', sans-serif;
+            font-family: 'Lovecraft\'s Diary', 'Courier Prime', monospace;
             background: url('https://github.com/OpalCodestheuniverse/Servus-Automata/blob/main/aleksandr-konev-logic-bb.jpg?raw=true') no-repeat center center fixed;
             background-size: cover;
             color: white;
@@ -87,7 +93,7 @@
             border: 2px solid white;
             border-radius: 12px;
             margin: 20px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .button:hover {
