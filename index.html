@@ -5,18 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servus Automata</title>
     <style>
-        /* Ensure fonts are loaded correctly */
         @font-face {
             font-family: 'Lovecrafts Diary';
-            src: url('assets/fonts/lovecrafts-diary.regular.ttf') format('truetype'); /* Update to correct path */
+            src: url('assets/fonts/lovecrafts-diary.regular.ttf') format('truetype'); 
         }
 
         @font-face {
             font-family: 'Cthulhumbus Arcade';
-            src: url('assets/fonts/jmh-cthulhumbus-arcade.cthulhumbusarcadeug-regular.ttf') format('truetype'); /* Update to correct path */
+            src: url('assets/fonts/jmh-cthulhumbus-arcade.cthulhumbusarcadeug-regular.ttf') format('truetype'); 
         }
 
-        /* Solution for the background */
         body {
             margin: 0;
             background-image: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a80ce302-40cd-4d8d-81bf-f3d49237fe25/dg2yl5i-cb78d499-e85d-4216-869b-adb69c774ff7.jpg/v1/fill/w_1192,h_670,q_70,strp/junji_ito_art_by_p4ntysh0t_dg2yl5i-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6IlwvZlwvYTgwY2UzMDItNDBjZC00ZDhkLTgxYmYtZjNkNDkyMzdmZTI1XC9kZzJ5bDVpLWNiNzhkNDk5LWU4NWQtNDIxNi04NjliLWFkYjY5Yzc3NGZmNy5qcGciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.l8WrL2-yzRYWQm9FkS30EbvvCC7UlobOaIzHrDJGLwc");
@@ -24,17 +22,12 @@
             background-size: cover;
         }
 
-        /* Add fallback fonts */
         h1, h2 {
-            font-family: 'Lovecrafts Diary', sans-serif; /* Default font with fallback */
+            font-family: 'Lovecrafts Diary', sans-serif;
             color: black;
             text-shadow: 2px 2px 4px white;
             text-align: center;
-            transition: font-family 0.5s ease; /* Smooth transition */
-        }
-
-        h1:hover, h2:hover {
-            font-family: 'Cthulhumbus Arcade', sans-serif; /* Font changes on hover */
+            transition: font-family 0.5s ease;
         }
 
         h1 {
@@ -61,7 +54,6 @@
             margin: 20px;
         }
 
-        /* Background in the main content */
         main:before {
             width: auto;
             margin-bottom: 2px;
@@ -78,15 +70,61 @@
     <!-- Preload fonts to load faster -->
     <link rel="preload" href="assets/fonts/lovecrafts-diary.regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
     <link rel="preload" href="assets/fonts/jmh-cthulhumbus-arcade.cthulhumbusarcadeug-regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+
 </head>
 <body>
     <main></main>
-    <h1>Servus Automata Portal Network</h1>
-    <h2>Your Access to Logics Arcane Services</h2>
+    <h1 id="main-title">Servus Automata Portal Network</h1>
+    <h2 id="subtitle">Your Access to Logics Arcane Services</h2>
     <p>This site has been a long time coming, be prepared for many changes as I decide what to do with it.</p>
     <footer>All deals of any nature with Logic are subject to change at any time.</footer>
+
+    <script>
+        // JavaScript to handle hover font change
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const mainTitle = document.getElementById('main-title');
+            const subtitle = document.getElementById('subtitle');
+
+            // Add hover effect for changing fonts
+            mainTitle.addEventListener('mouseover', function() {
+                mainTitle.style.fontFamily = "'Cthulhumbus Arcade', sans-serif";
+            });
+
+            mainTitle.addEventListener('mouseout', function() {
+                mainTitle.style.fontFamily = "'Lovecrafts Diary', sans-serif";
+            });
+
+            subtitle.addEventListener('mouseover', function() {
+                subtitle.style.fontFamily = "'Cthulhumbus Arcade', sans-serif";
+            });
+
+            subtitle.addEventListener('mouseout', function() {
+                subtitle.style.fontFamily = "'Lovecrafts Diary', sans-serif";
+            });
+
+            // Font loading feedback
+            const fontA = new FontFace('Lovecrafts Diary', 'url(assets/fonts/lovecrafts-diary.regular.ttf)');
+            const fontB = new FontFace('Cthulhumbus Arcade', 'url(assets/fonts/jmh-cthulhumbus-arcade.cthulhumbusarcadeug-regular.ttf)');
+
+            fontA.load().then(function() {
+                document.fonts.add(fontA);
+                console.log('Lovecrafts Diary loaded.');
+            }).catch(function() {
+                console.error('Failed to load Lovecrafts Diary.');
+            });
+
+            fontB.load().then(function() {
+                document.fonts.add(fontB);
+                console.log('Cthulhumbus Arcade loaded.');
+            }).catch(function() {
+                console.error('Failed to load Cthulhumbus Arcade.');
+            });
+        });
+    </script>
 </body>
 </html>
+
 
 
 
