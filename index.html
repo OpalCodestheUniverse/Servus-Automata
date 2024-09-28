@@ -1,99 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Persistent Hover Effect</title>
-  <style>
-    /* Your previous CSS styles */
-    body {
-      margin: 0;
-      background-image: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a80ce302-40cd-4d8d-81bf-f3d49237fe25/dg2yl5i-cb78d499-e85d-4216-869b-adb69c774ff7.jpg/v1/fill/w_1192,h_670,q_70,strp/junji_ito_art_by_p4ntysh0t_dg2yl5i-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6IlwvZlwvYTgwY2UzMDItNDBjZC00ZDhkLTgxYmYtZjNkNDkyMzdmZTI1XC9kZzJ5bDVpLWNiNzhkNDk5LWU4NWQtNDIxNi04NjliLWFkYjY5Yzc3NGZmNy5qcGciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.l8WrL2-yzRYWQm9FkS30EbvvCC7UlobOaIzHrDJGLwc");
-      background-attachment: fixed;
-      background-size: cover;
-      background-position: center;
-      font-family: 'Lovecraft\'s Diary', sans-serif;
-      min-height: 100vh;
-    }
-
-    /* Title Card Styles */
-    .title-card {
-      background-image: url("https://xsmultimedia.com/wp-content/uploads/2022/06/photo_2022-06-21_09-57-44.jpg");
-      background-size: cover;
-      background-position: top center;
-      height: 250px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .site-title {
-      font-family: 'JMH Cthulhumbus Arcade UG', sans-serif;
-      color: white;
-      font-size: 4rem;
-      text-shadow: 3px 3px 6px black;
-      text-align: center;
-      margin: 0;
-    }
-
-    /* Heading Styles */
-    h1, h2 {
-      color: black;
-      text-shadow: 2px 2px 4px white;
-      text-align: center;
-    }
-
-    h1 {
-      margin: 20px;
-      font-size: 3rem;
-    }
-
-    h2 {
-      margin: 10px;
-      font-size: 2rem;
-    }
-
-    /* Paragraph Style */
-    p {
-      color: white;
-      text-shadow: 2px 2px 4px black;
-      text-align: center;
-      margin: 5px;
-      font-size: 1.2rem;
-    }
-
-    /* Footer Style */
-    footer {
-      color: white;
-      text-align: center;
-      margin: 20px;
-    }
-
-    /* Hover Effect Class */
-    .hover-effect {
-      cursor: pointer;
-    }
-
-    .hovered {
-      font-family: 'JMH Cthulhumbus Arcade UG', sans-serif;
-    }
-  </style>
-</head>
 <body>
+    <!-- Main Content -->
+    <main></main>
+    <h1 id="main-title">Servus Automata Portal Network</h1>
+    <h2 id="subtitle">Your Access to Logics Arcane Services</h2>
+    <p>This site has been a long time coming, be prepared for many changes as I decide what to do with it.</p>
+    <main>
+        <h1 id="main-title">Servus Automata Portal Network</h1>
+        <h2 id="subtitle">Your Access to Logics Arcane Services</h2>
+        <p>This site has been a long time coming, be prepared for many changes as I decide what to do with it.</p>
+    </main>
+    <!-- Footer -->
+    <footer>All deals of any nature with Logic are subject to change at any time.</footer>
 
-  <h1 class="hover-effect">Hover Over Me</h1>
-  <h2 class="hover-effect">Hover Over Me Too</h2>
-  <p class="hover-effect">Hover over this paragraph to change its font!</p>
-  <footer class="hover-effect">Hover over the footer to change its font!</footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const textElements = document.querySelectorAll('h1, h2, p, footer');
 
-  <script>
-    // Add event listeners to all elements with the hover-effect class
-    document.querySelectorAll('.hover-effect').forEach(function(element) {
-      element.addEventListener('mouseover', function() {
-        element.classList.add('hovered'); // Add hovered class on mouseover
-      });
-    });
-  </script>
-
-</body>
-</html>
+            // Load the fonts globally
+            const fontA = new FontFace('Lovecraft\'s Diary', 'url(https://raw.githubusercontent.com/OpalCodestheUniverse/Servus-Automata/refs/heads/main/LovecraftsDiary.woff)');
+            const fontB = new FontFace('JMH Cthulhumbus Arcade UG', 'url(https://raw.githubusercontent.com/OpalCodestheUniverse/Servus-Automata/refs/heads/main/JMHCthulhumbusArcadeUG-Regular.woff)');
+            fontA.load().then(function () {
+                document.fonts.add(fontA);
+                console.log('Lovecraft\'s Diary loaded.');
+            }).catch(function () {
+                console.error('Failed to load Lovecraft\'s Diary.');
+            });
+            fontB.load().then(function () {
+                document.fonts.add(fontB);
+                console.log('JMH Cthulhumbus Arcade UG loaded.');
+            }).catch(function () {
+                console.error('Failed to load JMH Cthulhumbus Arcade UG.');
+            });
+            // Add hover effect for all text elements
+            textElements.forEach(element => {
+                // Define the transition for font-family
+                    // Remove the class to revert back to original font
+                    element.classList.remove('hover-effect');
+                });
+                // Font loading feedback
+                const fontA = new FontFace('Lovecraft\'s Diary', 'url(https://raw.githubusercontent.com/OpalCodestheUniverse/Servus-Automata/refs/heads/main/LovecraftsDiary.woff)');
+                const fontB = new FontFace('JMH Cthulhumbus Arcade UG', 'url(https://raw.githubusercontent.com/OpalCodestheUniverse/Servus-Automata/refs/heads/main/JMHCthulhumbusArcadeUG-Regular.woff)');
+                fontA.load().then(function () {
+                    document.fonts.add(fontA);
+                    console.log('Lovecraft\'s Diary loaded.');
+                }).catch(function () {
+                    console.error('Failed to load Lovecraft\'s Diary.');
+                });
+                fontB.load().then(function () {
+                    document.fonts.add(fontB);
+                    console.log('JMH Cthulhumbus Arcade UG loaded.');
+                }).catch(function () {
+                    console.error('Failed to load JMH Cthulhumbus Arcade UG.');
+                });
+            });
+        });
+    </script>
