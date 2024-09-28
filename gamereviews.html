@@ -75,6 +75,28 @@
             transform: scale(1.1);
         }
 
+        /* Button Container */
+        .button-container {
+            margin: 20px 0;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            color: white;
+            background-color: black;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            text-decoration: none;
+            margin: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
         /* Media Queries for Responsive Design */
         @media screen and (max-width: 600px) {
             .header, .read-more {
@@ -96,6 +118,13 @@
         <h2><a href="caves-of-qud-review.html">Caves of Qud: A Science Fantasy Roguelike Epic</a></h2>
         <p><strong>Do anything and everything. Caves of Qud is a deeply simulated, biologically diverse, richly cultured world.</p>
         <a class="read-more" href="caves-of-qud-review.html">Read More</a>
+    </div>
+
+    <div class="button-container">
+        <a class="button" href="index.html">Home</a>
+        <a class="button" href="about.html">About</a>
+        <a class="button" href="contact.html">Contact</a>
+        <a class="button" href="blog.html">Blog</a>
     </div>
 
     <script>
@@ -131,4 +160,3 @@
     </script>
 </body>
 </html>
-
