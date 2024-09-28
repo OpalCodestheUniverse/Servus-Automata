@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Posts</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="pagestyles.css">
     <style>
         /* General Styling */
         body, html {
@@ -91,6 +91,16 @@
             background-color: rgba(255, 255, 255, 0.5);
         }
 
+        /* Hover Effect */
+        .hover-effect {
+            transition: color 0.3s, background-color 0.3s;
+        }
+
+        .hover-effect:hover {
+            color: black;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
         /* Responsive Design */
         @media screen and (max-width: 600px) {
             .header, .read-more, .button {
@@ -103,23 +113,34 @@
     <div class="header">Blog Posts</div>
 
     <div class="blog-post">
-        <h2><a href="kaiju-wars-review.html">Kaiju Wars: A Must-Play Strategy Game</a></h2>
+        <h2><a href="kaiju-wars-review.html" class="hover-effect">Kaiju Wars: A Must-Play Strategy Game</a></h2>
         <p>Kaiju Wars has stomped into the strategy gaming scene with a roar, bringing a brilliant sense of style and tight tactical gameplay. A must-play for fans of strategy games and kaiju...</p>
-        <a class="read-more" href="kaiju-wars-review.html">Read More</a>
+        <a class="read-more hover-effect" href="kaiju-wars-review.html">Read More</a>
     </div>
 
     <div class="blog-post">
-        <h2><a href="caves-of-qud-review.html">Caves of Qud: A Science Fantasy Roguelike</a></h2>
+        <h2><a href="caves-of-qud-review.html" class="hover-effect">Caves of Qud: A Science Fantasy Roguelike</a></h2>
         <p>Caves of Qud is a deeply simulated, biologically diverse, richly cultured world. Explore its unique world filled with strange wonders...</p>
-        <a class="read-more" href="caves-of-qud-review.html">Read More</a>
+        <a class="read-more hover-effect" href="caves-of-qud-review.html">Read More</a>
     </div>
 
     <div class="button-container">
-        <a class="button" href="blog-posts.html">Blog Posts</a>
-        <a class="button" href="recipes.html">Recipes</a>
-        <a class="button" href="game-reviews.html">Game Reviews</a>
-        <a class="button" href="discord.html">Discord</a>
+        <a class="button hover-effect" href="blog-posts.html">Blog Posts</a>
+        <a class="button hover-effect" href="recipes.html">Recipes</a>
+        <a class="button hover-effect" href="game-reviews.html">Game Reviews</a>
+        <a class="button hover-effect" href="discord.html">Discord</a>
     </div>
+
+    <script>
+        // Add event listeners to all elements with the hover-effect class
+        document.querySelectorAll('.hover-effect').forEach(function(element) {
+            element.addEventListener('mouseover', function() {
+                element.classList.add('hovered'); // Add hovered class on mouseover
+            });
+            element.addEventListener('mouseout', function() {
+                element.classList.remove('hovered'); // Remove hovered class on mouseout
+            });
+        });
+    </script>
 </body>
 </html>
-
