@@ -7,12 +7,14 @@
     <style>
         @font-face {
             font-family: 'Lovecrafts Diary';
-            src: url('./assets/fonts/lovecrafts-diary.regular.ttf') format('truetype'); 
+            src: url('./lovecrafts-diary.regular.ttf') format('truetype');
+            font-display: swap; /* Ensures the font is swapped if there's a delay */
         }
 
         @font-face {
             font-family: 'Cthulhumbus Arcade';
-            src: url('./assets/fonts/jmh-cthulhumbus-arcade.cthulhumbusarcadeug-regular.ttf') format('truetype'); 
+            src: url('./jmh-cthulhumbus-arcade.cthulhumbusarcadeug-regular.ttf') format('truetype');
+            font-display: swap; 
         }
 
         body {
@@ -68,8 +70,8 @@
     </style>
 
     <!-- Preload fonts to load faster -->
-    <link rel="preload" href="./assets/fonts/lovecrafts-diary.regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
-    <link rel="preload" href="./assets/fonts/jmh-cthulhumbus-arcade.cthulhumbusarcadeug-regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+    <link rel="preload" href="./lovecrafts-diary.regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+    <link rel="preload" href="./jmh-cthulhumbus-arcade.cthulhumbusarcadeug-regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 
 </head>
 <body>
@@ -81,7 +83,6 @@
 
     <script>
         // JavaScript to handle hover font change
-
         document.addEventListener('DOMContentLoaded', function () {
             const mainTitle = document.getElementById('main-title');
             const subtitle = document.getElementById('subtitle');
@@ -104,8 +105,8 @@
             });
 
             // Font loading feedback
-            const fontA = new FontFace('Lovecrafts Diary', 'url(./assets/fonts/lovecrafts-diary.regular.ttf)');
-            const fontB = new FontFace('Cthulhumbus Arcade', 'url(./assets/fonts/jmh-cthulhumbus-arcade.cthulhumbusarcadeug-regular.ttf)');
+            const fontA = new FontFace('Lovecrafts Diary', 'url(./lovecrafts-diary.regular.ttf)');
+            const fontB = new FontFace('Cthulhumbus Arcade', 'url(./jmh-cthulhumbus-arcade.cthulhumbusarcadeug-regular.ttf)');
 
             fontA.load().then(function() {
                 document.fonts.add(fontA);
