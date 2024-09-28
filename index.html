@@ -6,8 +6,13 @@
     <title>Servus Automata</title>
     <style>
         @font-face {
-            font-family: 'Silent Broadcast';
-            src: url('silent_broadcast.ttf') format('truetype');
+            font-family: 'Lovecrafts Diary';
+            src: url('lovecrafts-diary.regular.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Cthulhumbus Arcade';
+            src: url('jmh-cthulhumbus-arcade.cthulhumbusarcadeug-regular.ttf') format('truetype');
         }
 
         main:before {
@@ -29,10 +34,15 @@
         }
 
         h1, h2 {
-            font-family: 'Silent Broadcast', sans-serif; /* Use the custom font */
-            color: black; /* Change text color to black */
-            text-shadow: 2px 2px 4px white; /* Change shadow color to white */
+            font-family: 'Lovecrafts Diary', sans-serif; /* Default font */
+            color: black;
+            text-shadow: 2px 2px 4px white;
             text-align: center;
+            transition: font-family 0.5s ease; /* Smooth transition */
+        }
+
+        h1:hover, h2:hover {
+            font-family: 'Cthulhumbus Arcade', sans-serif; /* Font on hover */
         }
 
         h1 {
