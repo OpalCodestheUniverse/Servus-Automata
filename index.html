@@ -6,280 +6,36 @@
     <title>Servus Automata</title>
     <link rel="stylesheet" href="pagestyles.css">
     <style>
+        @font-face {
+            font-family: '4K&A';
+            src: url('4K&A.ttf') format('truetype'); /* Adjust path if necessary */
+        }
+
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #222;
-            color: #fff;
-        }
-
-        .header {
-            text-align: center;
-            margin: 20px auto;
-        }
-
-        .header img {
-            max-width: 100%;
-            height: auto;
-            width: 50%; /* Downscale the image */
-        }
-
-        .button-container {
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
-            gap: 0.5rem;
-            padding: 0.5rem;
-            background-color: rgba(0, 0, 0, 0.8);
-            border-radius: 0.5rem;
-            margin: 0.5rem auto;
-            max-width: fit-content;
-        }
-
-        .button {
-            background-color: rgba(0, 0, 0, 0.8);
-            color: #fff;
-            padding: 0.5rem 1rem;
-            text-decoration: none;
-            border-radius: 0.5rem;
-            transition: background-color 0.3s;
-            text-align: center;
-        }
-
-        .button:hover {
-            background-color: rgba(51, 51, 51, 0.8);
-        }
-
-        .content {
-            padding: 0.5rem;
-            display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 0.5rem;
+            height: 100vh;
+            background-color: #222;
         }
 
-        .rules {
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 0.5rem;
-            border-radius: 0.5rem;
+        .title-box {
+            background-color: black;
+            color: white;
+            font-family: '4K&A', sans-serif;
+            padding: 20px;
+            border-radius: 15px;
             text-align: center;
-            margin: 0.5rem auto;
-            max-width: fit-content;
-        }
-
-        .links {
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            text-align: center;
-            margin: 0.5rem auto;
-            max-width: fit-content;
-        }
-
-        .links a {
-            color: inherit;
-            text-decoration: none;
-            margin: 0 0.5rem;
-            transition: color 0.3s;
-        }
-
-        .links a:hover {
-            color: #ddd;
-        }
-
-        .table-container {
-            max-width: fit-content;
-            overflow-x: auto;
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            margin: 0.5rem auto;
-        }
-
-        #winrarText {
-            display: none;
-            position: fixed;
-            top: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #fff;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 2rem;
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            z-index: 1000;
-            animation: fadeOut 2s forwards;
-        }
-
-        @keyframes fadeOut {
-            0% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
-        /* Responsive design with media queries */
-        @media (max-width: 600px) {
-            .header img {
-                width: 80%;
-            }
-        }
-
-        @media (max-width: 900px) {
-            .content {
-                padding: 0.5rem;
-            }
-
-            .rules, .links, .table-container {
-                padding: 0.4rem;
-            }
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <img src="Servus_Automata_Banner.png" alt="Servus Automata">
+    <div class="title-box">
+        <h1>Servus Automata</h1>
     </div>
-    <div class="button-container">
-        <a href="index.html" class="button" id="homeButton">Home</a>
-        <a href="banappeals.html" class="button" id="banAppealsButton">Ban Appeals</a>
-        <a href="blogposts.html" class="button" id="blogPostsButton">Blog Posts</a>
-    </div>
-    <div class="content">
-        <div class="rules" id="rulesText">
-            <p>Rules</p>
-            <p>Do not use the ban appeals</p>
-            <p>section as a soapbox.</p>
-        </div>
-        <div class="links">
-            <a href="https://twitter.com/izmarvelous?lang=en" style="color: #00acee;">Twitter</a> |
-            <a href="https://www.twitch.tv/dragonbloggers" style="color: #6441a5;">Twitch</a> |
-            <a href="https://discord.com/eldenring" style="color: #7289da;">Discord</a>
-        </div>
-        <div class="table-container" id="tableContainer"></div>
-    </div>
-    <div id="winrarText">A winrar is you!</div>
-
-    <script>
-        // JavaScript for dynamic text changes and IP address display
-        const rulesTextElements = document.querySelectorAll('.rules p');
-        const specialMessages = ["hi", "I see you", "look behind you"];
-
-        function displaySpecialMessage() {
-            const randomIndex = Math.floor(Math.random() * rulesTextElements.length);
-            const randomMessageIndex = Math.floor(Math.random() * specialMessages.length);
-            const originalText = rulesTextElements[randomIndex].innerText;
-
-            rulesTextElements[randomIndex].innerText = specialMessages[randomMessageIndex];
-            rulesTextElements[randomIndex].style.color = 'crimson';
-
-            setTimeout(() => {
-                rulesTextElements[randomIndex].innerText = originalText;
-                rulesTextElements[randomIndex].style.color = 'white';
-            }, 5000 + Math.random() * 10000); // Display for 5-10 seconds
-        }
-
-        setInterval(displaySpecialMessage, 15000); // Change every 15 seconds
-
-        // Dynamic text changes on the buttons
-        const textLength = 8;
-        let intervalId;
-
-        function generateRandomString(length) {
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            let result = '';
-            for (let i = 0; i < length; i++) {
-                result += characters.charAt(Math.floor(Math.random() * characters.length));
-            }
-            return result;
-        }
-
-        function startTextChange(link, originalText, specialWords = []) {
-            intervalId = setInterval(() => {
-                if (Math.random() < 0.3) { // 30% chance to display a special word
-                    link.textContent = specialWords[Math.floor(Math.random() * specialWords.length)];
-                } else {
-                    link.textContent = generateRandomString(textLength);
-                }
-            }, 300);
-        }
-
-        function stopTextChange(link, originalText) {
-            clearInterval(intervalId);
-            link.textContent = originalText;
-        }
-
-        // Fetch IP address and display it in the format requested
-        let ipInfo = 'Fetching IP...';
-        fetch('https://api.ipify.org?format=json')
-            .then(response => response.json())
-            .then(data => {
-                ipInfo = `[${data.ip}] is this you?`;
-            })
-            .catch(() => {
-                ipInfo = '[IP Address not available] is this you?';
-            });
-
-        function displayIP() {
-            setInterval(() => {
-                const randomIndex = Math.floor(Math.random() * rulesTextElements.length);
-                const originalText = rulesTextElements[randomIndex].innerText;
-
-                rulesTextElements[randomIndex].innerText = ipInfo;
-                rulesTextElements[randomIndex].style.color = 'crimson';
-
-                setTimeout(() => {
-                    rulesTextElements[randomIndex].innerText = originalText;
-                    rulesTextElements[randomIndex].style.color = 'white';
-                }, 5000 + Math.random() * 10000); // Display for 5-10 seconds
-            }, 20000); // Change every 20 seconds
-        }
-
-        setTimeout(displayIP, 10000); // Start displaying IP after an initial delay
-
-        // Konami code logic
-        const konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
-        let konamiIndex = 0;
-        let konamiActive = false;
-
-        document.addEventListener('keydown', function(e) {
-            if (e.keyCode === konamiCode[konamiIndex]) {
-                konamiIndex++;
-                if (konamiIndex === konamiCode.length) {
-                    konamiActive = !konamiActive;
-                    changeTextColor(konamiActive);
-                    showWinrarText();
-                    konamiIndex = 0;
-                }
-            } else {
-                konamiIndex = 0;
-            }
-        });
-
-        function changeTextColor(active) {
-            const elements = document.querySelectorAll('body, body *');
-            if (active) {
-                const randomColor = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
-                elements.forEach(el => {
-                    el.style.color = randomColor;
-                });
-            } else {
-                elements.forEach(el => {
-                    el.style.color = '';
-                });
-            }
-        }
-
-        function showWinrarText() {
-            const winrarText = document.getElementById('winrarText');
-            winrarText.style.display = 'block';
-            setTimeout(() => {
-                winrarText.style.display = 'none';
-            }, 2000); // 2 seconds
-        }
-    </script>
 </body>
 </html>
+
 
