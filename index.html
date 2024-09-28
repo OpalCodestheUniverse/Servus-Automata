@@ -6,16 +6,16 @@
     <title>Servus Automata</title>
 
     <style>
-        /* 1. Correct font-face loading */
+        /* 1. Correct font-face loading with absolute paths for GitHub Pages */
         @font-face {
             font-family: 'Lovecrafts Diary';
-            src: url('./lovecrafts-diary.regular.ttf') format('truetype');
+            src: url("https://opalcodestheuniverse.github.io/servus-automata/lovecrafts-diary.regular.ttf") format('truetype');
             font-display: swap;
         }
 
         @font-face {
             font-family: 'Cthulhumbus Arcade';
-            src: url('./jmh-cthulhumbus-arcade.cthulhumbusarcadeug-regular.ttf') format('truetype');
+            src: url("https://opalcodestheuniverse.github.io/servus-automata/jmh-cthulhumbus-arcade.cthulhumbusarcadeug-regular.ttf") format('truetype');
             font-display: swap;
         }
 
@@ -84,8 +84,8 @@
     </style>
 
     <!-- Preload fonts to ensure faster loading -->
-    <link rel="preload" href="./lovecrafts-diary.regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
-    <link rel="preload" href="./jmh-cthulhumbus-arcade.cthulhumbusarcadeug-regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+    <link rel="preload" href="https://opalcodestheuniverse.github.io/servus-automata/lovecrafts-diary.regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+    <link rel="preload" href="https://opalcodestheuniverse.github.io/servus-automata/jmh-cthulhumbus-arcade.cthulhumbusarcadeug-regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 
 </head>
 <body>
@@ -120,8 +120,8 @@
             });
 
             // Font loading feedback (optional, but gives better feedback on load success)
-            const fontA = new FontFace('Lovecrafts Diary', 'url(./lovecrafts-diary.regular.ttf)');
-            const fontB = new FontFace('Cthulhumbus Arcade', 'url(./jmh-cthulhumbus-arcade.cthulhumbusarcadeug-regular.ttf)');
+            const fontA = new FontFace('Lovecrafts Diary', 'url(https://opalcodestheuniverse.github.io/servus-automata/lovecrafts-diary.regular.ttf)');
+            const fontB = new FontFace('Cthulhumbus Arcade', 'url(https://opalcodestheuniverse.github.io/servus-automata/jmh-cthulhumbus-arcade.cthulhumbusarcadeug-regular.ttf)');
 
             fontA.load().then(function() {
                 document.fonts.add(fontA);
