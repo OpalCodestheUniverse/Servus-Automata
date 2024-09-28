@@ -13,21 +13,31 @@
 
         body {
             margin: 0;
+            background-color: white; /* Set background to white */
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
-            background-color: #222;
         }
 
         .title-box {
             background-color: black;
             color: white;
             font-family: '4K&A', sans-serif;
-            padding: 20px;
+            padding: 20px 40px;
             border-radius: 15px;
             text-align: center;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            margin-top: 20px; /* Space from the top */
+        }
+
+        h1 {
+            font-size: 3rem; /* Adjust size as needed */
+            text-shadow: 
+                -1px -1px 0 #000,  
+                1px -1px 0 #000,
+                -1px 1px 0 #000,
+                1px 1px 0 #000; /* Outline effect */
+            margin: 0; /* Remove default margin */
         }
     </style>
 </head>
