@@ -22,10 +22,17 @@
 
             // Add hover effect for all text elements
             textElements.forEach(element => {
+                // Define the transition for font-family
+                element.style.transition = 'font-family 0.5s ease'; // Smooth transition for font-family
+
                 element.addEventListener('mouseover', function () {
-                    element.style.fontFamily = "'JMH Cthulhumbus Arcade UG'";
-                    element.style.transition = 'font-family 0.5s ease'; // Smooth transition effect
-                    element.style.pointerEvents = 'none'; // Keeps hover effect tight around the text
+                    // Add a class to trigger font change
+                    element.classList.add('hover-effect');
+                });
+
+                element.addEventListener('mouseout', function () {
+                    // Remove the class to revert back to original font
+                    element.classList.remove('hover-effect');
                 });
 
                 // Font loading feedback
