@@ -3,50 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servus Automata</title>
-    <link rel="stylesheet" href="pagestyles.css">
+    <title>Your Page Title</title>
     <style>
-        @font-face {
-            font-family: '4K&A';
-            src: url('https://raw.githubusercontent.com/OpalCodestheUniverse/Servus-Automata/main/4K%26A.ttf') format('truetype');
+        main:before {
+            width: auto;
+            margin-bottom: 2px;
+            border: 2px double black;
+            height: 165px;
+            display: block;
+            content: "";
+            background-image: url('https://xsmultimedia.com/wp-content/uploads/2022/06/photo_2022-06-21_09-57-44.jpg');
+            background-position: center center;
+            background-size: cover;
         }
 
         body {
             margin: 0;
-            background-color: white; /* Background white */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start; /* Align to the top */
-            height: 100vh; /* Full viewport height */
-        }
-
-        .title-box {
-            background-color: white; /* Background white */
-            color: black; /* Text black */
-            font-family: '4K&A', sans-serif;
-            padding: 20px 40px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            margin-top: 20px; /* Space from the top */
+            background-image: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a80ce302-40cd-4d8d-81bf-f3d49237fe25/dg2yl5i-cb78d499-e85d-4216-869b-adb69c774ff7.jpg/v1/fill/w_1192,h_670,q_70,strp/junji_ito_art_by_p4ntysh0t_dg2yl5i-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6IlwvZlwvYTgwY2UzMDItNDBjZC00ZDhkLTgxYmYtZjNkNDkyMzdmZTI1XC9kZzJ5bDVpLWNiNzhkNDk5LWU4NWQtNDIxNi04NjliLWFkYjY5Yzc3NGZmNy5qcGciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.l8WrL2-yzRYWQm9FkS30EbvvCC7UlobOaIzHrDJGLwc");
+            background-attachment: fixed;
         }
 
         h1 {
-            font-size: 128px; /* Font size 128 pixels */
-            color: black; /* Text black */
-            text-shadow: none; /* Remove text shadow */
-            margin: 0; /* Remove default margin */
+            position: relative;
+            color: white;
+            text-shadow: 2px 2px 4px black;
+            text-align: center;
+            margin: 20px;
+            font-size: 3rem;
+        }
+
+        h2 {
+            position: relative;
+            color: white;
+            text-shadow: 2px 2px 4px black;
+            text-align: center;
+            margin: 10px;
+            font-size: 2rem;
+        }
+
+        p {
+            color: white;
+            text-shadow: 2px 2px 4px black;
+            text-align: center;
+            margin: 5px;
+            font-size: 1.2rem;
+        }
+
+        footer {
+            color: white;
+            text-align: center;
+            margin: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="title-box">
-        <h1>Servus Automata</h1>
-    </div>
+    <main></main>
+    <h1>Welcome to My Page</h1>
+    <h2>Subheading Here</h2>
+    <p>This is a paragraph explaining something important.</p>
+    <footer>Footer content goes here</footer>
 </body>
 </html>
-
 
 
 
