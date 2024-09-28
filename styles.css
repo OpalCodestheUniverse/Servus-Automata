@@ -1,13 +1,17 @@
-/* 1. Correct font-face loading with absolute paths for GitHub Pages */
+/* 1. Correct font-face loading with specified formats */
 @font-face {
-    font-family: 'Lovecrafts Diary';
-    src: url("https://opalcodestheuniverse.github.io/servus-automata/lovecrafts-diary.regular.ttf") format('truetype');
+    font-family: 'JMH Cthulhumbus Arcade UG';
+    src: url('https://raw.githubusercontent.com/OpalCodestheUniverse/Servus-Automata/refs/heads/main/JMHCthulhumbusArcadeUG-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Cthulhumbus Arcade';
-    src: url("https://opalcodestheuniverse.github.io/servus-automata/jmh-cthulhumbus-arcade.cthulhumbusarcadeug-regular.ttf") format('truetype');
+    font-family: 'Lovecraft\'s Diary';
+    src: url('https://raw.githubusercontent.com/OpalCodestheUniverse/Servus-Automata/refs/heads/main/LovecraftsDiary.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
     font-display: swap;
 }
 
@@ -23,12 +27,12 @@ body {
     background-image: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a80ce302-40cd-4d8d-81bf-f3d49237fe25/dg2yl5i-cb78d499-e85d-4216-869b-adb69c774ff7.jpg");
     background-attachment: fixed;
     background-size: cover;
-    font-family: 'Lovecrafts Diary', sans-serif;
+    font-family: 'Lovecraft\'s Diary';
 }
 
 /* 3. Heading Styles */
 h1, h2 {
-    font-family: 'Lovecrafts Diary', sans-serif;
+    font-family: 'Lovecraft\'s Diary';
     color: black;
     text-shadow: 2px 2px 4px white;
     text-align: center;
