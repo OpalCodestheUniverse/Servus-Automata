@@ -7,13 +7,13 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         /* General Styling */
-        body, html {
+        body {
             margin: 0;
             padding: 0;
-            height: 100%;
-            font-family: 'Lovecraft\'s Diary', sans-serif; /* Initial font */
             background: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a80ce302-40cd-4d8d-81bf-f3d49237fe25/dg2yl5i-cb78d499-e85d-4216-869b-adb69c774ff7.jpg/v1/fill/w_1192,h_670,q_70,strp/junji_ito_art_by_p4ntysh0t_dg2yl5i-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6IlwvZlwvYTgwY2UzMDItNDBjZC00ZDhkLTgxYmYtZjNkNDkyMzdmZTI1XC9kZzJ5bDVpLWNiNzhkNDk5LWU4NWQtNDIxNi04NjliLWFkYjY5Yzc3NGZmNy5qcGciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.l8WrL2-yzRYWQm9FkS30EbvvCC7UlobOaIzHrDJGLwc') no-repeat center center fixed;
             background-size: cover;
+            font-family: 'Lovecraft\'s Diary', sans-serif;
+            min-height: 100vh;
             color: white;
             text-align: center;
         }
@@ -22,14 +22,11 @@
         .header {
             width: calc(100% - 40px);
             background-color: rgba(0, 0, 0, 0.7);
-            color: white;
             padding: 20px;
-            font-size: 36px;
-            letter-spacing: 2px;
+            font-size: 3rem;
+            text-shadow: 2px 2px 4px white;
             border-radius: 15px;
             margin: 20px auto;
-            background-image: url('https://cdn.discordapp.com/attachments/778427281617977357/1234307234494812311/giphy.gif');
-            background-size: cover;
         }
 
         /* Blog Post Styling */
@@ -45,7 +42,8 @@
         .blog-post h2 a {
             color: white;
             text-decoration: none;
-            transition: font-family 0.3s; /* Transition for font change */
+            transition: color 0.3s;
+            text-shadow: 2px 2px 4px black;
         }
 
         .blog-post p {
@@ -82,7 +80,6 @@
             background-color: black;
             border: none;
             border-radius: 15px;
-            cursor: pointer;
             text-decoration: none;
             margin: 5px;
             transition: background-color 0.3s;
@@ -98,21 +95,21 @@
         }
 
         .hover-effect:hover {
-            font-family: 'JMH Cthulhumbus Arcade UG', sans-serif; /* Second font */
+            font-family: 'JMH Cthulhumbus Arcade UG', sans-serif;
             color: black;
             background-color: rgba(255, 255, 255, 0.7);
         }
 
         /* Responsive Design */
         @media screen and (max-width: 600px) {
-            .header, .read-more, .button {
-                font-size: 18px;
+            .header, .blog-post h2, .read-more, .button {
+                font-size: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="header">Blog Posts</div>
+    <h1 class="hover-effect">Blog Posts</h1>
 
     <div class="blog-post">
         <h2><a href="kaiju-wars-review.html" class="hover-effect">Kaiju Wars: A Must-Play Strategy Game</a></h2>
@@ -133,12 +130,16 @@
         <a class="button hover-effect" href="discord.html">Discord</a>
     </div>
 
+    <footer class="hover-effect">ALL DEALS WITH THE MASTER OF THIS DOMAIN ARE SUBJECT TO CHANGE AT ANY TIME, AS ARE LINKS AND THE RULES OF REALITY ITSELF.</footer>
+
     <script>
         // Add event listeners to all elements with the hover-effect class
         document.querySelectorAll('.hover-effect').forEach(function(element) {
             element.addEventListener('mouseover', function() {
                 element.classList.add('hovered'); // Optional: if you want to manage another class
             });
+        });
     </script>
 </body>
 </html>
+
