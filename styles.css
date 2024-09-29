@@ -50,6 +50,7 @@ h1, h2 {
     color: black;
     text-shadow: 2px 2px 4px white;
     text-align: center;
+    transition: font-family 0.3s, color 0.3s; /* Transition for hover effect */
 }
 
 h1 {
@@ -69,6 +70,7 @@ p {
     text-align: center;
     margin: 5px;
     font-size: 1.2rem;
+    transition: font-family 0.3s, color 0.3s; /* Transition for hover effect */
 }
 
 /* Footer Style */
@@ -78,8 +80,32 @@ footer {
     margin: 20px;
 }
 
-/* Hover Effect Class */
-h1.hover-effect, h2.hover-effect, p.hover-effect, footer.hover-effect {
-    font-family: 'JMH Cthulhumbus Arcade UG';
+/* Button Styles */
+.button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-decoration: none;
+    color: white;
+    background-color: black; /* Match button style */
+    border-radius: 15px;
+    text-align: center;
+    transition: background-color 0.3s;
 }
+
+.button:hover {
+    background-color: rgba(255, 255, 255, 0.5); /* Match hover style */
+}
+
+/* Hover Effect Class */
+.hover-effect {
+    transition: font-family 0.3s, color 0.3s, background-color 0.3s; /* Apply transition */
+}
+
+.hover-effect:hover {
+    font-family: 'JMH Cthulhumbus Arcade UG', sans-serif;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.7); /* Optional background change on hover */
+}
+
 
