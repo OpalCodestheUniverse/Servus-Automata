@@ -7,19 +7,23 @@
     <link rel="stylesheet" href="pagestyles.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'JMH Cthulhumbus Arcade UG', sans-serif; /* Updated font */
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
-            background-color: #f4f4f4;
+            background-color: #333;
         }
         .content {
             max-width: 800px;
             padding: 20px;
-            margin-top: 20px;
+            margin: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
-        .blog-post h1, .blog-post h2 {
+        .content h1, .content h2 {
             text-align: center;
         }
         .left-padding {
@@ -36,75 +40,75 @@
             font-size: 16px;
             text-decoration: none;
             color: white;
-            background-color: #007BFF;
-            border-radius: 5px;
+            background-color: black; /* Match button style */
+            border-radius: 15px;
             text-align: center;
+            transition: background-color 0.3s;
         }
         .button:hover {
-            background-color: #0056b3;
+            background-color: rgba(255, 255, 255, 0.5); /* Match hover style */
         }
     </style>
 </head>
 <body>
 
     <div class="content">
-        <div class="blog-post">
-            <h1>Caves of Qud: A Science Fantasy Roguelike Epic</h1>
-            
-            <div class="button-container">
-                <a href="index.html" class="button" id="homeButton">Home</a>
-                <a href="banappeals.html" class="button" id="banAppealsButton">Ban Appeals</a>
-                <a href="blogposts.html" class="button" id="blogPostsButton">Blog Posts</a>
-            </div>
-
-            <p><strong>Caves of Qud</strong> has carved a niche in the roguelike genre with its rich history, deep simulation, and a world brimming with arcane secrets. Whether you’re a fan of science fantasy or complex, emergent gameplay, Caves of Qud is a title that promises endless adventures.</p>
-
-            <h2>Deeply Rooted in History and Simulation</h2>
-            <p>Imagine a game where the past layers of civilizations intertwine with the present, offering a sense of depth and history rarely seen. <strong>Caves of Qud</strong> takes you on a journey through a world where every action has a consequence, and the environment is as dynamic as the creatures that inhabit it.</p>
-
-            <h2>Immersive Worldbuilding</h2>
-            <p>Set in a retrofuturistic world, Caves of Qud invites players to explore its meticulously crafted settings. From the salt-spangled dunes to lush jungles, the game’s environments are as diverse as they are dangerous. Your journey will see you digging through walls, melting obstacles, and engaging with a myriad of sentient beings.</p>
-
-            <ul class="left-padding">
-                <li><strong>Deep Physical Simulation:</strong> Don’t like the wall blocking your way? Dig through it with a pickaxe, or eat through it with your corrosive gas mutation, or melt it to lava. Every wall has a melting point, adding a layer of strategy to your explorations.</li>
-                <li><strong>Fully Simulated Creatures:</strong> Every monster and NPC is as fully simulated as the player, with levels, skills, equipment, faction allegiances, and body parts. Psionically dominate a spider and experience the world through its eyes.</li>
-                <li><strong>Dynamic Faction System:</strong> Align yourself with over 70 factions, including apes, crabs, trees, and robots. Your choices will shape your relationships and the world around you.</li>
-            </ul>
-
-            <h2>Expressive Character Creation</h2>
-            <p>The character creation in Caves of Qud is among the most detailed in any game. You can play as a mutant with unique abilities or a true kin from ancient eco-domes. The possibilities are vast, ensuring that each playthrough feels fresh and exciting.</p>
-
-            <ul class="left-padding">
-                <li>Over 70 mutations to choose from – wings, two heads, four arms, flaming hands, teleportation, and more.</li>
-                <li>Dozens of cybernetic implants – night vision, translucent skin, carbide fists, and more to enhance your character.</li>
-                <li>24 castes and kits that provide a rich backstory and unique abilities for your character.</li>
-                <li>Preset characters for those who prefer to jump straight into the action.</li>
-            </ul>
-
-            <h2>Multiple Play Modes</h2>
-            <p>Caves of Qud offers several modes to suit different playstyles:</p>
-            <ul class="left-padding">
-                <li><strong>Classic:</strong> Permadeath mode for those who enjoy a true roguelike challenge.</li>
-                <li><strong>Roleplay:</strong> Save your progress at checkpoints in settlements, offering a more traditional RPG experience.</li>
-                <li><strong>Wander:</strong> Focus on exploration without the pressure of combat. Gain experience by discovering new locations and interacting with legendary creatures.</li>
-                <li><strong>Daily:</strong> A single chance with a fixed character and world seed. See how long you can survive.</li>
-            </ul>
-
-            <h2>Continual Development</h2>
-            <p>Even in its nearly complete state, Caves of Qud continues to evolve. The developers are dedicated to adding new features, including:</p>
-            <ul class="left-padding">
-                <li>The final leg of the main quest.</li>
-                <li>A fully graphical UI.</li>
-                <li>Hundreds of new visual and sound effects.</li>
-                <li>Ongoing polish and stability improvements.</li>
-            </ul>
-
-            <h2>An Epic Journey</h2>
-            <p>Caves of Qud is more than just a game; it’s a labor of love that has been in development for over fifteen years. Co-creators Jason Grinblat and Brian Bucklew have poured their passion into creating a world where handwritten stories blend seamlessly with emergent narratives. The result is a game that feels alive, with each playthrough offering new challenges and discoveries.</p>
-
-            <p>If you’re ready to embark on an adventure filled with wonder, danger, and limitless possibilities, Caves of Qud is waiting for you. Live and drink, friend, and see what secrets you can uncover in the depths of Qud.</p>
+        <h1>Caves of Qud: A Science Fantasy Roguelike Epic</h1>
+        
+        <div class="button-container">
+            <a href="index.html" class="button" id="homeButton">Home</a>
+            <a href="banappeals.html" class="button" id="banAppealsButton">Ban Appeals</a>
+            <a href="blogposts.html" class="button" id="blogPostsButton">Blog Posts</a>
         </div>
+
+        <p><strong>Caves of Qud</strong> has carved a niche in the roguelike genre with its rich history, deep simulation, and a world brimming with arcane secrets. Whether you’re a fan of science fantasy or complex, emergent gameplay, Caves of Qud is a title that promises endless adventures.</p>
+
+        <h2>Deeply Rooted in History and Simulation</h2>
+        <p>Imagine a game where the past layers of civilizations intertwine with the present, offering a sense of depth and history rarely seen. <strong>Caves of Qud</strong> takes you on a journey through a world where every action has a consequence, and the environment is as dynamic as the creatures that inhabit it.</p>
+
+        <h2>Immersive Worldbuilding</h2>
+        <p>Set in a retrofuturistic world, Caves of Qud invites players to explore its meticulously crafted settings. From the salt-spangled dunes to lush jungles, the game’s environments are as diverse as they are dangerous. Your journey will see you digging through walls, melting obstacles, and engaging with a myriad of sentient beings.</p>
+
+        <ul class="left-padding">
+            <li><strong>Deep Physical Simulation:</strong> Don’t like the wall blocking your way? Dig through it with a pickaxe, or eat through it with your corrosive gas mutation, or melt it to lava. Every wall has a melting point, adding a layer of strategy to your explorations.</li>
+            <li><strong>Fully Simulated Creatures:</strong> Every monster and NPC is as fully simulated as the player, with levels, skills, equipment, faction allegiances, and body parts. Psionically dominate a spider and experience the world through its eyes.</li>
+            <li><strong>Dynamic Faction System:</strong> Align yourself with over 70 factions, including apes, crabs, trees, and robots. Your choices will shape your relationships and the world around you.</li>
+        </ul>
+
+        <h2>Expressive Character Creation</h2>
+        <p>The character creation in Caves of Qud is among the most detailed in any game. You can play as a mutant with unique abilities or a true kin from ancient eco-domes. The possibilities are vast, ensuring that each playthrough feels fresh and exciting.</p>
+
+        <ul class="left-padding">
+            <li>Over 70 mutations to choose from – wings, two heads, four arms, flaming hands, teleportation, and more.</li>
+            <li>Dozens of cybernetic implants – night vision, translucent skin, carbide fists, and more to enhance your character.</li>
+            <li>24 castes and kits that provide a rich backstory and unique abilities for your character.</li>
+            <li>Preset characters for those who prefer to jump straight into the action.</li>
+        </ul>
+
+        <h2>Multiple Play Modes</h2>
+        <p>Caves of Qud offers several modes to suit different playstyles:</p>
+        <ul class="left-padding">
+            <li><strong>Classic:</strong> Permadeath mode for those who enjoy a true roguelike challenge.</li>
+            <li><strong>Roleplay:</strong> Save your progress at checkpoints in settlements, offering a more traditional RPG experience.</li>
+            <li><strong>Wander:</strong> Focus on exploration without the pressure of combat. Gain experience by discovering new locations and interacting with legendary creatures.</li>
+            <li><strong>Daily:</strong> A single chance with a fixed character and world seed. See how long you can survive.</li>
+        </ul>
+
+        <h2>Continual Development</h2>
+        <p>Even in its nearly complete state, Caves of Qud continues to evolve. The developers are dedicated to adding new features, including:</p>
+        <ul class="left-padding">
+            <li>The final leg of the main quest.</li>
+            <li>A fully graphical UI.</li>
+            <li>Hundreds of new visual and sound effects.</li>
+            <li>Ongoing polish and stability improvements.</li>
+        </ul>
+
+        <h2>An Epic Journey</h2>
+        <p>Caves of Qud is more than just a game; it’s a labor of love that has been in development for over fifteen years. Co-creators Jason Grinblat and Brian Bucklew have poured their passion into creating a world where handwritten stories blend seamlessly with emergent narratives. The result is a game that feels alive, with each playthrough offering new challenges and discoveries.</p>
+
+        <p>If you’re ready to embark on an adventure filled with wonder, danger, and limitless possibilities, Caves of Qud is waiting for you. Live and drink, friend, and see what secrets you can uncover in the depths of Qud.</p>
     </div>
 
 </body>
 </html>
+
