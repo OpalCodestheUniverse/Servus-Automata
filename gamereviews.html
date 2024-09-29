@@ -12,7 +12,7 @@
             padding: 0;
             background: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a80ce302-40cd-4d8d-81bf-f3d49237fe25/dg2yl5i-cb78d499-e85d-4216-869b-adb69c774ff7.jpg/v1/fill/w_1192,h_670,q_70,strp/junji_ito_art_by_p4ntysh0t_dg2yl5i-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6IlwvZlwvYTgwY2UzMDItNDBjZC00ZDhkLTgxYmYtZjNkNDkyMzdmZTI1XC9kZzJ5bDVpLWNiNzhkNDk5LWU4NWQtNDIxNi04NjliLWFkYjY5Yzc3NGZmNy5qcGciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.l8WrL2-yzRYWQm9FkS30EbvvCC7UlobOaIzHrDJGLwc') no-repeat center center fixed;
             background-size: cover;
-            font-family: 'Lovecraft\'s Diary', sans-serif;
+            font-family: 'JMH Cthulhumbus Arcade UG', sans-serif; /* Updated font */
             min-height: 100vh;
             color: white;
             text-align: center;
@@ -42,7 +42,6 @@
         .blog-post h2 a {
             color: white;
             text-decoration: none;
-            transition: color 0.3s;
             text-shadow: 2px 2px 4px black;
         }
 
@@ -60,12 +59,6 @@
             border: none;
             border-radius: 15px;
             text-decoration: none;
-            transition: transform 0.3s, background-color 0.3s;
-        }
-
-        .read-more:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            transform: scale(1.1);
         }
 
         /* Button Container */
@@ -82,22 +75,6 @@
             border-radius: 15px;
             text-decoration: none;
             margin: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .button:hover {
-            background-color: rgba(255, 255, 255, 0.5);
-        }
-
-        /* Hover Effect */
-        .hover-effect {
-            transition: font-family 0.3s, color 0.3s, background-color 0.3s;
-        }
-
-        .hover-effect:hover {
-            font-family: 'JMH Cthulhumbus Arcade UG', sans-serif;
-            color: black;
-            background-color: rgba(255, 255, 255, 0.7);
         }
 
         /* Responsive Design */
@@ -109,36 +86,31 @@
     </style>
 </head>
 <body>
-    <h1 class="hover-effect">Blog Posts</h1>
+    <h1>Blog Posts</h1>
 
     <div class="blog-post">
-        <h2><a href="kaiju-wars-review.html" class="hover-effect">Kaiju Wars: A Must-Play Strategy Game</a></h2>
+        <h2><a href="kaiju-wars-review.html">Kaiju Wars: A Must-Play Strategy Game</a></h2>
         <p>Kaiju Wars has stomped into the strategy gaming scene with a roar, bringing a brilliant sense of style and tight tactical gameplay. A must-play for fans of strategy games and kaiju...</p>
-        <a class="read-more hover-effect" href="kaiju-wars-review.html">Read More</a>
+        <a class="read-more" href="kaiju-wars-review.html">Read More</a>
     </div>
 
     <div class="blog-post">
-        <h2><a href="caves-of-qud-review.html" class="hover-effect">Caves of Qud: A Science Fantasy Roguelike</a></h2>
+        <h2><a href="caves-of-qud-review.html">Caves of Qud: A Science Fantasy Roguelike</a></h2>
         <p>Caves of Qud is a deeply simulated, biologically diverse, richly cultured world. Explore its unique world filled with strange wonders...</p>
-        <a class="read-more hover-effect" href="caves-of-qud-review.html">Read More</a>
+        <a class="read-more" href="caves-of-qud-review.html">Read More</a>
     </div>
 
     <div class="button-container">
-        <a class="button hover-effect" href="blog-posts.html">Blog Posts</a>
-        <a class="button hover-effect" href="recipes.html">Recipes</a>
-        <a class="button hover-effect" href="game-reviews.html">Game Reviews</a>
-        <a class="button hover-effect" href="discord.html">Discord</a>
+        <a class="button" href="blog-posts.html">Blog Posts</a>
+        <a class="button" href="recipes.html">Recipes</a>
+        <a class="button" href="game-reviews.html">Game Reviews</a>
+        <a class="button" href="discord.html">Discord</a>
     </div>
 
-    <footer class="hover-effect">ALL DEALS WITH THE MASTER OF THIS DOMAIN ARE SUBJECT TO CHANGE AT ANY TIME, AS ARE LINKS AND THE RULES OF REALITY ITSELF.</footer>
+    <footer>ALL DEALS WITH THE MASTER OF THIS DOMAIN ARE SUBJECT TO CHANGE AT ANY TIME, AS ARE LINKS AND THE RULES OF REALITY ITSELF.</footer>
 
     <script>
-        // Add event listeners to all elements with the hover-effect class
-        document.querySelectorAll('.hover-effect').forEach(function(element) {
-            element.addEventListener('mouseover', function() {
-                element.classList.add('hovered'); // Optional: if you want to manage another class
-            });
-        });
+        // Removed hover effects and JavaScript
     </script>
 </body>
 </html>
