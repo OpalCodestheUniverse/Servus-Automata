@@ -11,7 +11,7 @@
             background-attachment: fixed;
             background-size: cover;
             background-position: center;
-            font-family: 'Lovecraft\'s Diary', sans-serif;
+            font-family: 'JMH Cthulhumbus Arcade UG', sans-serif;
             min-height: 100vh;
             color: white;
             text-align: center;
@@ -57,6 +57,25 @@
             border-radius: 12px;
         }
 
+        .button {
+            display: inline-block;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 15px 30px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 1.5rem;
+            border: 2px solid white;
+            border-radius: 12px;
+            margin: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: rgba(255, 255, 255, 0.7);
+            color: black;
+        }
+
         nav {
             margin: 20px;
             display: flex;
@@ -65,39 +84,18 @@
         }
 
         nav a {
-            color: white;
             text-decoration: none;
-            font-family: 'JMH Cthulhumbus Arcade UG', sans-serif;
-            font-size: 1.5rem;
-            padding: 10px;
-            border: 2px solid white;
-            border-radius: 12px;
-            transition: background-color 0.3s ease;
-        }
-
-        nav a:hover {
-            background-color: rgba(255, 255, 255, 0.7);
-            color: black;
-        }
-
-        audio {
-            margin: 20px;
         }
     </style>
 </head>
 <body>
     <h1>Servus Automata - Recipes</h1>
 
-    <audio controls autoplay loop>
-        <source src="https://chickenspace815072624.files.wordpress.com/2023/12/kenshi_-scorching-wind-more-extended-1.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
-    </audio>
-
     <nav>
-        <a href="banappeals.html">Ban Appeals</a>
-        <a href="recipes.html">Recipes</a>
-        <a href="#blog-posts">Blog Posts</a>
-        <a href="#socials">Socials</a>
+        <a href="banappeals.html" class="button">Ban Appeals</a>
+        <a href="recipes.html" class="button">Recipes</a>
+        <a href="#blog-posts" class="button">Blog Posts</a>
+        <a href="#socials" class="button">Socials</a>
     </nav>
 
     <!-- Recipe 1: Opal's Personal Meatloaf Recipe -->
@@ -105,7 +103,7 @@
         <h2>Opal's Personal Meatloaf Recipe</h2>
         <p>Never made anything and want something basic to get you started? Here's what you'll need!</p>
         <img src="https://chickenspace815072624.files.wordpress.com/2024/01/img_9677.jpg" alt="Opal's Meatloaf">
-        <a href="#meatloaf">Read Recipe</a>
+        <a href="#meatloaf" class="button">Read Recipe</a>
     </section>
 
     <!-- Recipe 2: American Take on Korean Style Fried Chicken -->
@@ -113,7 +111,7 @@
         <h2>American Take on Korean Style Fried Chicken - Sauceless</h2>
         <p>Brine your chicken overnight, this will ensure your meat is tender and flavorful...</p>
         <img src="https://chickenspace815072624.files.wordpress.com/2024/01/36096650-e942-4c15-a4fb-920b7783d91e.jpg" alt="Korean Fried Chicken">
-        <a href="#fried-chicken">Read Recipe</a>
+        <a href="#fried-chicken" class="button">Read Recipe</a>
     </section>
 
     <footer>ALL DEALS WITH THE MASTER OF THIS DOMAIN ARE SUBJECT TO CHANGE AT ANY TIME, AS ARE LINKS AND THE RULES OF REALITY ITSELF.</footer>
