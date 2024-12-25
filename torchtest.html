@@ -3,31 +3,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wall Sconce Torch</title>
+  <title>Medieval Wall Sconce Torches</title>
   <style>
     body {
-      background-color: #121212; /* Dark background for dramatic effect */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      background-color: #1a1a1a; /* Dark medieval background */
+      color: #f5f5f5; /* Light text color */
+      font-family: "Georgia", serif;
       margin: 0;
-      font-family: monospace;
-      color: #f5f5f5;
-    }
-
-    #sconce-torch {
+      padding: 0;
       display: flex;
-      flex-direction: column;
       align-items: center;
+      justify-content: center;
+      height: 100vh;
     }
 
-    #flame {
-      width: 15px;
-      height: 25px;
+    #content-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .torch {
+      position: relative;
+      width: 60px;
+    }
+
+    .flame {
+      width: 30px;
+      height: 50px;
       background: radial-gradient(circle, orange, yellow);
       border-radius: 50%;
+      margin: 0 auto;
       animation: flicker 0.2s infinite alternate;
+    }
+
+    .torch-body {
+      width: 15px;
+      height: 100px;
+      background: linear-gradient(90deg, #3a3a3a, #6b6b6b, #3a3a3a); /* Metallic look */
+      margin: 10px auto 0;
+      border-radius: 5px;
+    }
+
+    .torch-holder {
+      width: 50px;
+      height: 15px;
+      background: linear-gradient(90deg, #6b6b6b, #3a3a3a, #6b6b6b);
+      border-radius: 5px;
+      margin: 0 auto;
     }
 
     @keyframes flicker {
@@ -36,50 +60,45 @@
         opacity: 1;
       }
       50% {
-        transform: scale(1.2) translateY(-3px);
+        transform: scale(1.2) translateY(-2px);
         opacity: 0.8;
       }
       100% {
-        transform: scale(0.8) translateY(2px);
+        transform: scale(0.8) translateY(1px);
         opacity: 0.9;
       }
     }
 
-    #torch-body {
-      background: linear-gradient(90deg, #3a3a3a, #6b6b6b, #3a3a3a); /* Metallic look */
-      padding: 10px 20px;
-      border-radius: 5px;
+    #text-block {
+      max-width: 600px;
       text-align: center;
+      padding: 20px;
+      border: 3px solid #6b6b6b;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #2a2a2a, #1a1a1a, #2a2a2a);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
     }
   </style>
 </head>
 <body>
-  <div id="sconce-torch">
-    <div id="flame"></div>
-    <pre id="torch-body">
-    \  |  /
-     \ | /
-      \|/
-       |
-       |
-      [ ]
-      | |
-      | |
-      | |
-      | |
-     /___\
-    </pre>
+  <div id="content-wrapper">
+    <div class="torch">
+      <div class="flame"></div>
+      <div class="torch-body"></div>
+      <div class="torch-holder"></div>
+    </div>
+
+    <div id="text-block">
+      <h1>Welcome to the Medieval Tavern</h1>
+      <p>Step into a world of knights and dragons, where the glow of torches lights the path to adventure.</p>
+    </div>
+
+    <div class="torch">
+      <div class="flame"></div>
+      <div class="torch-body"></div>
+      <div class="torch-holder"></div>
+    </div>
   </div>
-
-  <script>
-    const flame = document.getElementById('flame');
-
-    setInterval(() => {
-      const scale = Math.random() * 0.3 + 0.9; // Random scale between 0.9 and 1.2
-      const translateY = Math.random() * 6 - 3; // Random Y position between -3px and 3px
-      flame.style.transform = `scale(${scale}) translateY(${translateY}px)`;
-      flame.style.opacity = (Math.random() * 0.4 + 0.6).toFixed(2); // Random opacity between 0.6 and 1
-    }, 150);
-  </script>
 </body>
 </html>
+
