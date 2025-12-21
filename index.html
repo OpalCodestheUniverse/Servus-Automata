@@ -68,15 +68,24 @@
     </div>
 
     <script>
-document.querySelectorAll('.mystic-text').forEach(element => {
-    const text = element.textContent;
+let globalDelay = 0;
+
+// Targets everything you want to animate sequentially
+document.querySelectorAll('.mystic-text').forEach((element) => {
+    const text = element.textContent.trim();
     element.textContent = '';
+    
     [...text].forEach((char, i) => {
         const span = document.createElement('span');
         span.textContent = char === ' ' ? '\u00A0' : char;
-        span.style.animationDelay = `${i * 0.05}s`; // Offset each letter
+        
+        // Sequential delay: previous elements + current letter offset
+        span.style.animationDelay = `${globalDelay + (i * 0.04)}s`;
         element.appendChild(span);
     });
+
+    // Add to the total delay so the next block waits
+    globalDelay += (text.length * 0.04) + 0.6; 
 });
 </script>
 
