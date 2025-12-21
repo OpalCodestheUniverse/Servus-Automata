@@ -3,88 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landing Page | Placeholder</title>
-    <style>
-        /* Basic Reset */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #fff; background-color: #1a1a1a; }
-
-        /* Hero Section with Background */
-        .hero {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-                        url('placeholder.jpg') no-repeat center center/cover;
-        }
-
-        .hero-content { max-width: 800px; padding: 20px; }
-        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; }
-        .hero p { font-size: 1.25rem; margin-bottom: 2rem; color: #ddd; }
-
-        /* Buttons */
-        .btn {
-            display: inline-block;
-            background: #007bff;
-            color: #fff;
-            padding: 12px 30px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background 0.3s ease;
-        }
-        .btn:hover { background: #0056b3; }
-
-        /* Features Section */
-        .features { padding: 80px 20px; background: #333; color: #fff; text-align: center; }
-        .container { max-width: 1100px; margin: 0 auto; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-top: 40px; }
-        .feature-card { padding: 20px; border: 1px solid #eee; border-radius: 10px; }
-
-        /* Footer */
-        footer { padding: 40px; text-align: center; background: #111; color: #777; font-size: 0.9rem; }
-    </style>
+    <title>Servus Automata | LOG1C</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="archive-body"> <div class="archive-container" style="margin-top: 50px; margin-bottom: 50px;">
+        <header class="archive-header">
+            <h1 class="archive-title">Servus Automata</h1>
+            <p class="subtitle">An easy way to contact LOG1C and view his various projects.</p>
+        </header>
 
-    <header class="hero">
-        <div class="hero-content">
-            <h1>Servus Automata</h1>
-            <p>This is an easy way both to contact LOG1C and view his various projects.</p>
-            <a href="recipes.html" class="btn">Recipes</a>
-            <a href="#" class="btn">Game Reviews</a>
-            <a href="#" class="btn">Writing</a>
-            <a href="#" class="btn">Blog</a>
-        </div>
-    </header>
+        <nav class="index-nav" style="margin-bottom: 50px;">
+            <a href="recipes.html" class="read-more-btn" style="margin: 5px; display: inline-block;">Recipes</a>
+            <a href="#" class="read-more-btn" style="margin: 5px; display: inline-block;">Game Reviews</a>
+            <a href="#" class="read-more-btn" style="margin: 5px; display: inline-block;">Writing</a>
+            <a href="archive.html" class="read-more-btn" style="margin: 5px; display: inline-block;">Blog</a>
+        </nav>
 
-    <section class="features">
-        <div class="container">
-            <h2>Why Hire Me?</h2>
-            <div class="grid">
-                <div class="feature-card">
-                    <h3>Reliable</h3>
-                    <p>I will remain in consistent communication with you until our business has concluded. No more flakey fiverr coders, get a real coder today.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Responsive Designs that function.</h3>
-                    <p>From websites to automation scripts, my work is clean, concise, and most of all, responsive.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Versatile.</h3>
-                    <p>I have literal years of experience in customer interaction and hobby coding.</p>
-                </div>
+        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 40px 0;">
+
+        <section class="features-dark">
+            <h2 class="archive-title" style="font-size: 2.5rem;">Why Hire Me?</h2>
+            
+            <div class="post-list">
+                <article class="post-item">
+                    <h2 class="post-link">Reliable</h2>
+                    <p class="post-excerpt">I will remain in consistent communication with you until our business has concluded. No more flakey fiverr coders, get a real coder today.</p>
+                </article>
+
+                <article class="post-item">
+                    <h2 class="post-link">Responsive Designs</h2>
+                    <p class="post-excerpt">From websites to automation scripts, my work is clean, concise, and most of all, responsive.</p>
+                </article>
+
+                <article class="post-item">
+                    <h2 class="post-link">Versatile</h2>
+                    <p class="post-excerpt">I have literal years of experience in customer interaction and hobby coding.</p>
+                </article>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <footer>
-        <p>&copy; 2025 LOG1C LLC. All rights reserved.</p>
-    </footer>
+        <footer class="archive-footer">
+            <p>&copy; 2025 LOG1C LLC. All rights reserved.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
 
 </body>
 </html>
