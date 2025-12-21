@@ -27,7 +27,7 @@
 
 /* Fixing Headings inside the Archive */
 .archive-title {
-    font-family: 'JMH Cthulhumbus Arcade UG', sans-serif;
+    font-family: JMH_Cthulhumbus, sans-serif;
     color: #ffffff !important; /* Force white to override your black text style */
     text-shadow: 0 0 15px rgba(255, 0, 127, 0.4) !important; /* Subtle pink glow to match eyes */
     font-size: 3.5rem;
