@@ -1,68 +1,59 @@
 /* Font Definitions */
 @font-face {
-    font-family: 'JMH Cthulhumbus Arcade UG';
+    font-family: 'ArcadeFont';
     src: url('JMH_Cthulhumbus.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
 }
 
 @font-face {
-    font-family: 'Lovecrafts Diary';
-    /* Updated to match your exact filename */
+    font-family: 'RuneFont';
     src: url("Lovecraft's Diary.ttf") format('truetype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
 }
 
 .archive-body {
     margin: 0;
     background: #000 url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a80ce302-40cd-4d8d-81bf-f3d49237fe25/dg2yl5i-cb78d499-e85d-4216-869b-adb69c774ff7.jpg/v1/fill/w_1192,h_670,q_70,strp/junji_ito_art_by_p4ntysh0t_dg2yl5i-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6IlwvZlwvYTgwY2UzMDItNDBjZC00ZDhkLTgxYmYtZjNkNDkyMzdmZTI1XC9kZzJ5bDVpLWNiNzhkNDk5LWU4NWQtNDIxNi04NjliLWFkYjY5Yzc3NGZmNy5qcGciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.l8WrL2-yzRYWQm9FkS30EbvvCC7UlobOaIzHrDJGLwc") no-repeat center center fixed;
     background-size: cover;
-    /* Main Site Font */
-    font-family: 'JMH Cthulhumbus Arcade UG', sans-serif; 
+    font-family: 'ArcadeFont', sans-serif; 
 }
 
-/* Sequential Mystic Transition */
+/* The Transition Logic */
 .mystic-text span {
     display: inline-block;
-    /* Force initial Rune state */
-    font-family: 'Lovecrafts Diary', serif !important; 
     opacity: 0;
-    animation: runeToArcade 2.8s forwards;
+    /* This starts the element as the Rune font */
+    font-family: 'RuneFont', serif;
+    animation: runeToArcade 3s forwards;
     
-    /* Thick black outline to make text pop against Junji Ito art */
+    /* Thick Outline Pop */
     text-shadow: 
-        -3px -3px 0 #000,  
-         3px -3px 0 #000,
-        -3px  3px 0 #000,
-         3px  3px 0 #000,
-         0px  0px 15px rgba(255, 0, 127, 0.8); /* Pink glow to match artwork eyes */
+        -2px -2px 0 #000,  
+         2px -2px 0 #000,
+        -2px  2px 0 #000,
+         2px  2px 0 #000,
+         0px  0px 10px #ff007f;
 }
 
 @keyframes runeToArcade {
     0% {
         opacity: 0;
-        filter: blur(4px);
-        transform: translateY(5px);
+        font-family: 'RuneFont', serif;
+        filter: blur(5px);
     }
-    30% {
+    10% {
         opacity: 1;
         filter: blur(0px);
-        color: #ff007f; /* Glow color during Rune phase */
-        font-family: 'Lovecrafts Diary', serif;
+        font-family: 'RuneFont', serif;
     }
     80% {
-        /* Keep Rune font for most of the animation */
-        font-family: 'Lovecrafts Diary', serif;
+        /* Still Runes */
+        font-family: 'RuneFont', serif;
+        color: #ff007f;
     }
     100% {
         opacity: 1;
+        /* Swaps to Arcade at the very end */
+        font-family: 'ArcadeFont', sans-serif;
         color: #fff;
-        /* Swap to the solid Arcade font at the very end */
-        font-family: 'JMH Cthulhumbus Arcade UG', sans-serif; 
-        transform: translateY(0);
     }
 }
 
