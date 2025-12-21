@@ -1,197 +1,100 @@
-/* Font-Face Definitions */
-@font-face {
-    font-family: 'JMH Cthulhumbus Arcade UG';
-    src: url('https://raw.githubusercontent.com/OpalCodestheUniverse/Servus-Automata/refs/heads/main/JMHCthulhumbusArcadeUG-Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
+/* ... Keep your @font-face and existing body styles at the top ... */
 
-@font-face {
-    font-family: 'Lovecraft\'s Diary';
-    src: url('https://raw.githubusercontent.com/OpalCodestheUniverse/Servus-Automata/refs/heads/main/LovecraftsDiary.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-body {
+/* Specific Override for the Archive Page Body */
+.archive-body {
     margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 60px 20px;
     background-image: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a80ce302-40cd-4d8d-81bf-f3d49237fe25/dg2yl5i-cb78d499-e85d-4216-869b-adb69c774ff7.jpg/v1/fill/w_1192,h_670,q_70,strp/junji_ito_art_by_p4ntysh0t_dg2yl5i-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6IlwvZlwvYTgwY2UzMDItNDBjZC00ZDhkLTgxYmYtZjNkNDkyMzdmZTI1XC9kZzJ5bDVpLWNiNzhkNDk5LWU4NWQtNDIxNi04NjliLWFkYjY5Yzc3NGZmNy5qcGciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.l8WrL2-yzRYWQm9FkS30EbvvCC7UlobOaIzHrDJGLwc");
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
-    font-family: 'Lovecraft\'s Diary', sans-serif;
-    min-height: 100vh;
 }
 
-/* Title Card Styles */
-.title-card {
-    background-image: url("https://xsmultimedia.com/wp-content/uploads/2022/06/photo_2022-06-21_09-57-44.jpg");
-    background-size: cover;
-    background-position: top center;
-    height: 250px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.site-title {
-    font-family: 'JMH Cthulhumbus Arcade UG', sans-serif;
-    color: white;
-    font-size: 4rem;
-    text-shadow: 3px 3px 6px black;
-    text-align: center;
-    margin: 0;
-}
-
-/* Heading Styles */
-h1, h2 {
-    color: black;
-    text-shadow: 2px 2px 4px white;
-    text-align: center;
-    transition: font-family 0.3s, color 0.3s; /* Transition for hover effect */
-}
-
-h1 {
-    margin: 20px;
-    font-size: 3rem;
-}
-
-h2 {
-    margin: 10px;
-    font-size: 2rem;
-}
-
-/* Paragraph Style */
-p {
-    color: white;
-    text-shadow: 2px 2px 4px black;
-    text-align: center;
-    margin: 5px;
-    font-size: 1.2rem;
-    transition: font-family 0.3s, color 0.3s; /* Transition for hover effect */
-}
-
-/* Footer Style */
-footer {
-    color: white;
-    text-align: center;
-    margin: 20px;
-}
-
-/* Button Styles */
-.button {
-    margin: 0 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    text-decoration: none;
-    color: white;
-    background-color: black; /* Match button style */
-    border-radius: 15px;
-    text-align: center;
-    transition: background-color 0.3s;
-}
-
-.button:hover {
-    background-color: rgba(255, 255, 255, 0.5); /* Match hover style */
-}
-
-/* Hover Effect Class */
-.hover-effect {
-    transition: font-family 0.3s, color 0.3s, background-color 0.3s; /* Apply transition */
-}
-
-.hover-effect:hover {
-    font-family: 'JMH Cthulhumbus Arcade UG', sans-serif;
-    color: black;
-    background-color: rgba(255, 255, 255, 0.7); /* Optional background change on hover */
-}
-
-/* Archive Page Specific Styles */
-.archive-page {
-    background: url('placeholder.jpg') no-repeat center center fixed;
-    background-size: cover;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 50px 20px;
-}
-
+/* The "Glassmorphism" Container from the Mockup */
 .archive-container {
-    background: rgba(0, 0, 0, 0.8); /* Dark overlay for readability */
-    backdrop-filter: blur(8px); /* Optional: blurs background slightly */
-    max-width: 700px;
+    background: rgba(15, 15, 15, 0.85); /* Deep dark semi-transparent */
+    backdrop-filter: blur(10px); 
+    max-width: 750px;
     width: 100%;
-    padding: 60px;
-    border-radius: 4px;
+    padding: 50px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    border-radius: 2px;
 }
 
-.archive-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 5px;
-    letter-spacing: 1px;
-    color: #ffffff;
+/* Fixing Headings inside the Archive */
+.archive-title {
+    font-family: 'JMH Cthulhumbus Arcade UG', sans-serif;
+    color: #ffffff !important; /* Force white to override your black text style */
+    text-shadow: 0 0 15px rgba(255, 0, 127, 0.4) !important; /* Subtle pink glow to match eyes */
+    font-size: 3.5rem;
+    margin-bottom: 10px;
 }
 
 .subtitle {
-    color: #bbb;
-    font-style: italic;
-    margin-bottom: 40px;
+    color: #888 !important;
+    font-family: 'Lovecraft\'s Diary', serif;
+    margin-bottom: 50px;
+    text-shadow: none !important;
 }
 
-.post-list {
-    text-align: left;
-    margin-top: 20px;
-}
-
+/* Post Items */
 .post-item {
-    margin-bottom: 40px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: left;
+    margin-bottom: 50px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 30px;
 }
 
 .post-date {
+    color: #555;
     font-size: 0.8rem;
-    color: #888;
-    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
-.post-item h2 a {
-    color: #fff;
+.post-link a {
+    color: #e0e0e0 !important;
     text-decoration: none;
-    font-size: 1.5rem;
-    display: block;
-    margin: 10px 0;
-    transition: color 0.3s;
+    font-family: 'JMH Cthulhumbus Arcade UG', sans-serif;
+    font-size: 2rem;
+    text-shadow: none !important;
+    transition: 0.3s;
 }
 
-.post-item h2 a:hover {
-    color: #ff4d4d; /* Accent color on hover */
+.post-link a:hover {
+    color: #ff007f !important; /* Vivid pink hover to match the artwork eyes */
 }
 
-.post-item p {
-    color: #ccc;
-    font-size: 1rem;
+.post-excerpt {
+    color: #bbb !important;
+    text-shadow: none !important;
+    text-align: left !important;
+    margin: 15px 0 !important;
+    font-family: 'Lovecraft\'s Diary', serif;
     line-height: 1.6;
 }
 
-.read-more {
-    display: inline-block;
-    margin-top: 15px;
-    color: #ff4d4d;
+.read-more-btn {
+    color: #ff007f;
     text-decoration: none;
-    font-weight: bold;
     font-size: 0.9rem;
+    font-weight: bold;
+    border: 1px solid #ff007f;
+    padding: 5px 15px;
+    border-radius: 20px;
+    transition: 0.3s;
 }
 
-footer {
-    margin-top: 40px;
-    font-size: 0.8rem;
-    color: #666;
+.read-more-btn:hover {
+    background: #ff007f;
+    color: white;
 }
 
+.archive-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+    color: #444 !important;
+}
