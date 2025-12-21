@@ -98,3 +98,36 @@
     padding-top: 20px;
     color: #444 !important;
 }
+
+.contact-form {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.contact-form input, 
+.contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 0, 127, 0.3);
+    color: white;
+    font-family: 'Lovecraft\'s Diary', serif;
+    font-size: 1.1rem;
+    border-radius: 4px;
+}
+
+.contact-form input:focus, 
+.contact-form textarea:focus {
+    outline: none;
+    border-color: #ff007f;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.contact-form ::placeholder {
+    color: #666;
+}
