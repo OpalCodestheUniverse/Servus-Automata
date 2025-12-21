@@ -1,6 +1,15 @@
 /* ... Keep your @font-face and existing body styles at the top ... */
 
 /* Specific Override for the Archive Page Body */
+@font-face {
+    font-family: 'JMH Cthulhumbus Arcade UG';
+    /* If the file is in the same folder as this CSS file */
+    src: url('JMH_Cthulhumbus.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 .archive-body {
     margin: 0;
     display: flex;
