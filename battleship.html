@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML5 Battleship</title>
+    <style>
+        :root { --water: #3498db; --ship: #7f8c8d; --hit: #e74c3c; --miss: #ecf0f1; --border: #2980b9; }
+        body { font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; background: #2c3e50; color: white; }
+        .game-container { display: flex; gap: 40px; margin-top: 20px; }
+        .grid-wrapper { text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(10, 30px); grid-template-rows: repeat(10, 30px); gap: 2px; background: var(--border); border: 2px solid var(--border); }
+        .cell { width: 30px; height: 30px; background: var(--water); cursor: pointer; position: relative; }
+        /* States */
+        .cell.ship { background: var(--ship); }
+        .cell.hit { background: var(--hit); }
+        .cell.miss { background: var(--miss); }
+        .cell.miss::after { content: "•"; color: #bdc3c7; display: flex; justify-content: center; align-items: center; height: 100%; }
+        
+        #enemy-grid .ship { background: var(--water); } /* Hide enemy ships */
+        
+        .controls { margin: 20px; }
+        button { padding: 10px 20px; background: #27ae60; border: none; color: white; cursor: pointer; font-weight: bold; border-radius: 5px; }
+        button:disabled { background: #95a5a6; }
+    </style>
+</head>
+<body>
+
+    <h2>BATTLESHIP</h2>
+    <div id="status">Place your ships! Click cells to place 5 ships.</div>
+
+    <div class="game-container">
+        <div class="grid-wrapper">
+            <h3>Your Fleet</h3>
+            <div id="player-grid" class="grid"></div>
+        </div>
+        <div class="grid-wrapper">
+            <h3>Enemy Waters</h3>
+            <div id="enemy-grid" class="grid"></div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="start-btn" onclick="startGame()" disabled>Start Battle</button>
+        <button onclick="location.reload()">Reset</button>
+    </div>
+
+    <script>
+        const SIZE = 10;
+        const SHIP_COUNT = 5;
+        let playerShips = [], enemyShips = [];
+        let playerBoard = Array(SIZE * SIZE).fill(0);
+        let enemyBoard = Array(SIZE * SIZE).fill(0);
+        let gameActive = false;
+
+        function createGrids() {
+            const pGrid = document.getElementById('player-grid');
+            const eGrid = document.getElementById('enemy-grid');
+            
+            for (let i = 0; i < SIZE * SIZE; i++) {
+                let pCell = document.createElement('div');
+                pCell.className = 'cell';
+                pCell.onclick = () => placeShip(i);
+                pGrid.appendChild(pCell);
+
+                let eCell = document.createElement('div');
+                eCell.className = 'cell';
+                eCell.onclick = () => playerAttack(i);
+                eGrid.appendChild(eCell);
+            }
+        }
+
+        function placeShip(i) {
+            if (gameActive || playerShips.length >= SHIP_COUNT) return;
+            if (playerBoard[i] === 1) return;
+
+            playerBoard[i] = 1;
+            playerShips.push(i);
+            document.getElementById('player-grid').children[i].classList.add('ship');
+
+            if (playerShips.length === SHIP_COUNT) {
+                document.getElementById('start-btn').disabled = false;
+                document.getElementById('status').innerText = "All ships placed. Ready for battle!";
+            }
+        }
+
+        function startGame() {
+            gameActive = true;
+            document.getElementById('start-btn').disabled = true;
+            document.getElementById('status').innerText = "Battle Start! Attack the Enemy Waters.";
+            
+            // Randomly place enemy ships
+            while (enemyShips.length < SHIP_COUNT) {
+                let loc = Math.floor(Math.random() * 100);
+                if (!enemyShips.includes(loc)) {
+                    enemyShips.push(loc);
+                    enemyBoard[loc] = 1;
+                }
+            }
+        }
+
+        function playerAttack(i) {
+            if (!gameActive || enemyBoard[i] > 1) return;
+
+            const cell = document.getElementById('enemy-grid').children[i];
+            if (enemyBoard[i] === 1) {
+                cell.classList.add('hit');
+                enemyBoard[i] = 2; // Hit
+                if (checkWin(enemyBoard)) endGame("Victory! You sank the fleet!");
+            } else {
+                cell.classList.add('miss');
+                enemyBoard[i] = 3; // Miss
+            }
+            
+            if (gameActive) setTimeout(enemyAttack, 500);
+        }
+
+        function enemyAttack() {
+            let loc;
+            do { loc = Math.floor(Math.random() * 100); } while (playerBoard[loc] > 1);
+
+            const cell = document.getElementById('player-grid').children[loc];
+            if (playerBoard[loc] === 1) {
+                cell.classList.add('hit');
+                playerBoard[loc] = 2;
+                if (checkWin(playerBoard)) endGame("Defeat! Your fleet was destroyed.");
+            } else {
+                cell.classList.add('miss');
+                playerBoard[loc] = 3;
+            }
+        }
+
+        function checkWin(board) {
+            return board.filter(x => x === 1).length === 0 && gameActive;
+        }
+
+        function endGame(msg) {
+            gameActive = false;
+            document.getElementById('status').innerText = msg;
+        }
+
+        createGrids();
+    </script>
+</body>
+</html>
