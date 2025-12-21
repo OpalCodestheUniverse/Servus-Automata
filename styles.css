@@ -108,4 +108,90 @@ footer {
     background-color: rgba(255, 255, 255, 0.7); /* Optional background change on hover */
 }
 
+/* Archive Page Specific Styles */
+.archive-page {
+    background: url('placeholder.jpg') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 50px 20px;
+}
+
+.archive-container {
+    background: rgba(0, 0, 0, 0.8); /* Dark overlay for readability */
+    backdrop-filter: blur(8px); /* Optional: blurs background slightly */
+    max-width: 700px;
+    width: 100%;
+    padding: 60px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    text-align: center;
+}
+
+.archive-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
+    color: #ffffff;
+}
+
+.subtitle {
+    color: #bbb;
+    font-style: italic;
+    margin-bottom: 40px;
+}
+
+.post-list {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.post-item {
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.post-date {
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+}
+
+.post-item h2 a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+    display: block;
+    margin: 10px 0;
+    transition: color 0.3s;
+}
+
+.post-item h2 a:hover {
+    color: #ff4d4d; /* Accent color on hover */
+}
+
+.post-item p {
+    color: #ccc;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.read-more {
+    display: inline-block;
+    margin-top: 15px;
+    color: #ff4d4d;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+footer {
+    margin-top: 40px;
+    font-size: 0.8rem;
+    color: #666;
+}
 
