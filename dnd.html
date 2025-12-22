@@ -5,63 +5,92 @@
     <title>Gemini 5E Dungeon Master</title>
     <style>
         body { background: #1a1a1a; color: #00ff00; font-family: 'Courier New', monospace; display: flex; flex-direction: column; height: 100vh; margin: 0; }
-        #log { flex-grow: 1; overflow-y: auto; padding: 20px; border-bottom: 1px solid #333; }
-        #input-area { padding: 20px; display: flex; }
-        input { flex-grow: 1; background: #000; color: #00ff00; border: 1px solid #00ff00; padding: 10px; }
-        #stats { position: absolute; right: 20px; top: 20px; border: 1px solid #444; padding: 10px; background: #222; }
+        #log { flex-grow: 1; overflow-y: auto; padding: 20px; border-bottom: 1px solid #333; line-height: 1.5; }
+        #input-area { padding: 20px; display: flex; background: #000; }
+        input { flex-grow: 1; background: #000; color: #00ff00; border: 1px solid #00ff00; padding: 12px; outline: none; }
+        #stats { position: absolute; right: 20px; top: 20px; border: 1px solid #444; padding: 10px; background: #222; z-index: 10; }
+        .dm-text { color: #00ff00; margin-bottom: 15px; }
+        .player-text { color: #ffffff; font-weight: bold; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
 <div id="stats">
-    <b>HP:</b> <span id="hp">20</span>/20 | <b>AC:</b> 15 | <b>Level:</b> 1
+    <b>HP:</b> <span id="hp">20</span>/20 | <b>AC:</b> 15 | <b>Class:</b> Fighter
 </div>
 
 <div id="log">
-    Welcome, Traveler. The mist clears... What do you do?
+    <p class="dm-text">Initializing Dungeon Master... Please wait.</p>
 </div>
 
 <div id="input-area">
-    <input type="text" id="playerInput" placeholder="Tell the DM your move (e.g., 'I attack the Goblin')...">
+    <input type="text" id="playerInput" placeholder="Type your action and press Enter...">
 </div>
 
-<script>
-    // 5E Rule Helpers
-    const dnd = {
-        roll: (sides) => Math.floor(Math.random() * sides) + 1,
-        check: (mod) => dnd.roll(20) + mod
-    };
+<script type="module">
+    import { GoogleGenAI } from "https://esm.run/@google/genai";
 
-    const log = document.getElementById('log');
-    const input = document.getElementById('playerInput');
+    // 2. Configuration
+    const API_KEY = "AIzaSyCXYDPmhPNcGGkW4spmXB06tsvJaKpOY_s"; // <--- PASTE YOUR KEY HERE
+    const genAI = new GoogleGenAI(API_KEY);
+    
+    const systemInstruction = `You are a D&D 5E Dungeon Master. 
+    The player is a Level 1 Fighter. HP: 20, AC: 15.
+    Keep descriptions vivid but short. When a roll is needed, tell them what to roll.
+    If they provide a roll result, determine the outcome based on 5E rules.`;
 
-    input.addEventListener('keypress', async (e) => {
-        if (e.key === 'Enter') {
-            const action = input.value;
-            appendLog(`> ${action}`, 'white');
-            input.value = '';
+    const model = genAI.getGenerativeModel({ 
+        model: "gemini-1.5-flash",
+        systemInstruction: systemInstruction 
+    });
+
+    // 3. Start the Chat Memory
+    let chat = model.startChat({
+        history: [],
+    });
+
+    const logElement = document.getElementById('log');
+    const inputElement = document.getElementById('playerInput');
+
+    // 4. Handle Input
+    inputElement.addEventListener('keypress', async (e) => {
+        if (e.key === 'Enter' && inputElement.value.trim() !== "") {
+            const message = inputElement.value;
+            inputElement.value = '';
             
-            // Here is where we would call Gemini
-            const response = await callGeminiDM(action);
-            appendLog(response, '#00ff00');
+            // Show player message
+            appendLog(message, 'player-text');
+            
+            // Get AI Response
+            const response = await getDMResponse(message);
+            appendLog(response, 'dm-text');
         }
     });
 
-    function appendLog(text, color) {
+    async function getDMResponse(userText) {
+        try {
+            const result = await chat.sendMessage(userText);
+            const response = await result.response;
+            return response.text();
+        } catch (err) {
+            console.error(err);
+            return "The DM is hazy... (Check your API Key or Connection)";
+        }
+    }
+
+    function appendLog(text, className) {
         const p = document.createElement('p');
-        p.style.color = color;
+        p.className = className;
         p.innerText = text;
-        log.appendChild(p);
-        log.scrollTop = log.scrollHeight;
+        logElement.appendChild(p);
+        logElement.scrollTop = logElement.scrollHeight;
     }
 
-    // placeholder for the API logic
-    async function callGeminiDM(prompt) {
-        return "The DM is thinking..."; 
-    }
+    // Start the game
+    (async () => {
+        const intro = await getDMResponse("The adventure begins. Set the scene in a dangerous forest.");
+        appendLog(intro, 'dm-text');
+    })();
 </script>
-
-
-    
 </body>
 </html>
