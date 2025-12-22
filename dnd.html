@@ -60,5 +60,45 @@
         return "The DM is thinking..."; 
     }
 </script>
+
+import { GoogleGenAI } from "https://esm.run/@google/genai";
+
+const API_KEY = "YOUR_API_KEY"; // ⚠️ Keep this private in a real app!
+const genAI = new GoogleGenAI(API_KEY);
+
+// System Instruction: This tells Gemini HOW to act as a DM
+const systemInstruction = `
+You are an expert D&D 5E Dungeon Master. 
+- You track the world state, NPCs, and current location.
+- You strictly follow D&D 5E rules.
+- When the player wants to do something difficult, ask them to "Roll for [Skill]".
+- Do not roll for the player. Let them provide the result.
+- Keep responses atmospheric but concise (under 100 words).
+`;
+
+const model = genAI.getGenerativeModel({ 
+    model: "gemini-1.5-flash",
+    systemInstruction: systemInstruction
+});
+
+// Start a chat session to keep the story memory
+let chat = model.startChat({
+    history: [
+        { role: "user", parts: [{ text: "Start a new D&D adventure in a dark tavern." }] },
+        { role: "model", parts: [{ text: "The air in the Broken Barrel is thick with smoke..." }] }
+    ],
+});
+
+async function callGeminiDM(playerText) {
+    try {
+        const result = await chat.sendMessage(playerText);
+        const response = await result.response;
+        return response.text();
+    } catch (error) {
+        console.error("Gemini Error:", error);
+        return "The DM is momentarily speechless (Connection Error).";
+    }
+}
+    
 </body>
 </html>
