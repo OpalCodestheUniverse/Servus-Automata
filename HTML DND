@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gemini 5E Dungeon Master</title>
+    <style>
+        body { background: #1a1a1a; color: #00ff00; font-family: 'Courier New', monospace; display: flex; flex-direction: column; height: 100vh; margin: 0; }
+        #log { flex-grow: 1; overflow-y: auto; padding: 20px; border-bottom: 1px solid #333; }
+        #input-area { padding: 20px; display: flex; }
+        input { flex-grow: 1; background: #000; color: #00ff00; border: 1px solid #00ff00; padding: 10px; }
+        #stats { position: absolute; right: 20px; top: 20px; border: 1px solid #444; padding: 10px; background: #222; }
+    </style>
+</head>
+<body>
+
+<div id="stats">
+    <b>HP:</b> <span id="hp">20</span>/20 | <b>AC:</b> 15 | <b>Level:</b> 1
+</div>
+
+<div id="log">
+    Welcome, Traveler. The mist clears... What do you do?
+</div>
+
+<div id="input-area">
+    <input type="text" id="playerInput" placeholder="Tell the DM your move (e.g., 'I attack the Goblin')...">
+</div>
+
+<script>
+    // 5E Rule Helpers
+    const dnd = {
+        roll: (sides) => Math.floor(Math.random() * sides) + 1,
+        check: (mod) => dnd.roll(20) + mod
+    };
+
+    const log = document.getElementById('log');
+    const input = document.getElementById('playerInput');
+
+    input.addEventListener('keypress', async (e) => {
+        if (e.key === 'Enter') {
+            const action = input.value;
+            appendLog(`> ${action}`, 'white');
+            input.value = '';
+            
+            // Here is where we would call Gemini
+            const response = await callGeminiDM(action);
+            appendLog(response, '#00ff00');
+        }
+    });
+
+    function appendLog(text, color) {
+        const p = document.createElement('p');
+        p.style.color = color;
+        p.innerText = text;
+        log.appendChild(p);
+        log.scrollTop = log.scrollHeight;
+    }
+
+    // placeholder for the API logic
+    async function callGeminiDM(prompt) {
+        return "The DM is thinking..."; 
+    }
+</script>
+</body>
+</html>
