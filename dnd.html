@@ -31,8 +31,9 @@
     import { GoogleGenAI } from "https://esm.run/@google/genai";
 
     // 2. Configuration
-    const API_KEY = "AIzaSyCXYDPmhPNcGGkW4spmXB06tsvJaKpOY_s"; // <--- PASTE YOUR KEY HERE
-    const genAI = new GoogleGenAI(API_KEY);
+   // ✅ CORRECT: Defined and used in the same block
+const API_KEY = "AIzaSyCXYDPmhPNcGGkW4spmXB06tsvJaKpOY_s"; 
+const genAI = new GoogleGenAI(API_KEY);
     
     const systemInstruction = `You are a D&D 5E Dungeon Master. 
     The player is a Level 1 Fighter. HP: 20, AC: 15.
