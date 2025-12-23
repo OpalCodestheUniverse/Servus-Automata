@@ -3,69 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Archive of Horrors</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Dynamic Blog Archive</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.6; }
+        .post-card { border-bottom: 1px solid #eee; padding: 20px 0; }
+        .post-card h3 { margin: 0; color: #333; }
+        .post-meta { font-size: 0.85rem; color: #888; margin-bottom: 10px; }
+        .post-card a { text-decoration: none; color: #007bff; font-weight: bold; }
+        #loader { font-style: italic; color: #666; }
+    </style>
 </head>
-<body class="archive-body">
+<body>
 
-    <div class="archive-container">
-        <header class="archive-header">
-            <h1 class="archive-title">The Warlocks Fridge</h1>
-            <p class="subtitle">Below are my latest recipe blunders. I enjoy cooking, experimenting with cooking, anything but clean up really.</p>
-        </header>
+    <h1>Blog Archive</h1>
+    <div id="loader">Fetching latest posts...</div>
+    <div id="archive-container"></div>
 
-        <main class="post-list">
-            <article class="post-item">
-                <span class="post-date">December 21, 2025</span>
-                <h2 class="post-link"><a href="#">Placeholder</a></h2>
-                <p class="post-excerpt">I'll have something for you here soon!</p>
-                <a href="#" class="read-more-btn">Read More →</a>
-            </article>
+    <script>
+        // REPLACE THIS with your published Google Sheets CSV link
+        const sheetUrl = 'YOUR_PUBLISHED_CSV_URL_HERE';
 
-             <main class="post-list">
-            <article class="post-item">
-                <span class="post-date">December 21, 2025</span>
-                <h2 class="post-link"><a href="#">Placeholder</a></h2>
-                <p class="post-excerpt">I'll have something for you here soon!</p>
-                <a href="#" class="read-more-btn">Read More →</a>
-            </article>
+        async function fetchPosts() {
+            try {
+                const response = await fetch(sheetUrl);
+                const data = await response.text();
+                
+                // Parse CSV (Simple split by line and comma)
+                const rows = data.split('\n').slice(1); // Remove header row
+                const container = document.getElementById('archive-container');
+                const loader = document.getElementById('loader');
+                
+                loader.style.display = 'none';
 
-                   <main class="post-list">
-            <article class="post-item">
-                <span class="post-date">December 21, 2025</span>
-                <h2 class="post-link"><a href="#">Placeholder</a></h2>
-                <p class="post-excerpt">I'll have something for you here soon!</p>
-                <a href="#" class="read-more-btn">Read More →</a>
-            </article>
+                rows.forEach(row => {
+                    const columns = row.split(',');
+                    if (columns.length < 3) return; // Skip empty rows
 
-        <footer class="archive-footer">
-            <p>&copy; 2025 Dark Archives. All rights reserved.</p>
-        </footer>
-    </div>
+                    const [title, date, link, category] = columns;
 
-<script>
-let globalDelay = 0;
+                    const postHtml = `
+                        <div class="post-card">
+                            <div class="post-meta">${date.trim()} | ${category.trim()}</div>
+                            <h3>${title.trim()}</h3>
+                            <a href="${link.trim()}">Read Post &rarr;</a>
+                        </div>
+                    `;
+                    container.innerHTML += postHtml;
+                });
+            } catch (error) {
+                console.error("Error loading sheet:", error);
+                document.getElementById('loader').innerText = "Failed to load posts.";
+            }
+        }
 
-// Targets everything you want to animate sequentially
-document.querySelectorAll('.mystic-text').forEach((element) => {
-    const text = element.textContent.trim();
-    element.textContent = '';
-    
-    [...text].forEach((char, i) => {
-        const span = document.createElement('span');
-        span.textContent = char === ' ' ? '\u00A0' : char;
-        
-        // Sequential delay: previous elements + current letter offset
-        span.style.animationDelay = `${globalDelay + (i * 0.04)}s`;
-        element.appendChild(span);
-    });
+        fetchPosts();
+    </script>
 
-    // Add to the total delay so the next block waits
-    globalDelay += (text.length * 0.04) + 0.6; 
-});
-</script>
-
-
-                       
 </body>
 </html>
