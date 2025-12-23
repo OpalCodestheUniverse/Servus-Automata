@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Archive</title>
+    <title>The Archive</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
 </head>
-<body>
+<body class="archive-body">
 
-    <header>
-        <h1>Blog Archive</h1>
-    </header>
+    <div class="archive-container">
+        <header>
+            <h1 class="archive-title mystic-text"><span>THE ARCHIVE</span></h1>
+            <p class="subtitle">Echoes from the spreadsheet void...</p>
+        </header>
 
-    <main>
-        <div id="loader">Fetching latest posts...</div>
+        <div id="loader" class="post-excerpt">Decrypting entries...</div>
         <div id="archive-container"></div>
-    </main>
+
+        <footer class="archive-footer">
+            <p>© 2025 - Stay in the madness.</p>
+        </footer>
+    </div>
 
     <script>
         const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRShpKrg7NQN1m8ysGHQeqtO2df_Mc7PQ-ng18Rmsq6DYJ0btvauuhmc1ShHFwrAUVTdj3OsMgGHD53/pub?gid=0&single=true&output=csv';
@@ -36,14 +41,18 @@
                         results.data.forEach((post, index) => {
                             if (!post.Title) return;
 
+                            // We wrap each letter or word in a span for your mystic animation
+                            // For simplicity here, we wrap the whole title
                             const postHtml = `
-                                <article class="post-card">
-                                    <header class="post-meta">
-                                        <span class="date">${post.Date}</span> | 
-                                        <span class="category">${post.Category}</span>
-                                    </header>
-                                    <h3>${post.Title}</h3>
-                                    <a href="post.html?id=${index}" class="read-more">Read Post &rarr;</a>
+                                <article class="post-item">
+                                    <div class="post-date">${post.Date} // ${post.Category}</div>
+                                    <h3 class="post-link mystic-text">
+                                        <a href="post.html?id=${index}"><span>${post.Title}</span></a>
+                                    </h3>
+                                    <p class="post-excerpt">
+                                        ${post.Excerpt || "An entry lost to time..."}
+                                    </p>
+                                    <a href="post.html?id=${index}" class="read-more-btn">ENTER &rarr;</a>
                                 </article>
                             `;
                             container.innerHTML += postHtml;
@@ -51,8 +60,8 @@
                     }
                 });
             } catch (error) {
-                console.error("Error loading sheet:", error);
-                document.getElementById('loader').innerText = "Failed to load posts.";
+                console.error("Error:", error);
+                document.getElementById('loader').innerText = "The void is silent.";
             }
         }
         fetchPosts();
