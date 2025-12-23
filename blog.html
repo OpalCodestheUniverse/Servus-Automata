@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archive of Horrors</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="archive-body">
+
+    <div class="archive-container">
+        <header class="archive-header">
+            <h1 class="archive-title">The Warlocks Fridge</h1>
+            <p class="subtitle">Below are my latest recipe blunders. I enjoy cooking, experimenting with cooking, anything but clean up really.</p>
+        </header>
+
+        <main class="post-list">
+            <article class="post-item">
+                <span class="post-date">December 21, 2025</span>
+                <h2 class="post-link"><a href="#">Placeholder</a></h2>
+                <p class="post-excerpt">I'll have something for you here soon!</p>
+                <a href="#" class="read-more-btn">Read More →</a>
+            </article>
+
+             <main class="post-list">
+            <article class="post-item">
+                <span class="post-date">December 21, 2025</span>
+                <h2 class="post-link"><a href="#">Placeholder</a></h2>
+                <p class="post-excerpt">I'll have something for you here soon!</p>
+                <a href="#" class="read-more-btn">Read More →</a>
+            </article>
+
+                   <main class="post-list">
+            <article class="post-item">
+                <span class="post-date">December 21, 2025</span>
+                <h2 class="post-link"><a href="#">Placeholder</a></h2>
+                <p class="post-excerpt">I'll have something for you here soon!</p>
+                <a href="#" class="read-more-btn">Read More →</a>
+            </article>
+
+        <footer class="archive-footer">
+            <p>&copy; 2025 Dark Archives. All rights reserved.</p>
+        </footer>
+    </div>
+
+<script>
+let globalDelay = 0;
+
+// Targets everything you want to animate sequentially
+document.querySelectorAll('.mystic-text').forEach((element) => {
+    const text = element.textContent.trim();
+    element.textContent = '';
+    
+    [...text].forEach((char, i) => {
+        const span = document.createElement('span');
+        span.textContent = char === ' ' ? '\u00A0' : char;
+        
+        // Sequential delay: previous elements + current letter offset
+        span.style.animationDelay = `${globalDelay + (i * 0.04)}s`;
+        element.appendChild(span);
+    });
+
+    // Add to the total delay so the next block waits
+    globalDelay += (text.length * 0.04) + 0.6; 
+});
+</script>
+
+
+                       
+</body>
+</html>
