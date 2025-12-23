@@ -3,69 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Archive of Horrors</title>
+    <title>The Warlock's Fridge</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
 </head>
 <body class="archive-body">
 
     <div class="archive-container">
         <header class="archive-header">
-            <h1 class="archive-title">The Warlocks Fridge</h1>
+            <h1 class="archive-title mystic-text">The Warlocks Fridge</h1>
             <p class="subtitle">Below are my latest recipe blunders. I enjoy cooking, experimenting with cooking, anything but clean up really.</p>
         </header>
 
-        <main class="post-list">
-            <article class="post-item">
-                <span class="post-date">December 21, 2025</span>
-                <h2 class="post-link"><a href="#">Placeholder</a></h2>
-                <p class="post-excerpt">I'll have something for you here soon!</p>
-                <a href="#" class="read-more-btn">Read More →</a>
-            </article>
-
-             <main class="post-list">
-            <article class="post-item">
-                <span class="post-date">December 21, 2025</span>
-                <h2 class="post-link"><a href="#">Placeholder</a></h2>
-                <p class="post-excerpt">I'll have something for you here soon!</p>
-                <a href="#" class="read-more-btn">Read More →</a>
-            </article>
-
-                   <main class="post-list">
-            <article class="post-item">
-                <span class="post-date">December 21, 2025</span>
-                <h2 class="post-link"><a href="#">Placeholder</a></h2>
-                <p class="post-excerpt">I'll have something for you here soon!</p>
-                <a href="#" class="read-more-btn">Read More →</a>
-            </article>
+        <main class="post-list" id="recipe-list">
+            </main>
 
         <footer class="archive-footer">
             <p>&copy; 2025 Dark Archives. All rights reserved.</p>
         </footer>
     </div>
 
-<script>
-let globalDelay = 0;
-
-// Targets everything you want to animate sequentially
-document.querySelectorAll('.mystic-text').forEach((element) => {
-    const text = element.textContent.trim();
-    element.textContent = '';
-    
-    [...text].forEach((char, i) => {
-        const span = document.createElement('span');
-        span.textContent = char === ' ' ? '\u00A0' : char;
+    <script>
+        // PASTE YOUR NEW RECIPE SHEET CSV LINK HERE
+        const recipeSheetUrl = 'YOUR_RECIPE_SHEET_CSV_URL_HERE';
         
-        // Sequential delay: previous elements + current letter offset
-        span.style.animationDelay = `${globalDelay + (i * 0.04)}s`;
-        element.appendChild(span);
-    });
+        let globalDelay = 0;
 
-    // Add to the total delay so the next block waits
-    globalDelay += (text.length * 0.04) + 0.6; 
-});
-</script>
+        function animateMysticText(element) {
+            const text = element.textContent.trim();
+            element.textContent = '';
+            [...text].forEach((char, i) => {
+                const span = document.createElement('span');
+                span.textContent = char === ' ' ? '\u00A0' : char;
+                span.style.animationDelay = `${globalDelay + (i * 0.04)}s`;
+                element.appendChild(span);
+            });
+            globalDelay += (text.length * 0.04) + 0.4;
+        }
 
+        async function fetchRecipes() {
+            try {
+                const response = await fetch(recipeSheetUrl);
+                const csvText = await response.text();
 
-                       
+                Papa.parse(csvText, {
+                    header: true,
+                    complete: function(results) {
+                        const container = document.getElementById('recipe-list');
+                        
+                        // Animate the main page title first
+                        animateMysticText(document.querySelector('.archive-title'));
+
+                        results.data.forEach((recipe, index) => {
+                            if (!recipe.Title) return;
+
+                            const article = document.createElement('article');
+                            article.className = 'post-item';
+                            article.innerHTML = `
+                                <span class="post-date">${recipe.Date}</span>
+                                <h2 class="post-link mystic-text">
+                                    <a href="recipe-post.html?id=${index}">${recipe.Title}</a>
+                                </h2>
+                                <p class="post-excerpt">${recipe.Excerpt}</p>
+                                <a href="recipe-post.html?id=${index}" class="read-more-btn">Taste Test →</a>
+                            `;
+                            container.appendChild(article);
+
+                            // Animate each recipe title as it is created
+                            const titleLink = article.querySelector('.post-link a');
+                            animateMysticText(titleLink);
+                        });
+                    }
+                });
+            } catch (e) { console.error("Fridge is empty...", e); }
+        }
+
+        fetchRecipes();
+    </script>
 </body>
 </html>
