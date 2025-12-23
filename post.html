@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loading Post...</title>
+    <title>Loading Entry...</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
 </head>
-<body class="single-post">
+<body class="archive-body">
 
-    <nav>
-        <a href="index.html" class="back-link">← Back to Archive</a>
-    </nav>
-
-    <article class="post-container">
-        <header class="post-header">
-            <span id="post-category" class="category"></span>
-            <h1 id="post-title"></h1>
-            <div id="post-date" class="date"></div>
+    <div class="archive-container">
+        <a href="index.html" class="read-more-btn">← BACK TO VOID</a>
+        
+        <header style="margin-top: 30px;">
+            <div id="post-date" class="post-date"></div>
+            <h1 id="post-title" class="archive-title" style="font-size: 2.5rem;"></h1>
+            <span id="post-category" class="post-date" style="color: #ff007f;"></span>
         </header>
 
-        <section id="post-content" class="content">
+        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;">
+
+        <section id="post-content" class="post-excerpt" style="font-size: 1.3rem; line-height: 1.8;">
             </section>
-    </article>
+    </div>
 
     <script>
         const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRShpKrg7NQN1m8ysGHQeqtO2df_Mc7PQ-ng18Rmsq6DYJ0btvauuhmc1ShHFwrAUVTdj3OsMgGHD53/pub?gid=0&single=true&output=csv';
@@ -44,15 +44,12 @@
                             document.getElementById('post-category').innerText = post.Category;
                             document.getElementById('post-content').innerHTML = post.Content;
                             document.title = post.Title;
-                        } else {
-                            document.getElementById('post-content').innerHTML = "<h1>404: Post Not Found</h1>";
                         }
                     }
                 });
             } catch (e) { console.error(e); }
         }
-
-        if (postId !== null) { loadPost(); }
+        if (postId !== null) loadPost();
     </script>
 </body>
 </html>
