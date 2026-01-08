@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    body { background: #1a1a1a; color: white; padding: 20px; }
+    .game-card { background: #2d2d2d; border-radius: 10px; margin-bottom: 20px; transition: 0.3s; height: 100%; }
+    .game-card:hover { transform: scale(1.02); border: 1px solid #0d6efd; }
+    .price-tag { font-size: 1.25rem; font-weight: bold; color: #2ecc71; }
+    .retail-price { text-decoration: line-through; color: #888; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1>🎮 CheapShark Tracker</h1>
+      <input type="text" id="searchInput" class="form-control w-25" placeholder="Search games..." onkeyup="filterGames()">
+    </div>
+    
+    <div id="gameContainer" class="row">
+      <div class="text-center">Loading latest deals...</div>
+    </div>
+  </div>
+
+  <script>
+    let allGames = [];
+
+    window.onload = () => {
+      google.script.run.withSuccessHandler(data => {
+        allGames = data;
+        renderGames(data);
+      }).getSheetData();
+    };
+
+    function renderGames(games) {
+      const container = document.getElementById('gameContainer');
+      container.innerHTML = games.map(game => `
+        <div class="col-md-3 mb-4 game-item">
+          <div class="game-card p-3">
+            <img src="${game[5]}" class="img-fluid rounded mb-2" style="width:100%; height:120px; object-fit:cover;">
+            <h6 class="text-truncate">${game[0]}</h6>
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <span class="price-tag">$${game[1]}</span>
+                <span class="retail-price">$${game[2]}</span>
+              </div>
+              <span class="badge bg-danger">-${game[3]}</span>
+            </div>
+            <a href="${game[4]}" target="_blank" class="btn btn-outline-primary btn-sm w-100 mt-3">Buy Now</a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterGames() {
+      const term = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = allGames.filter(g => g[0].toLowerCase().includes(term));
+      renderGames(filtered);
+    }
+  </script>
+</body>
+</html>
