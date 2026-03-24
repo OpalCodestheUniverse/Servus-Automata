@@ -2,121 +2,86 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Steel Haze: Rusted Pride - Perfect Sync</title>
     <style>
-        :root {
-            --steel: #b0b0b0;
-            --rust: #d35400;
-            --void: #0a0a0a;
-            --glow: rgba(211, 84, 0, 0.4);
-        }
-
         body {
-            background-color: var(--void);
-            color: var(--steel);
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            background-color: #000;
+            color: #fff;
             margin: 0;
-            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            overflow: hidden;
             text-transform: uppercase;
-            letter-spacing: 4px;
-        }
-
-        .lyrics-container {
-            max-width: 800px;
-            text-align: center;
-            padding: 40px;
         }
 
         .line {
-            margin-bottom: 1.5rem;
-            opacity: 0.8;
-            transition: all 0.5s ease;
-        }
-
-        /* The "Cold Place" intro */
-        .intro {
-            font-weight: 300;
-            font-size: 1.2rem;
-            border-left: 2px solid var(--steel);
-            padding-left: 20px;
-            text-align: left;
-        }
-
-        /* The "Steel Core" effect */
-        .peeling {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            font-size: 5rem;
             font-weight: 900;
-            font-size: 2.5rem;
-            background: linear-gradient(90deg, var(--steel), var(--rust), var(--steel));
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 4s linear infinite;
+            opacity: 0;
+            letter-spacing: -0.05em;
+            /* Animation set to 5.5s to cover the gap between most timestamps */
+            animation: sync-fade 5.5s ease-in-out forwards;
         }
 
-        /* The Chorus - "Let Me Rise" */
-        .rise {
-            font-size: 4rem;
+        /* Chorus/Impact Styling */
+        .rise { 
+            color: #ff4d00; 
             font-style: italic;
-            font-weight: 900;
-            color: #fff;
-            text-shadow: 0 0 20px var(--glow);
-            margin: 2rem 0;
-            animation: flicker 2s infinite;
+            text-shadow: 0 0 30px rgba(255, 77, 0, 0.7);
+            font-size: 6.5rem;
         }
 
-        /* High and Dry section */
-        .dawn {
-            font-size: 1.5rem;
-            color: var(--rust);
-            border-bottom: 1px solid var(--rust);
-            display: inline-block;
+        /* Ethereal/Ooh section */
+        .vocal {
+            font-weight: 300;
+            letter-spacing: 1.5rem;
+            color: #888;
+            font-size: 3rem;
         }
 
-        @keyframes shine {
-            to { background-position: 200% center; }
-        }
-
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; text-shadow: 0 0 40px var(--rust); }
-        }
-
-        .subtext {
-            font-size: 0.8rem;
-            color: #444;
-            margin-top: 50px;
+        @keyframes sync-fade {
+            0% { opacity: 0; transform: scale(0.95) translateY(10px); filter: blur(10px); }
+            10% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0px); }
+            85% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0px); }
+            100% { opacity: 0; transform: scale(1.05) translateY(-10px); filter: blur(10px); }
         }
     </style>
 </head>
 <body>
 
-    <div class="lyrics-container">
-        <div class="line intro">Standing in a cold place<br>Let me know</div>
-        
-        <div class="line peeling">My steel core peeling away</div>
+    <div class="line" style="animation-delay: 31.6s;">Stand in a cold place</div>
+    <div class="line" style="animation-delay: 37.5s;">Let me know</div>
+    <div class="line" style="animation-delay: 43.2s;">My steel core</div>
+    <div class="line" style="animation-delay: 48.9s;">Peels away</div>
 
-        <div class="line">All my blood</div>
-        <div class="line rise">LET ME RISE</div>
-        <div class="line" style="color: var(--rust);">Rusted pride</div>
-        <div class="line rise">LET ME RISE</div>
+    <div class="line" style="animation-delay: 65.9s;">All my blood</div>
+    <div class="line rise" style="animation-delay: 71.6s;">Let me rise</div>
+    <div class="line" style="animation-delay: 77.5s; color: #d35400;">Rusted pride</div>
+    <div class="line rise" style="animation-delay: 83.1s;">Let me rise</div>
 
-        <div class="line" style="letter-spacing: 15px;">(Uh uh uh..)</div>
+    <div class="line vocal" style="animation-delay: 123.3s;">Ooh</div>
+    <div class="line vocal" style="animation-delay: 128.7s;">Ooh</div>
+    <div class="line vocal" style="animation-delay: 134.2s;">Ooh</div>
+    <div class="line vocal" style="animation-delay: 139.7s;">Ooh</div>
 
-        <div class="line">High and dry</div>
-        <div class="line peeling" style="font-size: 3.5rem;">I FLY HIGH</div>
-        <div class="line dawn">Watch the sun rise in the dawn</div>
-        
-        <div class="line">Rust away / Lost to the wind</div>
-        <div class="line dawn">Watch the sun rise in the dawn</div>
+    <div class="line" style="animation-delay: 144.4s;">High and dry</div>
+    <div class="line rise" style="animation-delay: 149.8s;">I fly high</div>
+    <div class="line" style="animation-delay: 155.3s;">Watch the sun rise</div>
+    <div class="line" style="animation-delay: 161.5s; font-size: 3.5rem;">In the dawn</div>
 
-        <div class="line rise" style="font-size: 5rem;">I FLY HIGH</div>
-    </div>
+    <div class="line" style="animation-delay: 166.2s;">Rust away</div>
+    <div class="line" style="animation-delay: 171.6s;">Lost to the wind</div>
+    <div class="line" style="animation-delay: 177.1s;">Watch the sun rise</div>
+    <div class="line" style="animation-delay: 183.2s; font-size: 3.5rem;">In the dawn</div>
 
-    <div class="subtext">V.IV RUSTY // STEEL HAZE</div>
+    <div class="line rise" style="animation-delay: 188.0s;">I fly high</div>
+    <div class="line rise" style="animation-delay: 193.4s;">I fly high</div>
 
 </body>
 </html>
