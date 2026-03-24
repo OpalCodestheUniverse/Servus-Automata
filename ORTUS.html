@@ -2,22 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Steel Haze | Precision Master</title>
+    <title>Steel Haze | Calibrated Sync</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #000; color: #fff; height: 100vh; width: 100vw; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; overflow: hidden; text-transform: uppercase; }
         
-        #ui-log { position: absolute; top: 15px; left: 15px; font-family: monospace; color: #0f0; font-size: 11px; z-index: 100; background: rgba(0,0,0,0.5); padding: 5px; pointer-events: none; opacity: 0.6; border-left: 2px solid #0f0; }
-        #timer { position: absolute; bottom: 15px; right: 15px; font-family: monospace; color: #333; font-size: 14px; }
+        #ui-log { position: absolute; top: 15px; left: 15px; font-family: monospace; color: #0f0; font-size: 11px; z-index: 100; background: rgba(0,0,0,0.5); padding: 5px; pointer-events: none; }
+        #timer { position: absolute; bottom: 15px; right: 15px; font-family: monospace; color: #555; font-size: 18px; font-weight: bold; }
         
         #ignition { padding: 25px 50px; border: 2px solid #ff4d00; color: #ff4d00; background: none; cursor: pointer; font-weight: 900; letter-spacing: 8px; z-index: 101; font-size: 1.2rem; }
         #ignition:hover { background: #ff4d00; color: #000; box-shadow: 0 0 30px #ff4d00; }
         
-        .lyric-line { position: absolute; width: 100%; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; font-weight: 900; opacity: 0; pointer-events: none; visibility: hidden; transition: opacity 0.3s, filter 0.3s; }
+        .lyric-line { position: absolute; width: 100%; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; font-weight: 900; opacity: 0; pointer-events: none; visibility: hidden; }
         
+        /* State Handling */
         .active { visibility: visible; opacity: 1; filter: blur(0px); }
-        .exit { opacity: 0; filter: blur(20px); transition: 0.5s; }
+        .exit { opacity: 0; filter: blur(20px); transition: 0.6s; }
 
         .primary { font-size: clamp(3rem, 10vw, 7rem); z-index: 10; }
         .ambient { font-size: clamp(2rem, 6vw, 4rem); color: #444; z-index: 5; }
@@ -38,50 +39,45 @@
 </head>
 <body>
 
-    <div id="ui-log">CORE STANDBY...</div>
+    <div id="ui-log">CALIBRATION LOCKED...</div>
     <div id="timer">00.00</div>
-    <button id="ignition" onclick="ignite()">[ ENGAGE RECORDING SYNC ]</button>
+    <button id="ignition" onclick="ignite()">[ ENGAGE ]</button>
 
     <div id="stage" style="display:none">
-        <div class="lyric-line ambient" data-t="5.86">(I fly high)</div>
-        <div class="lyric-line primary" data-t="11.56">Standing in a cold place</div>
-        <div class="lyric-line primary" data-t="17.25">Let me know</div>
-        <div class="lyric-line primary" data-t="22.90">My steel core peeling away</div>
-        <div class="lyric-line ambient" data-t="34.46">(I fly high)</div>
-        <div class="lyric-line ambient" data-t="39.82">(I fly high)</div>
-        <div class="lyric-line primary" data-t="47.28">Standing in a cold place</div>
-        <div class="lyric-line primary" data-t="53.14">Let me know</div>
-        <div class="lyric-line primary" data-t="58.78">My steel core peeling away</div>
+        <div class="lyric-line ambient" data-t="26.30">(I fly high)</div>
+        <div class="lyric-line primary" data-t="32.00">Standing in a cold place</div>
+        <div class="lyric-line primary" data-t="37.69">Let me know</div>
+        <div class="lyric-line primary" data-t="43.34">My steel core peeling away</div>
+        <div class="lyric-line ambient" data-t="54.90">(I fly high)</div>
+        <div class="lyric-line ambient" data-t="60.26">(I fly high)</div>
+        <div class="lyric-line primary" data-t="67.72">Standing in a cold place</div>
+        <div class="lyric-line primary" data-t="73.58">Let me know</div>
+        <div class="lyric-line primary" data-t="79.22">My steel core peeling away</div>
 
-        <div class="lyric-line primary chorus" data-t="81.51">All my blood</div>
-        <div class="lyric-line primary chorus" data-t="87.24">Let me rise</div>
-        <div class="lyric-line primary chorus" data-t="93.03">Rusted pride</div>
-        <div class="lyric-line primary chorus" data-t="98.81">Let me rise</div>
+        <div class="lyric-line primary chorus" data-t="101.95">All my blood</div>
+        <div class="lyric-line primary chorus" data-t="107.68">Let me rise</div>
+        <div class="lyric-line primary chorus" data-t="113.47">Rusted pride</div>
+        <div class="lyric-line primary chorus" data-t="119.25">Let me rise</div>
 
-        <div class="lyric-line primary" data-t="159.86">High and dry</div>
-        <div class="lyric-line primary" data-t="165.37">I fly high</div>
-        <div class="lyric-line primary chorus" data-t="170.86">Watch the sun rise in the dawn</div>
+        <div class="lyric-line primary" data-t="180.30">High and dry</div>
+        <div class="lyric-line primary" data-t="185.81">I fly high</div>
+        <div class="lyric-line primary chorus" data-t="191.30">Watch the sun rise in the dawn</div>
         
-        <div class="lyric-line primary" data-t="181.82">Rust away</div>
-        <div class="lyric-line primary" data-t="187.27">Lost to the wind</div>
-        <div class="lyric-line primary chorus" data-t="192.73">Watch the sun rise in the dawn</div>
+        <div class="lyric-line primary" data-t="202.26">Rust away</div>
+        <div class="lyric-line primary" data-t="207.71">Lost to the wind</div>
+        <div class="lyric-line primary chorus" data-t="213.17">Watch the sun rise in the dawn</div>
 
-        <div class="lyric-line primary chorus" data-t="203.70">I fly high</div>
-        <div class="lyric-line primary chorus" data-t="209.13">I fly high</div>
-        <div class="lyric-line primary chorus" data-t="214.52">I fly high</div>
-        <div class="lyric-line primary chorus" data-t="219.88">I fly high</div>
-        <div class="lyric-line ambient chorus" data-t="226.40">(I fly high)</div>
-        <div class="lyric-line ambient chorus" data-t="230.91">(I fly high)</div>
+        <div class="lyric-line primary chorus" data-t="224.14">I fly high</div>
+        <div class="lyric-line primary chorus" data-t="229.57">I fly high</div>
+        <div class="lyric-line primary chorus" data-t="234.96">I fly high</div>
+        <div class="lyric-line primary chorus" data-t="240.32">I fly high</div>
+        <div class="lyric-line ambient chorus" data-t="246.84">(I fly high)</div>
+        <div class="lyric-line ambient chorus" data-t="251.35">(I fly high)</div>
     </div>
 
     <audio id="track" src="2-13. Steel Haze (Rusted Pride).mp3" crossorigin="anonymous"></audio>
 
     <script>
-        // --- CALIBRATION ---
-        // Change this number to match the delay before you start recording.
-        // If the lyrics are 2 seconds early, set this to 2.
-        const START_DELAY = 0.0; 
-
         const audio = document.getElementById('track');
         const log = document.getElementById('ui-log');
         const timerDisplay = document.getElementById('timer');
@@ -91,7 +87,7 @@
         function updateLog(m) { log.innerHTML += `<br>> ${m}`; }
 
         async function ignite() {
-            updateLog("CALIBRATING OFFSET: " + START_DELAY + "s");
+            updateLog("SYNCING CORE TO 32.00...");
             try {
                 if (!aCtx) {
                     aCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -116,16 +112,13 @@
         function render() {
             analyser.getByteFrequencyData(data);
             const bass = data[2] / 255;
-            
-            // This is the core fix: adjusting the internal clock by your delay
-            const time = audio.currentTime - START_DELAY; 
-            
-            timerDisplay.innerText = "CLOCK: " + time.toFixed(2);
+            const time = audio.currentTime;
+            timerDisplay.innerText = time.toFixed(2);
 
             lines.forEach((line, index) => {
                 const tStart = parseFloat(line.getAttribute('data-t'));
                 const nextLine = lines[index + 1];
-                const maxHold = line.classList.contains('primary') ? 4 : 2.5;
+                const maxHold = line.classList.contains('primary') ? 4.5 : 3.0;
                 const tNext = nextLine ? parseFloat(nextLine.getAttribute('data-t')) : tStart + maxHold;
                 const tEnd = Math.min(tNext, tStart + maxHold);
 
@@ -140,11 +133,11 @@
                 }
 
                 if (line.classList.contains('active')) {
-                    const shake = line.classList.contains('primary') ? bass * 40 : bass * 15;
+                    const shake = line.classList.contains('primary') ? bass * 45 : bass * 15;
                     line.style.setProperty('--x', `${(Math.random() - 0.5) * shake}px`);
                     line.style.setProperty('--y', `${(Math.random() - 0.5) * shake}px`);
-                    line.style.setProperty('--s', 1 + (bass * 0.18));
-                    line.style.setProperty('--glow', `${bass * 120}px`);
+                    line.style.setProperty('--s', 1 + (bass * 0.22));
+                    line.style.setProperty('--glow', `${bass * 130}px`);
                 }
             });
             requestAnimationFrame(render);
