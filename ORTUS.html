@@ -143,23 +143,31 @@
             console.log(msg);
         }
 
-        async function bootEngine() {
-            log("BOOTING SYSTEM...");
-            log("LOCATING: " + audio.src);
+<audio id="audio-source" src="./TRACK.MP3" preload="auto" crossorigin="anonymous"></audio>
 
-            try {
-                // Initialize Web Audio API
+<script>
+    // Replace the start of your bootEngine function with this logic:
+    async function bootEngine() {
+        // Cache-busting logic to force GitHub to find the file
+        const version = Math.random().toString(36).substring(7);
+        audio.src = "./TRACK.MP3?v=" + version; 
+        
+        log("BOOTING SYSTEM...");
+        log("FORCING PATH: " + audio.src);
+
+        try {
+            // Re-check the audio state
+            if (audioContext && audioContext.state === 'suspended') {
+                await audioContext.resume();
+            } else if (!audioContext) {
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 analyser = audioContext.createAnalyser();
-                const source = audioContext.createMediaElementSource(audio);
+                source = audioContext.createMediaElementSource(audio);
                 source.connect(analyser);
                 analyser.connect(audioContext.destination);
+            }
 
-                analyser.fftSize = 64;
-                frequencyData = new Uint8Array(analyser.frequencyBinCount);
-
-                // Start Playback
-                await audio.play();
+            await audio.play();
                 
                 prompt.style.display = 'none';
                 stage.style.display = 'block';
