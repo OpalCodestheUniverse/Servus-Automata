@@ -2,18 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Steel Haze | FINAL STABLE BUILD</title>
+    <title>Steel Haze | Rusted Pride Build</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #000; color: #fff; height: 100vh; width: 100vw; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; overflow: hidden; text-transform: uppercase; }
-        #ui-log { position: absolute; top: 15px; left: 15px; font-family: monospace; color: #0f0; font-size: 11px; z-index: 100; text-align: left; background: rgba(0,0,0,0.5); padding: 5px; }
+        #ui-log { position: absolute; top: 15px; left: 15px; font-family: monospace; color: #0f0; font-size: 11px; z-index: 100; text-align: left; background: rgba(0,0,0,0.6); padding: 10px; border-left: 2px solid #0f0; }
         #timer { position: absolute; bottom: 15px; right: 15px; font-family: monospace; color: #444; font-size: 14px; }
         #ignition { padding: 25px 50px; border: 2px solid #ff4d00; color: #ff4d00; background: none; cursor: pointer; font-weight: 900; letter-spacing: 8px; z-index: 101; font-size: 1.2rem; }
-        #ignition:hover { background: #ff4d00; color: #000; }
-        .lyric-line { position: absolute; width: 100%; top: 50%; left: 50%; transform: translate(calc(-50% + var(--x, 0px)), calc(-50% + var(--y, 0px))) scale(var(--s, 1)); text-align: center; font-size: clamp(2rem, 8vw, 6rem); font-weight: 900; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+        #ignition:hover { background: #ff4d00; color: #000; box-shadow: 0 0 20px #ff4d00; }
+        
+        .lyric-line { position: absolute; width: 100%; top: 50%; left: 50%; transform: translate(calc(-50% + var(--x, 0px)), calc(-50% + var(--y, 0px))) scale(var(--s, 1)); text-align: center; font-size: clamp(2rem, 8vw, 6rem); font-weight: 900; opacity: 0; pointer-events: none; }
         .active { animation: focus-fade 4s ease-in-out forwards; }
         .chorus { color: #ff4d00; font-style: italic; text-shadow: 0 0 var(--glow, 20px) rgba(255, 77, 0, 0.7); }
+        
         @keyframes focus-fade {
             0% { opacity: 0; filter: blur(20px); transform: translate(-50%, -45%) scale(0.85); }
             15% { opacity: 1; filter: blur(0px); transform: translate(-50%, -50%) scale(1); }
@@ -24,7 +26,7 @@
 </head>
 <body>
 
-    <div id="ui-log">READY...</div>
+    <div id="ui-log">SYSTEM READY...</div>
     <div id="timer">00.00</div>
     <button id="ignition" onclick="ignite()">[ ENGAGE ]</button>
 
@@ -32,22 +34,29 @@
         <div class="lyric-line" data-t="31.6">Standing in a cold place</div>
         <div class="lyric-line" data-t="37.5">Let me know</div>
         <div class="lyric-line" data-t="43.2">My steel core peeling away</div>
+
         <div class="lyric-line chorus" data-t="65.9">(All my blood)</div>
         <div class="lyric-line chorus" data-t="71.6">(Let me rise)</div>
         <div class="lyric-line chorus" data-t="77.5">(Rusted pride)</div>
         <div class="lyric-line chorus" data-t="83.1">(Let me rise)</div>
+
         <div class="lyric-line" data-t="95.0">Standing in a cold place</div>
         <div class="lyric-line" data-t="101.0">Let me know</div>
         <div class="lyric-line" data-t="107.0">My steel core peeling away</div>
+
         <div class="lyric-line chorus" data-t="115.0">Watch the sun rise in the dawn</div>
         <div class="lyric-line chorus" data-t="121.0">Watch the sun rise in the dawn</div>
+
         <div class="lyric-line" style="color:#555" data-t="123.3">(Uh uh uh..)</div>
+
         <div class="lyric-line" data-t="144.4">High and dry</div>
         <div class="lyric-line chorus" data-t="149.8">I fly high</div>
         <div class="lyric-line chorus" data-t="155.3">Watch the sun rise in the dawn</div>
+        
         <div class="lyric-line" data-t="166.2">Rust away</div>
         <div class="lyric-line" data-t="171.6">Lost to the wind</div>
         <div class="lyric-line chorus" data-t="177.1">Watch the sun rise in the dawn</div>
+
         <div class="lyric-line chorus" data-t="188.0">I fly high</div>
         <div class="lyric-line chorus" data-t="193.4">I fly high</div>
         <div class="lyric-line chorus" data-t="198.0">I fly high</div>
@@ -56,7 +65,7 @@
         <div class="lyric-line chorus" data-t="212.0">(I fly high)</div>
     </div>
 
-    <audio id="track" crossorigin="anonymous"></audio>
+    <audio id="track" src="2-13. Steel Haze (Rusted Pride).mp3" crossorigin="anonymous"></audio>
 
     <script>
         const audio = document.getElementById('track');
@@ -68,24 +77,9 @@
         function updateLog(m) { log.innerHTML += `<br>> ${m}`; }
 
         async function ignite() {
-            updateLog("IGNITION INITIATED...");
+            updateLog("INITIATING LINK...");
+            updateLog("PATH: " + audio.src);
             
-            // Try to force the correct path
-            const possiblePaths = ['./TRACK.MP3', 'TRACK.MP3', './track.mp3'];
-            let loaded = false;
-
-            for (let path of possiblePaths) {
-                if (loaded) break;
-                try {
-                    audio.src = path;
-                    await audio.load();
-                    updateLog("TRYING PATH: " + path);
-                    loaded = true;
-                } catch (e) {
-                    updateLog("PATH FAILED: " + path);
-                }
-            }
-
             try {
                 if (!aCtx) {
                     aCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -96,26 +90,21 @@
                     analyser.fftSize = 64;
                     data = new Uint8Array(analyser.frequencyBinCount);
                 }
-
+                
                 if (aCtx.state === 'suspended') await aCtx.resume();
-
+                
                 audio.volume = 1.0;
-                audio.muted = false; // Override any browser-level muting
+                await audio.play();
 
-                const playPromise = audio.play();
-
-                if (playPromise !== undefined) {
-                    playPromise.then(_ => {
-                        document.getElementById('ignition').style.display = 'none';
-                        document.getElementById('stage').style.display = 'block';
-                        updateLog("LINK ESTABLISHED. AUDIO FLOWING.");
-                        render();
-                    }).catch(error => {
-                        updateLog("PLAYBACK BLOCKED: " + error.message);
-                    });
-                }
+                document.getElementById('ignition').style.display = 'none';
+                document.getElementById('stage').style.display = 'block';
+                updateLog("STABLE. RUNNING SYNC.");
+                render();
             } catch (e) {
-                updateLog("CRITICAL ERROR: " + e.message);
+                updateLog("CRITICAL: " + e.message);
+                if (e.name === "NotSupportedError") {
+                    updateLog("HINT: Browser rejected the file. Double check file size on GitHub!");
+                }
             }
         }
 
@@ -129,6 +118,7 @@
                 const t = parseFloat(line.getAttribute('data-t'));
                 if (time >= t && !line.classList.contains('active')) {
                     line.classList.add('active');
+                    updateLog("SYNC: " + line.innerText.substring(0, 12));
                 }
                 if (line.classList.contains('active')) {
                     const shake = bass * 25;
@@ -142,8 +132,8 @@
         }
 
         audio.onerror = () => {
-            updateLog("FATAL: NO SUPPORTED SOURCE FOUND.");
-            updateLog("HINT: Ensure TRACK.MP3 is not an LFS pointer (check file size on GitHub).");
+            updateLog("FATAL: FILE NOT FOUND OR UNREADABLE.");
+            updateLog("CHECK: Does GitHub show this file as MB or Bytes?");
         };
     </script>
 </body>
