@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        :root {
+            --steel: #b0b0b0;
+            --rust: #d35400;
+            --void: #0a0a0a;
+            --glow: rgba(211, 84, 0, 0.4);
+        }
+
+        body {
+            background-color: var(--void);
+            color: var(--steel);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .lyrics-container {
+            max-width: 800px;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .line {
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+            transition: all 0.5s ease;
+        }
+
+        /* The "Cold Place" intro */
+        .intro {
+            font-weight: 300;
+            font-size: 1.2rem;
+            border-left: 2px solid var(--steel);
+            padding-left: 20px;
+            text-align: left;
+        }
+
+        /* The "Steel Core" effect */
+        .peeling {
+            font-weight: 900;
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--steel), var(--rust), var(--steel));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 4s linear infinite;
+        }
+
+        /* The Chorus - "Let Me Rise" */
+        .rise {
+            font-size: 4rem;
+            font-style: italic;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 20px var(--glow);
+            margin: 2rem 0;
+            animation: flicker 2s infinite;
+        }
+
+        /* High and Dry section */
+        .dawn {
+            font-size: 1.5rem;
+            color: var(--rust);
+            border-bottom: 1px solid var(--rust);
+            display: inline-block;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; text-shadow: 0 0 40px var(--rust); }
+        }
+
+        .subtext {
+            font-size: 0.8rem;
+            color: #444;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lyrics-container">
+        <div class="line intro">Standing in a cold place<br>Let me know</div>
+        
+        <div class="line peeling">My steel core peeling away</div>
+
+        <div class="line">All my blood</div>
+        <div class="line rise">LET ME RISE</div>
+        <div class="line" style="color: var(--rust);">Rusted pride</div>
+        <div class="line rise">LET ME RISE</div>
+
+        <div class="line" style="letter-spacing: 15px;">(Uh uh uh..)</div>
+
+        <div class="line">High and dry</div>
+        <div class="line peeling" style="font-size: 3.5rem;">I FLY HIGH</div>
+        <div class="line dawn">Watch the sun rise in the dawn</div>
+        
+        <div class="line">Rust away / Lost to the wind</div>
+        <div class="line dawn">Watch the sun rise in the dawn</div>
+
+        <div class="line rise" style="font-size: 5rem;">I FLY HIGH</div>
+    </div>
+
+    <div class="subtext">V.IV RUSTY // STEEL HAZE</div>
+
+</body>
+</html>
