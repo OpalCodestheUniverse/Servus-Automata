@@ -3,35 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steel Haze | Typography Engine</title>
+    <title>Steel Haze | Typography Engine v3.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap" rel="stylesheet">
     <style>
-        /* RESET & CENTER */
+        /* BASE STYLING */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             background: #000; 
             color: #fff; 
             height: 100vh; 
-            width: 100vw;
+            width: 100vw; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
             overflow: hidden;
-            font-family: 'Inter', 'Segoe UI', sans-serif;
+            font-family: 'Inter', sans-serif;
             text-transform: uppercase;
         }
 
-        /* OVERLAYS */
-        #ui-layer {
+        /* LIVE DEBUG CONSOLE */
+        #debug-console {
             position: absolute;
-            top: 20px; left: 20px;
+            top: 20px;
+            left: 20px;
             font-family: monospace;
             color: #0f0;
             font-size: 12px;
-            z-index: 999; /* Always on top */
-            text-align: left;
+            line-height: 1.4;
+            z-index: 1000;
             pointer-events: none;
+            text-shadow: 0 0 5px #0f0;
         }
 
+        /* START BUTTON */
         #prompt {
             padding: 30px 60px;
             border: 2px solid #ff4d00;
@@ -39,16 +43,18 @@
             font-weight: 900;
             letter-spacing: 10px;
             cursor: pointer;
-            z-index: 1000;
-            background: rgba(0,0,0,0.8);
+            z-index: 1001;
+            background: rgba(0,0,0,0.9);
+            transition: 0.2s;
         }
+        #prompt:hover { background: #ff4d00; color: #000; }
 
-        /* LYRIC STAGING */
+        /* THE STAGE */
         #stage {
             position: absolute;
-            width: 100vw;
-            height: 100vh;
-            display: none; /* Hidden until start */
+            width: 100%;
+            height: 100%;
+            display: none;
         }
 
         .line {
@@ -56,21 +62,25 @@
             width: 100%;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(var(--s, 1));
+            /* Centering + Reactive Variables */
+            transform: translate(calc(-50% + var(--x, 0px)), calc(-50% + var(--y, 0px))) scale(var(--s, 1));
             text-align: center;
-            font-size: clamp(2rem, 10vw, 6rem); /* Responsive size */
+            font-size: clamp(2rem, 10vw, 6rem);
             font-weight: 900;
             opacity: 0;
             pointer-events: none;
-            line-height: 1.1;
             white-space: nowrap;
         }
 
         /* ANIMATION STATES */
-        .active { animation: glitch-in-out 4s ease-in-out forwards; }
-        .impact { color: #ff4d00; font-style: italic; text-shadow: 0 0 40px rgba(255,77,0,0.6); }
+        .active { animation: lyric-sequence 4s ease-in-out forwards; }
+        .impact { 
+            color: #ff4d00; 
+            font-style: italic; 
+            text-shadow: 0 0 var(--glow, 20px) rgba(255, 77, 0, 0.8); 
+        }
 
-        @keyframes glitch-in-out {
+        @keyframes lyric-sequence {
             0% { opacity: 0; filter: blur(20px); transform: translate(-50%, -40%) scale(0.8); }
             15% { opacity: 1; filter: blur(0px); transform: translate(-50%, -50%) scale(1); }
             85% { opacity: 1; filter: blur(0px); transform: translate(-50%, -50%) scale(1); }
@@ -80,88 +90,124 @@
 </head>
 <body>
 
-    <div id="ui-layer">SYSTEM IDLE...</div>
+    <div id="debug-console">SYSTEM READY...</div>
 
-    <div id="prompt" onclick="bootSequence()">[ INITIALIZE ]</div>
+    <div id="prompt" onclick="bootEngine()">[ INITIALIZE ]</div>
 
     <div id="stage">
-        <div class="line" data-start="2.0">Standing in a cold place</div>
-        <div class="line" data-start="6.0">Let me know</div>
-        <div class="line" data-start="10.0">My steel core peeling away</div>
-        
+        <div class="line" data-start="31.6">Standing in a cold place</div>
+        <div class="line" data-start="37.5">Let me know</div>
+        <div class="line" data-start="43.2">My steel core peeling away</div>
+
+        <div class="line impact" data-start="65.9">(All my blood)</div>
         <div class="line impact" data-start="71.6">Let me rise</div>
+        <div class="line" data-start="77.5">Rusted pride</div>
         <div class="line impact" data-start="83.1">Let me rise</div>
+
+        <div class="line" data-start="95.0">Standing in a cold place</div>
+        <div class="line" data-start="101.0">Let me know</div>
+        <div class="line" data-start="107.0">My steel core peeling away</div>
+
+        <div class="line impact" data-start="115.0">Watch the sun rise in the dawn</div>
+        <div class="line impact" data-start="121.0">Watch the sun rise in the dawn</div>
+
+        <div class="line" style="letter-spacing: 20px; color: #444;" data-start="123.3">(Uh uh uh..)</div>
+
+        <div class="line" data-start="144.4">High and dry</div>
+        <div class="line impact" data-start="149.8">I fly high</div>
+        <div class="line impact" data-start="155.3">Watch the sun rise in the dawn</div>
+        
+        <div class="line" data-start="166.2">Rust away</div>
+        <div class="line" data-start="171.6">Lost to the wind</div>
+        <div class="line impact" data-start="177.1">Watch the sun rise in the dawn</div>
+
+        <div class="line impact" data-start="188.0">I fly high</div>
+        <div class="line impact" data-start="193.4">I fly high</div>
+        <div class="line impact" data-start="198.0">I fly high</div>
+        <div class="line impact" data-start="203.0">I fly high</div>
     </div>
 
-    <audio id="vibe-track" src="track.mp3" preload="auto"></audio>
+    <audio id="audio-source" src="./track.mp3" preload="auto" crossorigin="anonymous"></audio>
 
     <script>
-        const audio = document.getElementById('vibe-track');
-        const ui = document.getElementById('ui-layer');
+        const audio = document.getElementById('audio-source');
+        const consoleLog = document.getElementById('debug-console');
         const stage = document.getElementById('stage');
         const prompt = document.getElementById('prompt');
         const lines = document.querySelectorAll('.line');
 
-        let aCtx, anal, dArray;
+        let audioContext, analyser, frequencyData;
 
         function log(msg) {
-            ui.innerHTML += `<br>> ${msg}`;
+            consoleLog.innerHTML += `<br>> ${msg}`;
             console.log(msg);
         }
 
-        async function bootSequence() {
-            log("BOOTING AUDIO ENGINE...");
-            
-            try {
-                // Audio Context must be started via click
-                aCtx = new (window.AudioContext || window.webkitAudioContext)();
-                anal = aCtx.createAnalyser();
-                const source = aCtx.createMediaElementSource(audio);
-                source.connect(anal);
-                anal.connect(aCtx.destination);
-                
-                anal.fftSize = 64;
-                dArray = new Uint8Array(anal.frequencyBinCount);
+        async function bootEngine() {
+            log("BOOTING SYSTEM...");
+            log("LOCATING: " + audio.src);
 
-                log("LOADING track.mp3...");
+            try {
+                // Initialize Web Audio API
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioContext.createAnalyser();
+                const source = audioContext.createMediaElementSource(audio);
+                source.connect(analyser);
+                analyser.connect(audioContext.destination);
+
+                analyser.fftSize = 64;
+                frequencyData = new Uint8Array(analyser.frequencyBinCount);
+
+                // Start Playback
                 await audio.play();
                 
                 prompt.style.display = 'none';
                 stage.style.display = 'block';
-                log("PLAYBACK STARTING.");
+                log("LINK ESTABLISHED. COMMENCING SYNC.");
                 
-                requestAnimationFrame(draw);
+                render();
             } catch (err) {
                 log("CRITICAL ERROR: " + err.name);
                 log("REASON: " + err.message);
+                if(err.name === "NotAllowedError") log("FIX: Interactions required to play audio.");
             }
         }
 
-        function draw() {
-            anal.getByteFrequencyData(dArray);
-            let bass = dArray[2] / 255; 
-            let time = audio.currentTime;
+        function render() {
+            analyser.getByteFrequencyData(frequencyData);
+            const bass = frequencyData[2] / 255; // Bass sensitivity
+            const currentTime = audio.currentTime;
 
             lines.forEach(line => {
-                let start = parseFloat(line.getAttribute('data-start'));
+                const start = parseFloat(line.getAttribute('data-start'));
                 
-                // Trigger line
-                if (time >= start && !line.classList.contains('active')) {
+                // Show line at correct time
+                if (currentTime >= start && !line.classList.contains('active')) {
                     line.classList.add('active');
-                    log("SYNC: " + line.innerText);
+                    log("TRIGGER: " + line.innerText.substring(0, 15) + "...");
                 }
 
-                // Audio-Reactive Movement
+                // Apply Audio-Reactive Jitter to active lines
                 if (line.classList.contains('active')) {
-                    line.style.setProperty('--s', 1 + (bass * 0.1));
+                    const jitterX = (Math.random() - 0.5) * (bass * 25);
+                    const jitterY = (Math.random() - 0.5) * (bass * 25);
+                    const scale = 1 + (bass * 0.15);
+                    const glow = bass * 50;
+
+                    line.style.setProperty('--x', `${jitterX}px`);
+                    line.style.setProperty('--y', `${jitterY}px`);
+                    line.style.setProperty('--s', scale);
+                    line.style.setProperty('--glow', `${glow}px`);
                 }
             });
 
-            requestAnimationFrame(draw);
+            requestAnimationFrame(render);
         }
 
+        // Catch file path errors immediately
         audio.addEventListener('error', () => {
-            log("FATAL: track.mp3 NOT FOUND IN REPO.");
+            log("FATAL: FILE NOT FOUND AT TARGET URL.");
+            log("ACTION: Check case-sensitivity and file extension.");
         });
     </script>
 </body>
