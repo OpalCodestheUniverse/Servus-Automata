@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Steel Haze: Rusted Pride - Perfect Sync</title>
+    <title>Steel Haze: Rusted Pride - Interactive Sync</title>
     <style>
         body {
             background-color: #000;
@@ -15,73 +15,58 @@
             font-family: 'Inter', 'Segoe UI', sans-serif;
             overflow: hidden;
             text-transform: uppercase;
+            cursor: pointer; /* Shows you can click */
         }
+
+        /* The container stays hidden until we "start" the song */
+        #video-stage { display: none; width: 100%; height: 100%; position: relative; }
 
         .line {
             position: absolute;
             width: 100%;
+            top: 50%;
+            transform: translateY(-50%);
             text-align: center;
             font-size: 5rem;
             font-weight: 900;
             opacity: 0;
-            letter-spacing: -0.05em;
-            /* Animation set to 5.5s to cover the gap between most timestamps */
-            animation: sync-fade 5.5s ease-in-out forwards;
+            animation: sync-fade 5s ease-in-out forwards;
         }
 
-        /* Chorus/Impact Styling */
-        .rise { 
-            color: #ff4d00; 
-            font-style: italic;
-            text-shadow: 0 0 30px rgba(255, 77, 0, 0.7);
-            font-size: 6.5rem;
-        }
-
-        /* Ethereal/Ooh section */
-        .vocal {
-            font-weight: 300;
-            letter-spacing: 1.5rem;
-            color: #888;
-            font-size: 3rem;
-        }
+        .rise { color: #ff4d00; font-style: italic; text-shadow: 0 0 30px rgba(255,77,0,0.7); }
 
         @keyframes sync-fade {
-            0% { opacity: 0; transform: scale(0.95) translateY(10px); filter: blur(10px); }
-            10% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0px); }
-            85% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0px); }
-            100% { opacity: 0; transform: scale(1.05) translateY(-10px); filter: blur(10px); }
+            0% { opacity: 0; transform: translateY(20px) scale(0.9); filter: blur(10px); }
+            10% { opacity: 1; transform: translateY(-50%) scale(1); filter: blur(0px); }
+            90% { opacity: 1; transform: translateY(-50%) scale(1); filter: blur(0px); }
+            100% { opacity: 0; transform: translateY(-70%) scale(1.1); filter: blur(10px); }
         }
+
+        #start-prompt { font-size: 1rem; color: #444; letter-spacing: 2px; }
     </style>
 </head>
-<body>
+<body onclick="startLyrics()">
 
-    <div class="line" style="animation-delay: 31.6s;">Stand in a cold place</div>
-    <div class="line" style="animation-delay: 37.5s;">Let me know</div>
-    <div class="line" style="animation-delay: 43.2s;">My steel core</div>
-    <div class="line" style="animation-delay: 48.9s;">Peels away</div>
+    <div id="start-prompt">CLICK TO START SYNC (31s INTRO)</div>
 
-    <div class="line" style="animation-delay: 65.9s;">All my blood</div>
-    <div class="line rise" style="animation-delay: 71.6s;">Let me rise</div>
-    <div class="line" style="animation-delay: 77.5s; color: #d35400;">Rusted pride</div>
-    <div class="line rise" style="animation-delay: 83.1s;">Let me rise</div>
+    <div id="video-stage">
+        <div class="line" style="animation-delay: 31.6s;">Stand in a cold place</div>
+        <div class="line" style="animation-delay: 37.5s;">Let me know</div>
+        <div class="line" style="animation-delay: 43.2s;">My steel core</div>
+        <div class="line" style="animation-delay: 48.9s;">Peels away</div>
 
-    <div class="line vocal" style="animation-delay: 123.3s;">Ooh</div>
-    <div class="line vocal" style="animation-delay: 128.7s;">Ooh</div>
-    <div class="line vocal" style="animation-delay: 134.2s;">Ooh</div>
-    <div class="line vocal" style="animation-delay: 139.7s;">Ooh</div>
+        <div class="line" style="animation-delay: 65.9s;">All my blood</div>
+        <div class="line rise" style="animation-delay: 71.6s;">Let me rise</div>
+        <div class="line" style="animation-delay: 77.5s;">Rusted pride</div>
+        <div class="line rise" style="animation-delay: 83.1s;">Let me rise</div>
+    </div>
 
-    <div class="line" style="animation-delay: 144.4s;">High and dry</div>
-    <div class="line rise" style="animation-delay: 149.8s;">I fly high</div>
-    <div class="line" style="animation-delay: 155.3s;">Watch the sun rise</div>
-    <div class="line" style="animation-delay: 161.5s; font-size: 3.5rem;">In the dawn</div>
-
-    <div class="line" style="animation-delay: 166.2s;">Rust away</div>
-    <div class="line" style="animation-delay: 171.6s;">Lost to the wind</div>
-    <div class="line" style="animation-delay: 177.1s;">Watch the sun rise</div>
-    <div class="line" style="animation-delay: 183.2s; font-size: 3.5rem;">In the dawn</div>
-
-    <div class="line rise" style="animation-delay: 188.0s;">I fly high</div>
-    <div class="line rise" style="animation-delay: 193.4s;">I fly high</div>
-
+    <script>
+        function startLyrics() {
+            document.getElementById('start-prompt').style.display = 'none';
+            document.getElementById('video-stage').style.display = 'block';
+            console.log("Lyrics started. First line in 31 seconds...");
+        }
+    </script>
 </body>
 </html>
