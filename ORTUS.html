@@ -2,134 +2,167 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Steel Haze: Reactive Typography</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steel Haze | Typography Engine</title>
     <style>
-        body {
-            background-color: #000;
-            color: #fff;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: 'Inter', sans-serif;
+        /* RESET & CENTER */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: #000; 
+            color: #fff; 
+            height: 100vh; 
+            width: 100vw;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
             overflow: hidden;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
             text-transform: uppercase;
         }
 
-        #start-screen {
-            text-align: center;
-            z-index: 100;
+        /* OVERLAYS */
+        #ui-layer {
+            position: absolute;
+            top: 20px; left: 20px;
+            font-family: monospace;
+            color: #0f0;
+            font-size: 12px;
+            z-index: 999; /* Always on top */
+            text-align: left;
+            pointer-events: none;
+        }
+
+        #prompt {
+            padding: 30px 60px;
+            border: 2px solid #ff4d00;
+            color: #ff4d00;
+            font-weight: 900;
+            letter-spacing: 10px;
             cursor: pointer;
+            z-index: 1000;
+            background: rgba(0,0,0,0.8);
+        }
+
+        /* LYRIC STAGING */
+        #stage {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            display: none; /* Hidden until start */
         }
 
         .line {
             position: absolute;
             width: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(var(--s, 1));
             text-align: center;
-            font-size: 5rem;
+            font-size: clamp(2rem, 10vw, 6rem); /* Responsive size */
+            font-weight: 900;
             opacity: 0;
             pointer-events: none;
-            /* The 'shake' variable will be controlled by JS */
-            transform: translate(var(--x), var(--y)) scale(var(--s));
-            transition: transform 0.05s linear;
+            line-height: 1.1;
+            white-space: nowrap;
         }
 
-        .impact { 
-            color: #ff4d00; 
-            font-style: italic;
-            text-shadow: 0 0 calc(10px + var(--glow)) rgba(255, 77, 0, 0.9);
-        }
+        /* ANIMATION STATES */
+        .active { animation: glitch-in-out 4s ease-in-out forwards; }
+        .impact { color: #ff4d00; font-style: italic; text-shadow: 0 0 40px rgba(255,77,0,0.6); }
 
-        @keyframes lyric-fade {
-            0% { opacity: 0; filter: blur(15px); }
-            10% { opacity: 1; filter: blur(0px); }
-            90% { opacity: 1; filter: blur(0px); }
-            100% { opacity: 0; filter: blur(15px); }
-        }
-
-        .active-line {
-            animation: lyric-fade 4s ease-in-out forwards;
+        @keyframes glitch-in-out {
+            0% { opacity: 0; filter: blur(20px); transform: translate(-50%, -40%) scale(0.8); }
+            15% { opacity: 1; filter: blur(0px); transform: translate(-50%, -50%) scale(1); }
+            85% { opacity: 1; filter: blur(0px); transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; filter: blur(20px); transform: translate(-50%, -60%) scale(1.2); }
         }
     </style>
 </head>
 <body>
 
-    <div id="start-screen" onclick="initAudio()">
-        <h1 style="letter-spacing: 10px;">INITIALIZE SYSTEM</h1>
-        <p style="color: #666;">[ CLICK TO LOAD STEEL-HAZE.MP3 ]</p>
+    <div id="ui-layer">SYSTEM IDLE...</div>
+
+    <div id="prompt" onclick="bootSequence()">[ INITIALIZE ]</div>
+
+    <div id="stage">
+        <div class="line" data-start="2.0">Standing in a cold place</div>
+        <div class="line" data-start="6.0">Let me know</div>
+        <div class="line" data-start="10.0">My steel core peeling away</div>
+        
+        <div class="line impact" data-start="71.6">Let me rise</div>
+        <div class="line impact" data-start="83.1">Let me rise</div>
     </div>
 
-    <div id="stage" style="display:none;">
-        <div class="line" data-time="31.6">Standing in a cold place</div>
-        <div class="line" data-time="37.5">Let me know</div>
-        <div class="line" data-time="43.2">My steel core peeling away</div>
-        
-        <div class="line" data-time="65.9">(All my blood)</div>
-        <div class="line impact" data-time="71.6">Let me rise</div>
-        <div class="line" data-time="77.5">Rusted pride</div>
-        <div class="line impact" data-time="83.1">Let me rise</div>
-
-        <div class="line" data-time="144.4">High and dry</div>
-        <div class="line impact" data-time="149.8">I fly high</div>
-        </div>
-
-    <audio id="bgm" src="steel-haze.mp3"></audio>
+    <audio id="vibe-track" src="track.mp3" preload="auto"></audio>
 
     <script>
-        let audioCtx, analyser, dataArray, source;
+        const audio = document.getElementById('vibe-track');
+        const ui = document.getElementById('ui-layer');
+        const stage = document.getElementById('stage');
+        const prompt = document.getElementById('prompt');
         const lines = document.querySelectorAll('.line');
-        const audio = document.getElementById('bgm');
 
-        function initAudio() {
-            // Hide start screen
-            document.getElementById('start-screen').style.display = 'none';
-            document.getElementById('stage').style.display = 'block';
+        let aCtx, anal, dArray;
 
-            // Audio Setup
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            analyser = audioCtx.createAnalyser();
-            source = audioCtx.createMediaElementSource(audio);
-            source.connect(analyser);
-            analyser.connect(audioCtx.destination);
-
-            analyser.fftSize = 64; 
-            dataArray = new Uint8Array(analyser.frequencyBinCount);
-
-            audio.play();
-            render();
+        function log(msg) {
+            ui.innerHTML += `<br>> ${msg}`;
+            console.log(msg);
         }
 
-        function render() {
-            analyser.getByteFrequencyData(dataArray);
+        async function bootSequence() {
+            log("BOOTING AUDIO ENGINE...");
             
-            // Get the "Bass" (first few buckets of the frequency data)
-            let volume = dataArray[2] / 255; 
-            let shake = volume * 15; // How much it vibrates
-            let glow = volume * 50;  // How much the glow expands
+            try {
+                // Audio Context must be started via click
+                aCtx = new (window.AudioContext || window.webkitAudioContext)();
+                anal = aCtx.createAnalyser();
+                const source = aCtx.createMediaElementSource(audio);
+                source.connect(anal);
+                anal.connect(aCtx.destination);
+                
+                anal.fftSize = 64;
+                dArray = new Uint8Array(anal.frequencyBinCount);
 
-            // Apply reactive visuals to all active lines
+                log("LOADING track.mp3...");
+                await audio.play();
+                
+                prompt.style.display = 'none';
+                stage.style.display = 'block';
+                log("PLAYBACK STARTING.");
+                
+                requestAnimationFrame(draw);
+            } catch (err) {
+                log("CRITICAL ERROR: " + err.name);
+                log("REASON: " + err.message);
+            }
+        }
+
+        function draw() {
+            anal.getByteFrequencyData(dArray);
+            let bass = dArray[2] / 255; 
+            let time = audio.currentTime;
+
             lines.forEach(line => {
-                const startTime = parseFloat(line.getAttribute('data-time'));
-                const currentTime = audio.currentTime;
-
-                // Trigger animation if the time matches
-                if (currentTime >= startTime && !line.classList.contains('active-line')) {
-                    line.classList.add('active-line');
+                let start = parseFloat(line.getAttribute('data-start'));
+                
+                // Trigger line
+                if (time >= start && !line.classList.contains('active')) {
+                    line.classList.add('active');
+                    log("SYNC: " + line.innerText);
                 }
 
-                // Apply the jitter/glow based on audio volume
-                if (line.classList.contains('active-line')) {
-                    line.style.setProperty('--x', `${(Math.random() - 0.5) * shake}px`);
-                    line.style.setProperty('--y', `${(Math.random() - 0.5) * shake}px`);
-                    line.style.setProperty('--s', `${1 + (volume * 0.1)}`);
-                    line.style.setProperty('--glow', `${glow}px`);
+                // Audio-Reactive Movement
+                if (line.classList.contains('active')) {
+                    line.style.setProperty('--s', 1 + (bass * 0.1));
                 }
             });
 
-            requestAnimationFrame(render);
+            requestAnimationFrame(draw);
         }
+
+        audio.addEventListener('error', () => {
+            log("FATAL: track.mp3 NOT FOUND IN REPO.");
+        });
     </script>
 </body>
 </html>
