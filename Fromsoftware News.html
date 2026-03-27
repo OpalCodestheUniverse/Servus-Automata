@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FromSoftware Updates</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+</head>
+<body class="archive-body">
+
+    <div class="archive-container">
+        <a href="index.html" class="read-more-btn">← BACK TO LOGS</a>
+        
+        <header style="margin-top:30px;">
+            <h1 id="news-title" class="archive-title">Loading Intelligence Brief...</h1>
+            <p id="news-meta" class="post-date"></p>
+        </header>
+
+        <div id="news-content" class="post-excerpt" style="line-height: 1.6;">
+            </div>
+    </div>
+
+    <script>
+        /** * 1. Replace this URL with your NEW "Publish to Web" CSV link 
+         * after you've set up the automation script on the new sheet.
+         */
+        const newsSheetUrl = 'YOUR_NEW_PUBLISHED_CSV_URL_HERE';
+        
+        const params = new URLSearchParams(window.location.search);
+        const newsId = params.get('id');
+
+        async function loadNews() {
+            try {
+                const response = await fetch(newsSheetUrl);
+                const csvText = await response.text();
+                
+                Papa.parse(csvText, {
+                    header: true,
+                    skipEmptyLines: true,
+                    complete: function(results) {
+                        // We find the entry where the 'ID' column matches our URL param
+                        const data = results.data.find(row => row.ID == newsId);
+                        
+                        if(data) {
+                            document.getElementById('news-title').innerText = data.Title;
+                            // Formats: "2026-03-27 // FromSoft"
+                            document.getElementById('news-meta').innerText = `${data.Date} // ${data.Category}`;
+                            document.getElementById('news-content').innerHTML = data.Content;
+                            document.title = "FromSoft | " + data.Title;
+                        } else {
+                            document.getElementById('news-title').innerText = "Update Not Found";
+                            document.getElementById('news-content').innerHTML = "The transmission you're looking for doesn't exist yet.";
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error("Transmission Error:", error);
+                document.getElementById('news-title').innerText = "Signal Lost";
+            }
+        }
+
+        // Only attempt to load if an ID is present in the URL (e.g., ?id=1)
+        if (newsId !== null) {
+            loadNews();
+        } else {
+            document.getElementById('news-title').innerText = "No ID Provided";
+        }
+    </script>
+</body>
+</html>
