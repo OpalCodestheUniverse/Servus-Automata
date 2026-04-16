@@ -1,20 +1,3 @@
-/**
- * Super Mario Bros World 1-1 (NES)
- * A 1:1 functional recreation in JavaScript/HTML5 Canvas.
- * * CORE CONCEPTS:
- * This script builds the foundational engine for a 2D platformer, including 
- * gravity-based physics, collision detection, and sprite-based rendering.
- * It utilizes an array-based map system where each integer represents a 
- * specific game tile (Ground, Pipe, Question Block) exactly as laid out 
- * in the 1985 original.
- * * ANALYSIS:
- * By mapping the level layout to a coordinate grid, we ensure mechanical 
- * accuracy. The physics loop calculates velocity and acceleration 60 
- * times per second, providing the responsive "weight" characteristic 
- * of Mario’s movement. This simulation captures the technical 
- * constraints of the NES while utilizing modern browser performance.
- */
-
 const canvas = document.createElement('canvas');
 const ctx = canvas.getContext('2d');
 document.body.appendChild(canvas);
