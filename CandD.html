@@ -9,9 +9,11 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-image: url('https://images.unsplash.com/photo-1598449354454-e692f3922d5a?q=80&w=1920');
+            /* Changed to local file */
+            background-image: url('grass.jpg'); 
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -63,8 +65,8 @@
 
         .service-img {
             width: 100%;
-            height: auto;           /* Allows image to scale naturally */
-            object-fit: contain;    /* Ensures full image visibility */
+            height: auto;
+            object-fit: contain;
             border: 5px solid #e8ede7;
             margin-bottom: 30px;
             display: block;
