@@ -9,7 +9,6 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* Changed to local file */
             background-image: url('grass.jpg'); 
             background-size: cover;
             background-position: center;
@@ -29,6 +28,13 @@
             padding: 40px;
             text-align: center;
             box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        /* Bordered text sections */
+        .framed-text {
+            border: 1px solid black;
+            padding: 10px;
+            margin-bottom: 10px;
         }
 
         .business-name {
@@ -57,6 +63,8 @@
             justify-content: space-between;
             text-align: left;
             margin-bottom: 30px;
+            border: 1px solid black;
+            padding: 15px;
         }
 
         .info-container h3 { font-size: 1rem; color: #0056a3; margin-bottom: 5px; }
@@ -77,6 +85,7 @@
             color: white;
             padding: 20px;
             border-radius: 5px;
+            border: 1px solid black;
         }
 
         .phone-btn {
@@ -94,14 +103,18 @@
             margin-top: 20px;
             font-weight: bold;
             color: #2e7d32;
+            border: 1px solid black;
+            padding: 5px;
         }
     </style>
 </head>
 <body>
 
     <div class="flyer-card">
-        <h1 class="business-name">C and D Mowing</h1>
-        <p class="tagline">Your lawn, perfectly manicured.</p>
+        <div class="framed-text">
+            <h1 class="business-name">C and D Mowing</h1>
+            <p class="tagline">Your lawn, perfectly manicured.</p>
+        </div>
 
         <h2 class="section-title">Our Services</h2>
         
