@@ -3,252 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C and D Mowing | Lawn Care Services</title>
+    <title>C and D Mowing | OKC Lawn Care</title>
     <style>
-        /* --- CSS Reset & Global Styles --- */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* Lush grass background covering the whole viewport */
             background-image: url('https://images.unsplash.com/photo-1598449354454-e692f3922d5a?q=80&w=1920');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
-            color: #333;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
             padding: 20px;
         }
 
-        /* --- Main Card Container (The "Flyer") --- */
-        .main-card {
-            background-color: rgba(255, 255, 255, 0.96); /* White with slight transparency */
-            border-radius: 20px;
+        /* The "Flyer" Card with Border */
+        .flyer-card {
+            background-color: #ffffff;
+            border: 10px solid #2e7d32; /* Deep Green Border */
             width: 100%;
-            max-width: 600px;
+            max-width: 500px;
             padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Stronger shadow for depth */
             text-align: center;
-        }
-
-        /* --- Header Section (Logo + Name) --- */
-        .header-section {
-            margin-bottom: 30px;
-        }
-
-        .logo-img {
-            max-width: 150px;
-            height: auto;
-            margin-bottom: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
         }
 
         .business-name {
-            color: #0056a3; /* Blue color from the logo text */
+            color: #0056a3;
             font-size: 2.5rem;
-            font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 1px;
             margin-bottom: 5px;
         }
 
-        .business-tagline {
-            color: #444;
-            font-size: 1.1rem;
+        .tagline {
             font-style: italic;
-        }
-
-        /* --- Main Content Section --- */
-        .content-section {
-            border-top: 2px solid #ddd;
-            border-bottom: 2px solid #ddd;
-            padding: 30px 0;
+            color: #444;
             margin-bottom: 30px;
         }
 
         .section-title {
-            color: #2e7d32; /* Green color from the logo graphic */
-            font-size: 1.8rem;
+            color: #2e7d32;
+            font-size: 1.5rem;
             margin-bottom: 20px;
-            font-weight: bold;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
         }
 
-        /* Two-column layout for services/why choose us */
-        .info-grid {
+        .info-container {
             display: flex;
             justify-content: space-between;
-            gap: 20px;
-            margin-bottom: 30px;
             text-align: left;
-        }
-
-        .info-col {
-            flex: 1;
-        }
-
-        .info-col h3 {
-            color: #0056a3;
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-        }
-
-        .info-col ul {
-            list-style: none;
-        }
-
-        .info-col ul li {
-            margin-bottom: 8px;
-            position: relative;
-            padding-left: 25px;
-            font-size: 1rem;
-            line-height: 1.4;
-        }
-
-        /* Custom Checkmark Icons for bullets using pseudo-elements */
-        .info-col ul li::before {
-            content: '✔';
-            position: absolute;
-            left: 0;
-            color: #2e7d32;
-            font-weight: bold;
-        }
-
-        /* --- Central Image Area --- */
-        .image-wrapper {
             margin-bottom: 30px;
         }
+
+        .info-container h3 { font-size: 1rem; color: #0056a3; margin-bottom: 5px; }
+        .info-container ul { list-style: none; }
+        .info-container li { font-size: 0.9rem; margin-bottom: 5px; }
 
         .service-img {
             width: 100%;
-            max-width: 400px; /* Or specific pixel width for consistency */
-            height: auto;
-            border: 10px solid white;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-        }
-
-        /* --- Call to Action (CTA) Section --- */
-        .cta-section {
-            background-color: #2e7d32; /* Green background for the whole CTA block */
-            color: white;
-            padding: 25px;
-            border-radius: 10px;
+            height: 200px;
+            object-fit: cover;
+            border: 5px solid #e8ede7;
             margin-bottom: 30px;
         }
 
-        .cta-text {
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .phone-link {
-            display: inline-block;
-            font-size: 2rem;
-            font-weight: bold;
+        .cta-box {
+            background-color: #2e7d32;
             color: white;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .phone-btn {
+            display: block;
+            margin-top: 10px;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
             text-decoration: none;
-            padding: 10px 20px;
-            border: 3px solid white;
-            border-radius: 50px;
-            transition: background-color 0.3s, color 0.3s;
+            padding: 10px;
+            border: 2px solid white;
         }
 
-        .phone-link:hover {
-            background-color: white;
+        .location {
+            margin-top: 20px;
+            font-weight: bold;
             color: #2e7d32;
-        }
-
-        /* --- Footer Section (Location Only) --- */
-        .footer-section {
-            font-size: 1rem;
-            color: #555;
-        }
-
-        /* --- Responsive Adjustments --- */
-        @media (max-width: 500px) {
-            .main-card {
-                padding: 20px;
-            }
-
-            .business-name {
-                font-size: 2rem;
-            }
-
-            .info-grid {
-                flex-direction: column; /* Stack columns on small screens */
-            }
-
-            .info-col {
-                margin-bottom: 20px;
-            }
-
-            .section-title {
-                font-size: 1.5rem;
-            }
-
-            .cta-text {
-                font-size: 1.2rem;
-            }
-
-            .phone-link {
-                font-size: 1.5rem;
-            }
         }
     </style>
 </head>
 <body>
 
-    <div class="main-card">
-        <!-- Header Section: Logo, Name, Tagline -->
-        <div class="header-section">
-            <img src="https://i.ibb.co/3N49g6B/mower-logo.png" alt="C and D Mowing Logo" class="logo-img">
-            <h1 class="business-name">C and D Mowing</h1>
-            <p class="business-tagline">Your lawn, perfectly manicured.</p>
-        </div>
+    <div class="flyer-card">
+        <h1 class="business-name">C and D Mowing</h1>
+        <p class="tagline">Your lawn, perfectly manicured.</p>
 
-        <!-- Main Content: Services and Reasons -->
-        <div class="content-section">
-            <h2 class="section-title">Our Services</h2>
-            <div class="info-grid">
-                <div class="info-col">
-                    <!-- Removed the bullets list as requested -->
-                    <h3>Residential & Commercial</h3>
-                    <h3>Professional & Reliable</h3>
-                </div>
-                <div class="info-col">
-                    <h3>Why Choose Us?</h3>
-                    <ul>
-                        <li>Experienced Team</li>
-                        <li>Reliable Service</li>
-                        <li>Competitive Pricing</li>
-                        <li>Satisfaction Guaranteed</li>
-                    </ul>
-                </div>
+        <h2 class="section-title">Our Services</h2>
+        
+        <div class="info-container">
+            <div>
+                <h3>Professional Services</h3>
+                <p>Residential & Commercial<br>Professional & Reliable</p>
             </div>
-            <!-- Central Image -->
-            <div class="image-wrapper">
-                <img src="https://images.unsplash.com/photo-1605347242505-6d8900542528?q=80&w=600" alt="Professional lawnmower on a manicured green lawn" class="service-img">
+            <div>
+                <h3>Why Choose Us?</h3>
+                <ul>
+                    <li>✔ Experienced Team</li>
+                    <li>✔ Reliable Service</li>
+                    <li>✔ Competitive Pricing</li>
+                    <li>✔ Satisfaction Guaranteed</li>
+                </ul>
             </div>
         </div>
 
-        <!-- Call to Action Section -->
-        <div class="cta-section">
-            <p class="cta-text">Get Your Free Quote!</p>
-            <a href="tel:5551234567" class="phone-link">Call Us Today: (555) 123-4567</a>
+        <img src="https://images.unsplash.com/photo-1605347242505-6d8900542528?q=80&w=600" alt="Lawnmower" class="service-img">
+
+        <div class="cta-box">
+            <p>GET YOUR FREE QUOTE!</p>
+            <a href="tel:5551234567" class="phone-btn">Call: (555) 123-4567</a>
         </div>
 
-        <!-- Footer Section: Location only -->
-        <div class="footer-section">
-            Serving the OKC Community
-        </div>
+        <div class="location">Serving the OKC Community</div>
     </div>
 
 </body>
