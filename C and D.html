@@ -1,1 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C & D Mowing | Professional Lawn Care</title>
+    <style>
+        body {
+            background-color: #e8ede7;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
 
+        .flyer {
+            background-color: #ffffff;
+            border: 8px solid #2d5a27;
+            padding: 40px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background Image Placeholder */
+        .flyer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1598449354454-e692f3922d5a?q=80&w=1000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            color: #2d5a27;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #444;
+            font-size: 1.2rem;
+            margin: 20px 0;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            background-color: #2d5a27;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .contact-btn:hover {
+            background-color: #3e7a37;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="flyer">
+        <div class="content">
+            <h1>C & D Mowing</h1>
+            <p>Professional Lawn Care Services<br>Reliable. Affordable. Precise.</p>
+            <hr>
+            <p><strong>Serving your area!</strong></p>
+            <p>Call us for a free estimate:<br><strong>(555) 000-0000</strong></p>
+            <a href="tel:5550000000" class="contact-btn">Call Now</a>
+        </div>
+    </div>
+
+</body>
+</html>
