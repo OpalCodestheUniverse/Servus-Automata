@@ -7,7 +7,7 @@
     <style>
         :root {
             --bg-dark: #07090e;
-            --panel-bg: rgba(12, 16, 26, 0.88);
+            --panel-bg: rgba(12, 16, 26, 0.92);
             --border-glow: #2a3a52;
             --accent-cyan: #00e5ff;
             --accent-red: #ff2a55;
@@ -58,7 +58,7 @@
             z-index: 1;
         }
 
-        /* Procedural Canvas Background Overlay (Rain, Drizzle, FX) */
+        /* Procedural Canvas Background Overlay */
         #fx-canvas {
             position: absolute;
             top: 0;
@@ -139,7 +139,7 @@
         /* Character Avatar Frame */
         #character-frame {
             position: absolute;
-            bottom: 220px;
+            bottom: 230px;
             left: 80px;
             z-index: 8;
             display: flex;
@@ -164,13 +164,6 @@
             overflow: hidden;
         }
 
-        .avatar-box::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, transparent 60%, rgba(0,229,255,0.2));
-        }
-
         /* Dialogue Box Area */
         #dialogue-area {
             position: relative;
@@ -183,13 +176,15 @@
             border-left: 4px solid var(--accent-cyan);
             border-radius: 6px;
             padding: 24px 32px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(8px);
             cursor: pointer;
             min-height: 180px;
+            max-height: 220px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            overflow: hidden;
         }
 
         #speaker-name {
@@ -205,9 +200,13 @@
         #dialogue-text {
             font-family: var(--font-serif);
             font-size: 1.25rem;
-            line-height: 1.65;
+            line-height: 1.6;
             color: var(--text-main);
             min-height: 70px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
 
         .click-prompt {
@@ -216,6 +215,7 @@
             color: var(--accent-cyan);
             letter-spacing: 1px;
             animation: blink 1.2s infinite;
+            margin-top: 8px;
         }
 
         @keyframes blink {
@@ -314,17 +314,6 @@
             color: var(--text-muted);
         }
 
-        /* Screen Flash FX */
-        #flash-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: white;
-            opacity: 0;
-            z-index: 15;
-            pointer-events: none;
-            transition: opacity 0.1s ease-out;
-        }
-
         /* Heartbeat Panic Overlay */
         #panic-overlay {
             position: absolute;
@@ -352,7 +341,6 @@
     <canvas id="fx-canvas"></canvas>
     <div class="scanlines"></div>
     <div class="vignette"></div>
-    <div id="flash-overlay"></div>
     <div id="panic-overlay"></div>
 
     <!-- Top UI Header -->
@@ -360,10 +348,8 @@
         <div class="chapter-title">Aeterna Noctu LLC // Chapter 1: The Relic in Black Leather</div>
         <div class="nav-buttons">
             <button class="btn-ui" id="btn-log">Log</button>
-
             <button class="btn-ui" id="btn-auto">Auto: OFF</button>
             <button class="btn-ui" id="btn-save">Quick Save</button>
-
             <button class="btn-ui" id="btn-load">Quick Load</button>
             <button class="btn-ui" id="btn-audio">Sound: ON</button>
         </div>
@@ -378,7 +364,7 @@
     <div id="dialogue-area">
         <div>
             <div id="speaker-name">Narrator</div>
-            <div id="dialogue-text">Press anywhere or SPACE to begin...</div>
+            <div id="dialogue-text">Click anywhere or press SPACE to enter the night...</div>
         </div>
         <div class="click-prompt">▼ CLICK TO CONTINUE</div>
     </div>
@@ -396,17 +382,16 @@
 
 <script>
 /**
- * Procedural Audio Synthesizer (Web Audio API)
- * Generates dark ambient hums, rain noise, airlock whooshes, and heartbeats dynamically.
+ * Procedural Cyber-Noir Web Audio Engine
+ * Synthesizes dynamic multi-track soundtracks and cinematic SFX in memory!
  */
-class VNSystemAudio {
+class CyberNoirSynth {
     constructor() {
-        self = this;
         this.ctx = null;
         this.enabled = true;
-        this.noiseNode = null;
-        this.droneOsc = null;
+        this.musicNode = null;
         this.gainNode = null;
+        this.isMusicPlaying = false;
     }
 
     init() {
@@ -414,9 +399,10 @@ class VNSystemAudio {
             const AudioCtx = window.AudioContext || window.webkitAudioContext;
             this.ctx = new AudioCtx();
             this.gainNode = this.ctx.createGain();
-            this.gainNode.gain.value = 0.15;
+            this.gainNode.gain.value = 0.25;
             this.gainNode.connect(this.ctx.destination);
-            this.startAmbient();
+            
+            this.startCyberNoirMusic();
         }
         if (this.ctx.state === 'suspended') {
             this.ctx.resume();
@@ -426,71 +412,149 @@ class VNSystemAudio {
     toggleAudio() {
         this.enabled = !this.enabled;
         if (this.gainNode) {
-            this.gainNode.gain.value = this.enabled ? 0.15 : 0;
+            this.gainNode.gain.value = this.enabled ? 0.25 : 0;
         }
         return this.enabled;
     }
 
-    startAmbient() {
-        if (!this.ctx) return;
-        
-        // Dark Low Drone
-        this.droneOsc = this.ctx.createOscillator();
-        const droneGain = this.ctx.createGain();
-        this.droneOsc.type = 'sawtooth';
-        this.droneOsc.frequency.setValueAtTime(55, this.ctx.currentTime); // A1 note
-        
-        // Lowpass Filter for moody synth
-        const filter = this.ctx.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(180, this.ctx.currentTime);
+    // --- Procedural Soundtrack Pre-Renderer ---
+    startCyberNoirMusic() {
+        if (!this.ctx || this.isMusicPlaying) return;
 
-        droneGain.gain.value = 0.3;
-        this.droneOsc.connect(filter);
-        filter.connect(droneGain);
-        droneGain.connect(this.gainNode);
-        this.droneOsc.start();
+        const sr = this.ctx.sampleRate;
+        const bpm = 92;
+        const beatDur = 60 / bpm;
+        const barDur = beatDur * 4;
+        const totalDur = barDur * 8; // 8-bar loop
+        const numSamples = Math.floor(sr * totalDur);
 
-        // Procedural Rain / HVAC Ambient Noise
-        const bufferSize = this.ctx.sampleRate * 2;
-        const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
-        const output = noiseBuffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) {
-            output[i] = Math.random() * 2 - 1;
+        const musicBuffer = this.ctx.createBuffer(2, numSamples, sr);
+        const left = musicBuffer.getChannelData(0);
+        const right = musicBuffer.getChannelData(1);
+
+        // Progression: Dm -> Bb -> F -> C
+        const chordProg = [
+            [146.83, 174.61, 220.00], // Dm
+            [116.54, 146.83, 174.61], // Bb
+            [130.81, 174.61, 196.00], // F
+            [130.81, 164.81, 196.00]  // C
+        ];
+
+        const arpNotes = [293.66, 349.23, 440.00, 587.33, 523.25, 440.00, 349.23, 329.63];
+
+        for (let i = 0; i < numSamples; i++) {
+            const t = i / sr;
+            const barIndex = Math.floor(t / barDur) % 4;
+            const currentChord = chordProg[barIndex];
+
+            // 1. Pumping Synth Bass (8th-note pulse)
+            const rootFreq = currentChord[0] / 2;
+            const bassSaw = 2 * (t * rootFreq - Math.floor(0.5 + t * rootFreq));
+            const bassEnv = Math.exp(-6 * (t % (beatDur / 2)));
+            const bassVal = bassSaw * bassEnv * 0.12;
+
+            // 2. Polyphonic Synth Pad
+            let padVal = 0;
+            for (let f of currentChord) {
+                padVal += Math.sin(2 * Math.PI * f * t) * 0.035;
+            }
+
+            // 3. Arpeggiated Noir Lead
+            const sixteenthDur = beatDur / 4;
+            const step = Math.floor(t / sixteenthDur) % arpNotes.length;
+            const arpFreq = arpNotes[step];
+            const stepT = t % sixteenthDur;
+            const arpEnv = Math.exp(-11 * stepT);
+            const arpSaw = 2 * (t * arpFreq - Math.floor(0.5 + t * arpFreq));
+            const arpVal = arpSaw * arpEnv * 0.055;
+
+            // 4. Soft Percussion (Sub Kick & Snare Noise)
+            const beatStep = Math.floor(t / beatDur) % 4;
+            const beatT = t % beatDur;
+            let percVal = 0;
+            if (beatStep === 0 || beatStep === 2) {
+                const kFreq = Math.max(35, 140 * Math.exp(-28 * beatT));
+                percVal += Math.sin(2 * Math.PI * kFreq * beatT) * Math.exp(-10 * beatT) * 0.22;
+            }
+            if (beatStep === 1 || beatStep === 3) {
+                percVal += (Math.random() * 2 - 1) * Math.exp(-18 * beatT) * 0.12;
+            }
+
+            const mix = bassVal + padVal + arpVal + percVal;
+            left[i] = Math.max(-0.95, Math.min(0.95, mix));
+            right[i] = Math.max(-0.95, Math.min(0.95, mix * 0.96 + (Math.sin(t * 3) * 0.03)));
         }
 
-        this.noiseNode = this.ctx.createBufferSource();
-        this.noiseNode.buffer = noiseBuffer;
-        this.noiseNode.loop = true;
-
-        const noiseFilter = this.ctx.createBiquadFilter();
-        noiseFilter.type = 'bandpass';
-        noiseFilter.frequency.setValueAtTime(800, this.ctx.currentTime);
-        noiseFilter.Q.setValueAtTime(1.0, this.ctx.currentTime);
-
-        const noiseGain = this.ctx.createGain();
-        noiseGain.gain.value = 0.08;
-
-        this.noiseNode.connect(noiseFilter);
-        noiseFilter.connect(noiseGain);
-        noiseGain.connect(this.gainNode);
-        this.noiseNode.start();
+        this.musicNode = this.ctx.createBufferSource();
+        this.musicNode.buffer = musicBuffer;
+        this.musicNode.loop = true;
+        this.musicNode.connect(this.gainNode);
+        this.musicNode.start();
+        this.isMusicPlaying = true;
     }
 
+    // --- Dynamic Sound Effects ---
     playAirlockWhoosh() {
+        if (!this.ctx || !this.enabled) return;
+        const now = this.ctx.currentTime;
+        
+        // Pressure release noise sweep
+        const bufferSize = this.ctx.sampleRate * 0.8;
+        const buf = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+        const data = buf.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+
+        const noise = this.ctx.createBufferSource();
+        noise.buffer = buf;
+
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(3000, now);
+        filter.frequency.exponentialRampToValueAtTime(100, now + 0.8);
+
+        const gain = this.ctx.createGain();
+        gain.gain.setValueAtTime(0.4, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.8);
+
+        noise.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.gainNode);
+
+        noise.start(now);
+    }
+
+    playShovelStrike() {
+        if (!this.ctx || !this.enabled) return;
+        const now = this.ctx.currentTime;
+
+        // Sub thud
+        const osc = this.ctx.createOscillator();
+        const g = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(110, now);
+        osc.frequency.exponentialRampToValueAtTime(30, now + 0.3);
+        g.gain.setValueAtTime(0.6, now);
+        g.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+        osc.connect(g);
+        g.connect(this.gainNode);
+        osc.start(now);
+        osc.stop(now + 0.3);
+    }
+
+    playElevatorJolt() {
         if (!this.ctx || !this.enabled) return;
         const now = this.ctx.currentTime;
         const osc = this.ctx.createOscillator();
         const g = this.ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(120, now);
-        osc.frequency.exponentialRampToValueAtTime(40, now + 0.8);
-        g.gain.setValueAtTime(0.4, now);
-        g.gain.exponentialRampToValueAtTime(0.01, now + 0.8);
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(80, now);
+        osc.frequency.exponentialRampToValueAtTime(25, now + 0.4);
+        g.gain.setValueAtTime(0.5, now);
+        g.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
         osc.connect(g);
         g.connect(this.gainNode);
         osc.start(now);
-        osc.stop(now + 0.8);
+        osc.stop(now + 0.4);
     }
 
     playHeartbeat() {
@@ -500,14 +564,14 @@ class VNSystemAudio {
             const osc = this.ctx.createOscillator();
             const g = this.ctx.createGain();
             osc.type = 'sine';
-            osc.frequency.setValueAtTime(60, now + delay);
-            osc.frequency.exponentialRampToValueAtTime(30, now + delay + 0.15);
-            g.gain.setValueAtTime(0.6, now + delay);
-            g.gain.exponentialRampToValueAtTime(0.01, now + delay + 0.15);
+            osc.frequency.setValueAtTime(65, now + delay);
+            osc.frequency.exponentialRampToValueAtTime(28, now + delay + 0.16);
+            g.gain.setValueAtTime(0.7, now + delay);
+            g.gain.exponentialRampToValueAtTime(0.01, now + delay + 0.16);
             osc.connect(g);
             g.connect(this.gainNode);
             osc.start(now + delay);
-            osc.stop(now + delay + 0.15);
+            osc.stop(now + delay + 0.16);
         });
     }
 
@@ -517,13 +581,13 @@ class VNSystemAudio {
         const osc = this.ctx.createOscillator();
         const g = this.ctx.createGain();
         osc.type = 'triangle';
-        osc.frequency.setValueAtTime(880, now);
-        g.gain.setValueAtTime(0.05, now);
-        g.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+        osc.frequency.setValueAtTime(750, now);
+        g.gain.setValueAtTime(0.02, now);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 0.035);
         osc.connect(g);
         g.connect(this.gainNode);
         osc.start(now);
-        osc.stop(now + 0.05);
+        osc.stop(now + 0.035);
     }
 }
 
@@ -535,7 +599,7 @@ class VisualEffects {
         this.canvas = document.getElementById(canvasId);
         this.ctx = this.canvas.getContext('2d');
         this.drops = [];
-        this.mode = 'rain'; // 'rain', 'fog', or 'none'
+        this.mode = 'rain';
         this.resize();
         window.addEventListener('resize', () => this.resize());
         this.initRain();
@@ -621,6 +685,7 @@ const CHAPTER_1_SCRIPT = [
         fx: "rain",
         speaker: "Narrator",
         avatar: "🪦",
+        sfx: "shovel",
         text: "His shovel struck the soil, and he winced at the vibration of the handle as the head impacted the December loam of that Georgia graveyard."
     },
 
@@ -630,7 +695,6 @@ const CHAPTER_1_SCRIPT = [
         fx: "none",
         speaker: "Clancy Harris",
         avatar: "📋",
-        sfx: "airlock",
         text: "“Hands off.” The command was a razor—cold and precise."
     },
     {
@@ -790,8 +854,8 @@ const CHAPTER_1_SCRIPT = [
         avatar: "🪞",
         text: "He buttoned his white shirt, adjusted his slacks, and finally built up the courage to look in the mirror. His eyes were sunken with light gray forming. He practiced a smile...",
         choice: [
-            { text: "Attempt a warm, youthful smile.", target: 27 },
-            { text: "Slick back hair and brace for professional coldness.", target: 27 }
+            { text: "Attempt a warm, youthful smile.", target: 24 },
+            { text: "Slick back hair and brace for professional coldness.", target: 24 }
         ]
     },
     {
@@ -963,7 +1027,7 @@ const CHAPTER_1_SCRIPT = [
         fx: "none",
         speaker: "Miss Clara Allans",
         avatar: "🏢",
-        sfx: "airlock",
+        sfx: "elevator",
         text: "Suddenly, the lift jolted! Clancy moved out of reflex to catch her. She leaned into his touch, resting against him. His stomach twisted with guilt and sorrow."
     },
     {
@@ -1002,7 +1066,7 @@ const CHAPTER_1_SCRIPT = [
         fx: "none",
         speaker: "SYSTEM",
         avatar: "END",
-        text: "— END OF CHAPTER 1 —\nThank you for playing. Quick Save available in navigation bar."
+        text: "— END OF CHAPTER 1 —\nThank you for playing. Progress can be saved via the top bar."
     }
 ];
 
@@ -1013,13 +1077,13 @@ class VisualNovelEngine {
     constructor(script) {
         this.script = script;
         this.currentIndex = 0;
-        this.typewriterSpeed = 22; // ms per char
+        this.typewriterSpeed = 22;
         this.isTyping = false;
         this.autoPlay = false;
         this.autoTimer = null;
         this.historyLog = [];
 
-        this.audio = new VNSystemAudio();
+        this.audio = new CyberNoirSynth();
         this.vfx = new VisualEffects('fx-canvas');
 
         // UI Element References
@@ -1030,7 +1094,6 @@ class VisualNovelEngine {
         this.avatarIcon = document.getElementById('avatar-icon');
         this.choiceOverlay = document.getElementById('choice-overlay');
         this.panicOverlay = document.getElementById('panic-overlay');
-        this.flashOverlay = document.getElementById('flash-overlay');
 
         this.initEvents();
     }
@@ -1041,7 +1104,6 @@ class VisualNovelEngine {
             if (e.code === 'Space' || e.code === 'Enter') this.next();
         });
 
-        // UI Header Buttons
         document.getElementById('btn-audio').addEventListener('click', (e) => {
             e.stopPropagation();
             const enabled = this.audio.toggleAudio();
@@ -1097,8 +1159,11 @@ class VisualNovelEngine {
         this.bgLayer.style.background = scene.bg;
         this.vfx.setMode(scene.fx || 'none');
 
-        // Audio Effects
+        // Dynamic SFX Triggers
         if (scene.sfx === 'airlock') this.audio.playAirlockWhoosh();
+        if (scene.sfx === 'shovel') this.audio.playShovelStrike();
+        if (scene.sfx === 'elevator') this.audio.playElevatorJolt();
+        
         if (scene.panic) {
             this.panicOverlay.classList.add('pulsing');
             this.audio.playHeartbeat();
@@ -1106,7 +1171,7 @@ class VisualNovelEngine {
             this.panicOverlay.classList.remove('pulsing');
         }
 
-        // Speaker & Avatar Setup
+        // Speaker & Avatar
         this.speakerName.innerText = scene.speaker;
         if (scene.avatar) {
             this.avatarIcon.innerText = scene.avatar;
@@ -1130,13 +1195,13 @@ class VisualNovelEngine {
 
     typeText(text, callback) {
         this.isTyping = true;
-        this.dialogueText.innerText = '';
+        this.dialogueText.textContent = '';
         let i = 0;
 
         if (this.typeTimer) clearInterval(this.typeTimer);
 
         this.typeTimer = setInterval(() => {
-            this.dialogueText.innerText += text.charAt(i);
+            this.dialogueText.textContent += text.charAt(i);
             if (i % 3 === 0) this.audio.playBeep();
             i++;
             if (i >= text.length) {
@@ -1169,9 +1234,8 @@ class VisualNovelEngine {
         if (this.choiceOverlay.classList.contains('active')) return;
 
         if (this.isTyping) {
-            // Fast-forward text
             clearInterval(this.typeTimer);
-            this.dialogueText.innerText = this.script[this.currentIndex].text;
+            this.dialogueText.textContent = this.script[this.currentIndex].text;
             this.isTyping = false;
             return;
         }
