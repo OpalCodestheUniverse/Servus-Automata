@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -45,14 +45,14 @@
             background: #000;
         }
 
-        /* Anime Background Image Layer */
+        /* Anime Background Layer with Cel-Shaded Visual Novel Filters */
         #bg-layer {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover;
             background-position: center;
             transition: background-image 1s ease-in-out, filter 1s ease;
-            filter: brightness(0.55) contrast(1.18) saturate(1.15);
+            filter: brightness(0.5) contrast(1.25) saturate(1.2) hue-rotate(-5deg);
             z-index: 1;
         }
 
@@ -352,7 +352,8 @@
 
 <script>
 /**
- * Procedural Web Audio Engine (Boosted Master Volume & Loud SFX)
+ * Advanced Multi-Track Procedural Web Audio Engine
+ * Generates 6 structurally complex, multi-section compositions (Clive Barker Horror/Grief Theme).
  */
 class AdvancedSomberAudioEngine {
     constructor() {
@@ -368,8 +369,7 @@ class AdvancedSomberAudioEngine {
             const AudioCtx = window.AudioContext || window.webkitAudioContext;
             this.ctx = new AudioCtx();
             this.gainNode = this.ctx.createGain();
-            // BOOSTED MASTER GAIN (Louder overall mix)
-            this.gainNode.gain.value = 0.65;
+            this.gainNode.gain.value = 0.70; // High Master Volume
             this.gainNode.connect(this.ctx.destination);
         }
         if (this.ctx.state === 'suspended') {
@@ -380,7 +380,7 @@ class AdvancedSomberAudioEngine {
     toggleAudio() {
         this.enabled = !this.enabled;
         if (this.gainNode) {
-            this.gainNode.gain.value = this.enabled ? 0.65 : 0;
+            this.gainNode.gain.value = this.enabled ? 0.70 : 0;
         }
         return this.enabled;
     }
@@ -411,7 +411,7 @@ class AdvancedSomberAudioEngine {
         }
     }
 
-    // --- TRACK 1: "The December Soil" ---
+    // --- TRACK 1: "The December Soil" (C-Minor Sorrowful Funeral Elegy) ---
     _renderGraveyardTrack() {
         const sr = this.ctx.sampleRate;
         const bpm = 54;
@@ -421,8 +421,8 @@ class AdvancedSomberAudioEngine {
         const buf = this.ctx.createBuffer(2, numSamples, sr);
         const l = buf.getChannelData(0), r = buf.getChannelData(1);
 
-        const chordA = [[130.81, 155.56, 196.00], [116.54, 146.83, 174.61]];
-        const chordB = [[138.59, 174.61, 207.65], [130.81, 164.81, 196.00]];
+        const chordA = [[130.81, 155.56, 196.00], [116.54, 146.83, 174.61]]; // Cm -> Bb
+        const chordB = [[138.59, 174.61, 207.65], [130.81, 164.81, 196.00]]; // Ab -> G7
         const melodyA = [261.63, 311.13, 392.00, 311.13, 261.63, 246.94, 293.66, 246.94];
         const melodyB = [349.23, 415.30, 523.25, 415.30, 392.00, 311.13, 293.66, 261.63];
 
@@ -436,7 +436,10 @@ class AdvancedSomberAudioEngine {
             const mStep = Math.floor(t / (beatDur / 2)) % mel.length;
             const mFreq = mel[mStep];
             const mEnv = Math.exp(-4 * (t % (beatDur / 2)));
-            const lead = Math.sin(2 * Math.PI * mFreq * t) * mEnv * 0.22;
+            
+            // Stereo Detuned Dual Leads
+            const leadL = Math.sin(2 * Math.PI * mFreq * t) * mEnv * 0.22;
+            const leadR = Math.sin(2 * Math.PI * (mFreq * 1.005) * t) * mEnv * 0.22;
 
             const cFreq = mFreq * 0.75;
             const counter = Math.sin(2 * Math.PI * cFreq * t) * mEnv * 0.08;
@@ -446,14 +449,13 @@ class AdvancedSomberAudioEngine {
 
             const bass = Math.sin(2 * Math.PI * (chord[0][0] / 2) * t) * 0.14;
 
-            const mix = lead + counter + pad + bass;
-            l[i] = Math.max(-0.95, Math.min(0.95, mix));
-            r[i] = Math.max(-0.95, Math.min(0.95, mix * 0.97));
+            l[i] = Math.max(-0.95, Math.min(0.95, leadL + counter + pad + bass));
+            r[i] = Math.max(-0.95, Math.min(0.95, leadR + counter + pad + bass));
         }
         return buf;
     }
 
-    // --- TRACK 2: "Clinical Mapping" ---
+    // --- TRACK 2: "Clinical Mapping" (D-Minor Cold Mechanical Tension) ---
     _renderLabTrack() {
         const sr = this.ctx.sampleRate;
         const bpm = 78;
@@ -475,13 +477,13 @@ class AdvancedSomberAudioEngine {
             const aFreq = arp[step];
             const aEnv = Math.exp(-12 * (t % (beatDur / 4)));
             const leadSaw = 2 * (t * aFreq - Math.floor(0.5 + t * aFreq));
-            const lead = leadSaw * aEnv * 0.12;
+            const lead = leadSaw * aEnv * 0.14;
 
             const bFreq = (bar % 2 === 0) ? 73.42 : 65.41;
             const bEnv = Math.exp(-8 * (t % (beatDur / 2)));
-            const bass = Math.sin(2 * Math.PI * bFreq * t) * bEnv * 0.18;
+            const bass = Math.sin(2 * Math.PI * bFreq * t) * bEnv * 0.20;
 
-            const tick = Math.sin(2 * Math.PI * 1200 * (t % beatDur)) * Math.exp(-50 * (t % beatDur)) * 0.05;
+            const tick = Math.sin(2 * Math.PI * 1200 * (t % beatDur)) * Math.exp(-50 * (t % beatDur)) * 0.06;
 
             const mix = lead + bass + tick;
             l[i] = Math.max(-0.95, Math.min(0.95, mix));
@@ -490,7 +492,7 @@ class AdvancedSomberAudioEngine {
         return buf;
     }
 
-    // --- TRACK 3: "Frigid Executive" ---
+    // --- TRACK 3: "Frigid Executive" (Eb-Minor Corporate Interrogation) ---
     _renderOfficeTrack() {
         const sr = this.ctx.sampleRate;
         const bpm = 65;
@@ -505,14 +507,14 @@ class AdvancedSomberAudioEngine {
             const bar = Math.floor(t / (beatDur * 4)) % 4;
 
             const saw = 2 * (t * 77.78 - Math.floor(0.5 + t * 77.78));
-            const drone = saw * 0.1;
+            const drone = saw * 0.12;
 
             const pFreq = 622.25 + (bar * 30);
             const pingEnv = Math.exp(-2.5 * (t % (beatDur * 2)));
-            const ping = Math.sin(2 * Math.PI * pFreq * t) * pingEnv * 0.08;
+            const ping = Math.sin(2 * Math.PI * pFreq * t) * pingEnv * 0.09;
 
             const pulseT = t % beatDur;
-            const pulse = Math.sin(2 * Math.PI * 50 * pulseT) * Math.exp(-15 * pulseT) * 0.22;
+            const pulse = Math.sin(2 * Math.PI * 50 * pulseT) * Math.exp(-15 * pulseT) * 0.24;
 
             const mix = drone + ping + pulse;
             l[i] = Math.max(-0.95, Math.min(0.95, mix));
@@ -521,7 +523,7 @@ class AdvancedSomberAudioEngine {
         return buf;
     }
 
-    // --- TRACK 4: "Spectre on the Pillow" ---
+    // --- TRACK 4: "Spectre on the Pillow" (F-Minor Tragic Despair & Grief) ---
     _renderApartmentTrack() {
         const sr = this.ctx.sampleRate;
         const bpm = 50;
@@ -539,8 +541,8 @@ class AdvancedSomberAudioEngine {
             const f = mel[step];
             const env = Math.exp(-2.5 * (t % (beatDur * 2)));
 
-            const lead = Math.sin(2 * Math.PI * f * t) * env * 0.22;
-            const sub = Math.sin(2 * Math.PI * 43.65 * t) * 0.12;
+            const lead = Math.sin(2 * Math.PI * f * t) * env * 0.24;
+            const sub = Math.sin(2 * Math.PI * 43.65 * t) * 0.14;
 
             const mix = lead + sub;
             l[i] = Math.max(-0.95, Math.min(0.95, mix));
@@ -549,7 +551,7 @@ class AdvancedSomberAudioEngine {
         return buf;
     }
 
-    // --- TRACK 5: "A Mouse in the Silo" ---
+    // --- TRACK 5: "A Mouse in the Silo" (G-Minor Stealth & Paranoia) ---
     _renderHeistTrack() {
         const sr = this.ctx.sampleRate;
         const bpm = 96;
@@ -564,9 +566,9 @@ class AdvancedSomberAudioEngine {
             const bT = t % (beatDur / 2);
 
             const bSaw = 2 * (t * 98.00 - Math.floor(0.5 + t * 98.00));
-            const bass = bSaw * Math.exp(-10 * bT) * 0.16;
+            const bass = bSaw * Math.exp(-10 * bT) * 0.18;
 
-            const lead = Math.sin(2 * Math.PI * 783.99 * t) * Math.exp(-20 * bT) * 0.08;
+            const lead = Math.sin(2 * Math.PI * 783.99 * t) * Math.exp(-20 * bT) * 0.09;
 
             const mix = bass + lead;
             l[i] = Math.max(-0.95, Math.min(0.95, mix));
@@ -575,7 +577,7 @@ class AdvancedSomberAudioEngine {
         return buf;
     }
 
-    // --- TRACK 6: "Autopsy of a Theft" ---
+    // --- TRACK 6: "Autopsy of a Theft" (A-Minor Sterile Corporate Autopsy) ---
     _renderReportTrack() {
         const sr = this.ctx.sampleRate;
         const totalDur = 14.0;
@@ -585,9 +587,9 @@ class AdvancedSomberAudioEngine {
 
         for (let i = 0; i < numSamples; i++) {
             const t = i / sr;
-            const tone1 = Math.sin(2 * Math.PI * 110.00 * t) * 0.09;
-            const tone2 = Math.sin(2 * Math.PI * 113.80 * t) * 0.09;
-            const staticHum = (Math.random() * 2 - 1) * 0.025;
+            const tone1 = Math.sin(2 * Math.PI * 110.00 * t) * 0.11;
+            const tone2 = Math.sin(2 * Math.PI * 113.80 * t) * 0.11;
+            const staticHum = (Math.random() * 2 - 1) * 0.03;
 
             const mix = tone1 + tone2 + staticHum;
             l[i] = Math.max(-0.95, Math.min(0.95, mix));
@@ -596,7 +598,7 @@ class AdvancedSomberAudioEngine {
         return buf;
     }
 
-    // --- LOUDER & PUNCHIER DYNAMIC SFX ---
+    // --- DYNAMIC SOUND EFFECTS ---
     playAirlockWhoosh() {
         if (!this.ctx || !this.enabled) return;
         const now = this.ctx.currentTime;
@@ -612,7 +614,6 @@ class AdvancedSomberAudioEngine {
         filter.frequency.setValueAtTime(3200, now);
         filter.frequency.exponentialRampToValueAtTime(60, now + 0.9);
 
-        // BOOSTED GAIN
         const gain = this.ctx.createGain();
         gain.gain.setValueAtTime(0.85, now);
         gain.gain.exponentialRampToValueAtTime(0.01, now + 0.9);
@@ -647,7 +648,7 @@ class AdvancedSomberAudioEngine {
         osc.type = 'sawtooth';
         osc.frequency.setValueAtTime(90, now);
         osc.frequency.exponentialRampToValueAtTime(18, now + 0.5);
-        g.gain.setValueAtTime(0.8, now);
+        g.gain.setValueAtTime(0.80, now);
         g.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
         osc.connect(g);
         g.connect(this.gainNode);
@@ -658,7 +659,6 @@ class AdvancedSomberAudioEngine {
     playHeartbeat() {
         if (!this.ctx || !this.enabled) return;
         const now = this.ctx.currentTime;
-        // PUNCHY DOUBLE HEARTBEAT
         [0, 0.20].forEach(delay => {
             const osc = this.ctx.createOscillator();
             const g = this.ctx.createGain();
@@ -691,7 +691,7 @@ class AdvancedSomberAudioEngine {
 }
 
 /**
- * Visual Canvas Particle Renderer (Rain & Atmosphere)
+ * Visual Canvas Particle Renderer (Rain Effect)
  */
 class VisualEffects {
     constructor(canvasId) {
@@ -754,12 +754,12 @@ class VisualEffects {
 }
 
 /**
- * Visual Novel Script Definition - Including Anime Background Images
+ * Script Definition - Featuring Verified Dark Anime Visual Novel Background Art
  */
 const CHAPTER_1_SCRIPT = [
     // --- PROLOGUE: GEORGIA GRAVEYARD ---
     {
-        bgImage: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1508873696983-2df515122519?w=1600&auto=format&fit=crop",
         fx: "rain",
         bgm: "graveyard",
         location: "[ LOCATION: COUNTY ROAD 4 // GEORGIA GRAVEYARD ]",
@@ -767,7 +767,7 @@ const CHAPTER_1_SCRIPT = [
         text: "The night was dark and quiet—thankfully. A lone figure trudged along, silhouetted against the moonlight, shovel in hand."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1508873696983-2df515122519?w=1600&auto=format&fit=crop",
         fx: "rain",
         bgm: "graveyard",
         location: "[ LOCATION: COUNTY ROAD 4 // GEORGIA GRAVEYARD ]",
@@ -775,7 +775,7 @@ const CHAPTER_1_SCRIPT = [
         text: "“Good; maybe the ground won’t be so hard,” he thought, trying to make light of the work ahead to steady his nerves."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1508873696983-2df515122519?w=1600&auto=format&fit=crop",
         fx: "rain",
         bgm: "graveyard",
         location: "[ LOCATION: COUNTY ROAD 4 // GEORGIA GRAVEYARD ]",
@@ -783,7 +783,7 @@ const CHAPTER_1_SCRIPT = [
         text: "He stepped across the threshold of the hallowed grounds as a drizzle began to fall. He could barely see among the various shapes surrounding him, but eventually, after some searching, he made his way to the freshly disturbed earth."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1508873696983-2df515122519?w=1600&auto=format&fit=crop",
         fx: "rain",
         bgm: "graveyard",
         location: "[ LOCATION: COUNTY ROAD 4 // GEORGIA GRAVEYARD ]",
@@ -794,7 +794,7 @@ const CHAPTER_1_SCRIPT = [
 
     // --- SCENE 1: AETERNA NOCTU LAB ---
     {
-        bgImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "lab",
         location: "[ LOCATION: AETERNA NOCTU RESEARCH FACILITY ]",
@@ -802,7 +802,7 @@ const CHAPTER_1_SCRIPT = [
         text: "“Hands off.” The command was a razor—cold and precise."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "lab",
         location: "[ LOCATION: AETERNA NOCTU RESEARCH FACILITY ]",
@@ -810,7 +810,7 @@ const CHAPTER_1_SCRIPT = [
         text: "Clancy didn't look up from his clipboard. “Do I rifle through your pockets while you’re working? Have you no shame?”"
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "lab",
         location: "[ LOCATION: AETERNA NOCTU RESEARCH FACILITY ]",
@@ -818,7 +818,7 @@ const CHAPTER_1_SCRIPT = [
         text: "As a lead researcher for Aeterna Noctu LLC, he was ostensibly conducting research into more efficient methods of mapping neural pathways."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "lab",
         location: "[ LOCATION: AETERNA NOCTU RESEARCH FACILITY ]",
@@ -826,7 +826,7 @@ const CHAPTER_1_SCRIPT = [
         text: "He set the clipboard down and moved the bag, its black leather and heavy clasp cool to the touch. “You do that again, and I promise I’ll have your badge before lunch,” he barked at the assistant. The woman jumped and quickly scuttled away."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "lab",
         location: "[ LOCATION: AETERNA NOCTU RESEARCH FACILITY ]",
@@ -836,7 +836,7 @@ const CHAPTER_1_SCRIPT = [
 
     // --- SCENE 2: CLARA ALLANS AIRLOCK OFFICE ---
     {
-        bgImage: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "office",
         location: "[ LOCATION: EXECUTIVE DIRECTORATE OFFICE ]",
@@ -845,7 +845,7 @@ const CHAPTER_1_SCRIPT = [
         text: "He stood from his stool, grumbling, and marched toward Miss Allans' private office. The imposing airlock slid open, and he stepped inside, only for it to seal behind him."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "office",
         location: "[ LOCATION: EXECUTIVE DIRECTORATE OFFICE ]",
@@ -853,7 +853,7 @@ const CHAPTER_1_SCRIPT = [
         text: "“Mister Harris, please, take a seat. We have much to discuss.” She gestured to the lavish seats in front of her desk, and Harris, after an audible gulp, sat down."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "office",
         location: "[ LOCATION: EXECUTIVE DIRECTORATE OFFICE ]",
@@ -861,7 +861,7 @@ const CHAPTER_1_SCRIPT = [
         text: "“So, Mister Harris, I read your reports on this quarter's research initiatives. In fact, I’ve already presented your findings to the board. When can the project be ready? Our shareholders won’t wait for something so impactful.”"
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "office",
         location: "[ LOCATION: EXECUTIVE DIRECTORATE OFFICE ]",
@@ -870,7 +870,7 @@ const CHAPTER_1_SCRIPT = [
         text: "Her face was grim. He was being rushed. “It’s nowhere near ready, Miss Allans. Wouldn’t you prefer to put it through clinical trials first?” He sounded panicked, clutching the bag."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "office",
         location: "[ LOCATION: EXECUTIVE DIRECTORATE OFFICE ]",
@@ -878,7 +878,7 @@ const CHAPTER_1_SCRIPT = [
         text: "“Clancy. Clancy, Clancy, Clancy. You won’t need trials if this is something you can replicate. The board has called full steam ahead, so we’re going full steam ahead.”"
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "office",
         location: "[ LOCATION: EXECUTIVE DIRECTORATE OFFICE ]",
@@ -886,7 +886,7 @@ const CHAPTER_1_SCRIPT = [
         text: "Clancy gripped the bag tighter, its contents rattling, and gave a nod. “I see. I’ll assemble the team and try to breathe some morale into them,” he said nonchalantly, fighting the urge to flee."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "office",
         location: "[ LOCATION: AETERNA NOCTU RESEARCH FACILITY ]",
@@ -897,7 +897,7 @@ const CHAPTER_1_SCRIPT = [
 
     // --- SCENE 3: CLANCY'S APARTMENT - NIGHT TO MORNING ---
     {
-        bgImage: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "apartment",
         location: "[ LOCATION: CLANCY'S RESIDENCE // 01:14 AM ]",
@@ -905,7 +905,7 @@ const CHAPTER_1_SCRIPT = [
         text: "Clancy sat in his armchair at home, fresh from work, and began to write. If he were going to do this, it had to be thought out—not some panicked rush. He compiled a list of all the assets he’d need from that hellhole, lightly hugging the bag, always near."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "apartment",
         location: "[ LOCATION: CLANCY'S RESIDENCE // 01:14 AM ]",
@@ -914,7 +914,7 @@ const CHAPTER_1_SCRIPT = [
         text: "This is insane. What am I doing? His mind lashed at him. His plan to steal the components for the procedure had thrilled him initially; why was he so full of anxiety now?"
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "apartment",
         location: "[ LOCATION: CLANCY'S RESIDENCE // 01:28 AM ]",
@@ -922,7 +922,7 @@ const CHAPTER_1_SCRIPT = [
         text: "He stood, walked to the kitchen, and poured a glass of bourbon. The liquor was cold comfort against the fear gripping his heart, its talons a searing inferno of confusion and woe."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "apartment",
         location: "[ LOCATION: CLANCY'S RESIDENCE // 03:00 AM ]",
@@ -930,7 +930,7 @@ const CHAPTER_1_SCRIPT = [
         text: "He settled into bed, heart heavy, the bag nestled on the pillow next to him. He drifted off, a familiar face haunting his final moments of lucidity—a spectre of the past."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "apartment",
         location: "[ LOCATION: CLANCY'S RESIDENCE // 06:45 AM ]",
@@ -938,7 +938,7 @@ const CHAPTER_1_SCRIPT = [
         text: "In a flash, the first beams of sun grazed his half-lidded eyes. He awoke with a start and began his day, shuffling to the bathroom with the bare enthusiasm of someone tired of life."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "apartment",
         location: "[ LOCATION: CLANCY'S RESIDENCE // 07:10 AM ]",
@@ -946,7 +946,7 @@ const CHAPTER_1_SCRIPT = [
         text: "His morning had followed the same routine for years: a bowl of the same sugary cereal he’d enjoyed as a child. Something small to take away the sting."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "apartment",
         location: "[ LOCATION: CLANCY'S RESIDENCE // 07:30 AM ]",
@@ -954,7 +954,7 @@ const CHAPTER_1_SCRIPT = [
         text: "He eventually stood from his breakfast and made his way to the bathroom. The bag remained in tow, and he glanced at it. “You’re always so sweet this time of morning,” he murmured."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "apartment",
         location: "[ LOCATION: CLANCY'S RESIDENCE // 07:32 AM ]",
@@ -962,7 +962,7 @@ const CHAPTER_1_SCRIPT = [
         text: "He grimaced, knowing the words would receive no reciprocation. He was speaking to a bag. He banished the thought as a lapse in conviction, told himself to grow a spine, and put on his face."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "apartment",
         location: "[ LOCATION: CLANCY'S RESIDENCE // 07:40 AM ]",
@@ -971,7 +971,7 @@ const CHAPTER_1_SCRIPT = [
     },
 
     {
-        bgImage: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "apartment",
         location: "[ LOCATION: CLANCY'S RESIDENCE // 08:00 AM ]",
@@ -983,7 +983,7 @@ const CHAPTER_1_SCRIPT = [
         ]
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "apartment",
         location: "[ LOCATION: CLANCY'S RESIDENCE // 08:02 AM ]",
@@ -993,7 +993,7 @@ const CHAPTER_1_SCRIPT = [
 
     // --- SCENE 4: PARKING GARAGE & WET LAB HEIST ---
     {
-        bgImage: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "heist",
         location: "[ LOCATION: CORPORATE PARKING STRUCTURE ]",
@@ -1001,7 +1001,7 @@ const CHAPTER_1_SCRIPT = [
         text: "His drive to the lab was uneventful; the bag buckled in for safety. A quiet pause hit Clancy as he pulled into the employee-only parking garage, thankful to be out of the California sun."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "heist",
         location: "[ LOCATION: CORPORATE PARKING STRUCTURE ]",
@@ -1010,7 +1010,7 @@ const CHAPTER_1_SCRIPT = [
         text: "It was quickly replaced by panic as Miss Allans' car slid into a space not far away. He ducked his head, hoping to avoid her gaze and the resulting line of questioning."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "heist",
         location: "[ LOCATION: SECURITY CHECKPOINT A-1 ]",
@@ -1018,7 +1018,7 @@ const CHAPTER_1_SCRIPT = [
         text: "Thankfully, she passed by, unknowing. He held his bag to his chest and shuffled inside. He gave the woman behind the bulletproof glass a “friendly” smile, entered the airlock resigned to the dangerous hours ahead."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "heist",
         location: "[ LOCATION: RESEARCH DIVISION // WET LAB ]",
@@ -1026,7 +1026,7 @@ const CHAPTER_1_SCRIPT = [
         text: "He returned to his desk, checking the schedule with a smile. “Wet lab duty, perfect. I couldn’t have asked for a better first go at this.”"
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "heist",
         location: "[ LOCATION: RESEARCH DIVISION // WET LAB ]",
@@ -1034,7 +1034,7 @@ const CHAPTER_1_SCRIPT = [
         text: "He entered the wet lab, delivering the usual formal speech to his subordinates and ordering them to their workstations with a sharp bark. While executives scared him, he was at home in the lab."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "heist",
         location: "[ LOCATION: RESEARCH DIVISION // WET LAB ]",
@@ -1042,7 +1042,7 @@ const CHAPTER_1_SCRIPT = [
         text: "The synthskin mentioned in the dossier was laid before him in sheets. He was to document texture and polymer density against human skin. “As soon as they leave for lunch, I’ll slip sheets into my bag until we have enough.”"
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "heist",
         location: "[ LOCATION: RESEARCH DIVISION // WET LAB ]",
@@ -1051,7 +1051,7 @@ const CHAPTER_1_SCRIPT = [
         text: "The interns left. He grabbed a scalpel and began cutting sheets. “Work slowly; you damage this, and this is all pointless.” His inner voice chimed in. The scalpel glided through the skin..."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "heist",
         location: "[ LOCATION: RESEARCH DIVISION // WET LAB ]",
@@ -1061,7 +1061,7 @@ const CHAPTER_1_SCRIPT = [
         text: "The heavy magnetic latch of the wet-lab door disengaged with a dull, hydraulic thud. The cobra moved."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "heist",
         location: "[ LOCATION: RESEARCH DIVISION // WET LAB ]",
@@ -1070,7 +1070,7 @@ const CHAPTER_1_SCRIPT = [
         text: "Clancy’s hand froze, the blade buried a millimeter deep into the sterile mat. Through the vertical glass pane, a blur of a white lab coat hovered for one agonizing heartbeat... two... before a hand pulled it back outside. The lock clicked shut."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "heist",
         location: "[ LOCATION: RESEARCH DIVISION // WET LAB ]",
@@ -1080,7 +1080,7 @@ const CHAPTER_1_SCRIPT = [
 
     // --- SCENE 5: LUNCH & GYRO INTERLUDE ---
     {
-        bgImage: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "apartment",
         location: "[ LOCATION: OFF-SITE // GYRO RESTAURANT ]",
@@ -1088,7 +1088,7 @@ const CHAPTER_1_SCRIPT = [
         text: "He stood in line at a local gyro place and procured an overpriced meal. The cool grease bled through the paper bag, warming his palm. But the sun felt like an accusation. He couldn't eat. The thought of swallowing made his stomach turn."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "apartment",
         location: "[ LOCATION: PERSONAL VEHICLE // AUDI ]",
@@ -1096,7 +1096,7 @@ const CHAPTER_1_SCRIPT = [
         text: "Inside his Audi, Clancy unbuckled the black leather bag. Inside, the stolen sheets of synthskin gleamed with an uncanny, pearlescent sheen, looking like the depiction of an angel."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "apartment",
         location: "[ LOCATION: PERSONAL VEHICLE // AUDI ]",
@@ -1106,7 +1106,7 @@ const CHAPTER_1_SCRIPT = [
 
     // --- SCENE 6: ACTUATOR THEFT & COWORKER INCIDENT ---
     {
-        bgImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "heist",
         location: "[ LOCATION: HARDWARE TESTING WING ]",
@@ -1114,7 +1114,7 @@ const CHAPTER_1_SCRIPT = [
         text: "Back in the hardware section, Clancy tugged at synthetic musculature. Each electrical pulse from his ServoMetric caused a whir of activity. The break call hit. He began collecting actuators into his bag..."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "heist",
         location: "[ LOCATION: HARDWARE TESTING WING ]",
@@ -1122,7 +1122,7 @@ const CHAPTER_1_SCRIPT = [
         text: "A warm set of hands gripped his shoulders. “Hello, Mister Harris! We were wondering if we could talk you into eating lunch with us!”"
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "heist",
         location: "[ LOCATION: HARDWARE TESTING WING ]",
@@ -1133,7 +1133,7 @@ const CHAPTER_1_SCRIPT = [
 
     // --- SCENE 7: FIRE ESCAPE BREAKDOWN ---
     {
-        bgImage: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "apartment",
         location: "[ LOCATION: APARTMENT FIRE ESCAPE // NIGHT ]",
@@ -1143,7 +1143,7 @@ const CHAPTER_1_SCRIPT = [
 
     // --- SCENE 8: OPTICAL INPUTS & ELEVATOR RIDE WITH CLARA ALLANS ---
     {
-        bgImage: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "heist",
         location: "[ LOCATION: PERSONAL VEHICLE // AUDI ]",
@@ -1151,7 +1151,7 @@ const CHAPTER_1_SCRIPT = [
         text: "The following day, in his car, he eyed a jar pulled from his bag. A pair of bright blue synthetic optical inputs returned the stare. “The organ lab is going to be a nightmare...” he told the bag."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "heist",
         location: "[ LOCATION: FREIGHT ELEVATOR B-4 ]",
@@ -1160,7 +1160,7 @@ const CHAPTER_1_SCRIPT = [
         text: "In the parking garage, his heart stopped: Miss Clara Allans stepped into the elevator ahead of him, enjoying her morning latte. He took a deep breath. “Miss Allans! A pleasure as always.” (Trying too hard...)"
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "heist",
         location: "[ LOCATION: FREIGHT ELEVATOR B-4 ]",
@@ -1168,7 +1168,7 @@ const CHAPTER_1_SCRIPT = [
         text: "Clara Allans stood pristine in a cream power suit. She observed Clancy like a predator observing prey. “A good morning to you as well, Mister Harris. Enjoying the weather?”"
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "heist",
         location: "[ LOCATION: FREIGHT ELEVATOR B-4 ]",
@@ -1177,7 +1177,7 @@ const CHAPTER_1_SCRIPT = [
         text: "Suddenly, the lift jolted! Clancy moved out of reflex to catch her. She leaned into his touch, resting against him. His stomach twisted with guilt and sorrow."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "heist",
         location: "[ LOCATION: FREIGHT ELEVATOR B-4 ]",
@@ -1185,7 +1185,7 @@ const CHAPTER_1_SCRIPT = [
         text: "Clara took note of his grip on the leather bag. “You know, Clancy, you’ve carried that bag for a while now... Where did you get it? It’s genuinely fabulous. The leather is beautiful, and the clasp looks antique.”"
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "heist",
         location: "[ LOCATION: FREIGHT ELEVATOR B-4 ]",
@@ -1195,7 +1195,7 @@ const CHAPTER_1_SCRIPT = [
 
     // --- SCENE 9: RESTROOM BREAKDOWN ---
     {
-        bgImage: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "apartment",
         location: "[ LOCATION: FACILITY RESTROOM ]",
@@ -1204,7 +1204,7 @@ const CHAPTER_1_SCRIPT = [
         text: "The lift stopped. Clancy rushed to the nearest employee restroom, slammed a stall door shut, set the bag on the floor, and vomited into the toilet, crying."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "apartment",
         location: "[ LOCATION: B-LEVEL STAIRWELL ]",
@@ -1214,7 +1214,7 @@ const CHAPTER_1_SCRIPT = [
 
     // --- FINAL EPILOGUE: INCIDENT REPORT AN-2026 ---
     {
-        bgImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "report",
         documentMode: true,
@@ -1223,7 +1223,7 @@ const CHAPTER_1_SCRIPT = [
         text: "AETERNA NOCTU LLC — INTERNAL INCIDENT REPORT\nDOCUMENT ID: AN-2026-GA-04\nSECURITY CLEARANCE: LEVEL 4 (DIRECTORATE ONLY)\nDISTRIBUTION: ALLANS, V. (CHIEF EXECUTIVE OFFICER)\nSUBJECT: UNAUTHORIZED FIELD EXPERIMENTATION / ASSET RECOVERY\nLOCATION: COUNTY ROAD 4, [REDACTED] COUNTY, GEORGIA"
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "report",
         documentMode: true,
@@ -1232,7 +1232,7 @@ const CHAPTER_1_SCRIPT = [
         text: "11/12: Subject A (Senior Researcher Clancy Harris) formally accepted the regional field assignment in his hometown of [REDACTED], Georgia, to oversee the logistical transition of regional neural-mapping data and the prototyping of a substrate.\n\n11/14 - 12/01: Audit reveals consistent inventory discrepancies under Subject A's credentials, including proprietary synthetic neural matrices, chemical fixatives, and biometric containment units."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "report",
         documentMode: true,
@@ -1241,7 +1241,7 @@ const CHAPTER_1_SCRIPT = [
         text: "12/03: Subject A failed to report for the scheduled corporate check-in. Local surveillance indicates he utilized the company-issued field kit to perform an unsanctioned, secondary procedure on a local biological substrate."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "report",
         documentMode: true,
@@ -1250,7 +1250,7 @@ const CHAPTER_1_SCRIPT = [
         text: "NEURAL CORE ARCHITECTURE: Successfully recovered from Subject A’s personal transport. Unit is intact, fully preserved, and stable.\n\nInternal registry confirms the architecture belongs to MATTHEW HARRIS (Deceased 04/18/2024, former civilian spouse of Subject A, illegally exhumed by Subject A prior to employment)."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "report",
         documentMode: true,
@@ -1259,7 +1259,7 @@ const CHAPTER_1_SCRIPT = [
         text: "BIOLOGICAL SUBSTRATE: Completely destroyed due to local civilian intervention (mob action/puritanical civil unrest). Substrate identity confirmed via local medical records as SAMUEL [REDACTED], age 11, deceased 12/02 of natural causes.\n\nNOTE: Subject A successfully achieved a 98.4% neural-to-somatic bridge between the Matthew Harris architecture and the Samuel substrate prior to termination. Project feasibility is verified."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "report",
         documentMode: true,
@@ -1268,7 +1268,7 @@ const CHAPTER_1_SCRIPT = [
         text: "Subject A (Clancy Harris): Terminated by local civilians during the unrest. No corporate intervention was required.\n\nSubstrate Father: The father of the substrate, [REDACTED], was discovered at the scene in a state of catatonic psychological collapse. Local authorities have processed him; risk of legal exposure to Aeterna Noctu LLC is assessed at 0.0%.\n\nInventory: Matthew Harris's neural core has been logged into the proprietary inventory system."
     },
     {
-        bgImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1600&auto=format&fit=crop",
+        bgImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1600&auto=format&fit=crop",
         fx: "none",
         bgm: "report",
         documentMode: true,
@@ -1362,7 +1362,6 @@ class VisualNovelEngine {
 
         const scene = this.script[this.currentIndex];
 
-        // Background Image & VFX
         if (scene.bgImage) {
             this.bgLayer.style.backgroundImage = `url("${scene.bgImage}")`;
         }
@@ -1372,7 +1371,6 @@ class VisualNovelEngine {
             this.audio.playTrack(scene.bgm);
         }
 
-        // LOUDER DYNAMIC SFX
         if (scene.sfx === 'airlock') this.audio.playAirlockWhoosh();
         if (scene.sfx === 'shovel') this.audio.playShovelStrike();
         if (scene.sfx === 'elevator') this.audio.playElevatorJolt();
