@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aeterna Noctu: Chapter 1 - The Relic in Black Leather</title>
+    <style>
+        :root {
+            --bg-dark: #07090e;
+            --panel-bg: rgba(12, 16, 26, 0.88);
+            --border-glow: #2a3a52;
+            --accent-cyan: #00e5ff;
+            --accent-red: #ff2a55;
+            --accent-amber: #ffaa00;
+            --text-main: #e1e7f0;
+            --text-muted: #8a99ad;
+            --font-serif: 'Georgia', serif;
+            --font-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-dark);
+            font-family: var(--font-sans);
+            color: var(--text-main);
+            overflow: hidden;
+        }
+
+        /* Main Game Stage */
+        #game-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: #000;
+        }
+
+        /* Background Visual Layer */
+        #bg-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: filter 1s ease, transform 1s ease, background-image 0.8s ease;
+            z-index: 1;
+        }
+
+        /* Procedural Canvas Background Overlay (Rain, Drizzle, FX) */
+        #fx-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Vignette & Scanlines */
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 4px, 6px 100%;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .vignette {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.85);
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        /* Top Header Navigation Bar */
+        #header-bar {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px;
+            background: linear-gradient(180deg, rgba(7, 9, 14, 0.9) 0%, rgba(7, 9, 14, 0) 100%);
+        }
+
+        .chapter-title {
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-ui {
+            background: rgba(18, 25, 38, 0.6);
+            border: 1px solid var(--border-glow);
+            color: var(--text-main);
+            padding: 6px 16px;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-ui:hover {
+            background: var(--accent-cyan);
+            color: #000;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+        }
+
+        /* Character Avatar Frame */
+        #character-frame {
+            position: absolute;
+            bottom: 220px;
+            left: 80px;
+            z-index: 8;
+            display: flex;
+            align-items: flex-end;
+            gap: 20px;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .avatar-box {
+            width: 100px;
+            height: 100px;
+            border-radius: 4px;
+            border: 2px solid var(--accent-cyan);
+            background: rgba(0,0,0,0.6);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .avatar-box::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, transparent 60%, rgba(0,229,255,0.2));
+        }
+
+        /* Dialogue Box Area */
+        #dialogue-area {
+            position: relative;
+            z-index: 10;
+            width: calc(100% - 80px);
+            max-width: 1200px;
+            margin: 0 auto 30px auto;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-glow);
+            border-left: 4px solid var(--accent-cyan);
+            border-radius: 6px;
+            padding: 24px 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            cursor: pointer;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        #speaker-name {
+            font-family: var(--font-sans);
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: var(--accent-cyan);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        #dialogue-text {
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            line-height: 1.65;
+            color: var(--text-main);
+            min-height: 70px;
+        }
+
+        .click-prompt {
+            align-self: flex-end;
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+            letter-spacing: 1px;
+            animation: blink 1.2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        /* Choice Box Overlay */
+        #choice-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 7, 12, 0.85);
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        #choice-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .choice-btn {
+            width: 80%;
+            max-width: 650px;
+            padding: 16px 24px;
+            background: rgba(18, 25, 38, 0.9);
+            border: 1px solid var(--border-glow);
+            border-left: 4px solid var(--accent-cyan);
+            color: var(--text-main);
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border-radius: 4px;
+        }
+
+        .choice-btn:hover {
+            background: var(--border-glow);
+            border-left-color: var(--accent-amber);
+            transform: translateX(6px);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+        }
+
+        /* History Log Modal */
+        #log-modal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(7, 9, 14, 0.95);
+            z-index: 30;
+            display: none;
+            flex-direction: column;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        #log-content {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .log-entry {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 10px;
+        }
+
+        .log-speaker {
+            font-weight: bold;
+            color: var(--accent-cyan);
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .log-text {
+            font-family: var(--font-serif);
+            font-size: 1.05rem;
+            color: var(--text-muted);
+        }
+
+        /* Screen Flash FX */
+        #flash-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            opacity: 0;
+            z-index: 15;
+            pointer-events: none;
+            transition: opacity 0.1s ease-out;
+        }
+
+        /* Heartbeat Panic Overlay */
+        #panic-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            box-shadow: inset 0 0 80px rgba(255, 42, 85, 0);
+            z-index: 5;
+            pointer-events: none;
+            transition: box-shadow 0.3s ease;
+        }
+
+        #panic-overlay.pulsing {
+            animation: pulse-red 1.2s infinite;
+        }
+
+        @keyframes pulse-red {
+            0%, 100% { box-shadow: inset 0 0 40px rgba(255, 42, 85, 0.1); }
+            50% { box-shadow: inset 0 0 120px rgba(255, 42, 85, 0.5); }
+        }
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <div id="bg-layer"></div>
+    <canvas id="fx-canvas"></canvas>
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
+    <div id="flash-overlay"></div>
+    <div id="panic-overlay"></div>
+
+    <!-- Top UI Header -->
+    <header id="header-bar">
+        <div class="chapter-title">Aeterna Noctu LLC // Chapter 1: The Relic in Black Leather</div>
+        <div class="nav-buttons">
+            <button class="btn-ui" id="btn-log">Log</button>
+
+            <button class="btn-ui" id="btn-auto">Auto: OFF</button>
+            <button class="btn-ui" id="btn-save">Quick Save</button>
+
+            <button class="btn-ui" id="btn-load">Quick Load</button>
+            <button class="btn-ui" id="btn-audio">Sound: ON</button>
+        </div>
+    </header>
+
+    <!-- Character Avatar Overlay -->
+    <div id="character-frame" style="opacity: 0;">
+        <div class="avatar-box" id="avatar-icon">💼</div>
+    </div>
+
+    <!-- Main Dialogue UI -->
+    <div id="dialogue-area">
+        <div>
+            <div id="speaker-name">Narrator</div>
+            <div id="dialogue-text">Press anywhere or SPACE to begin...</div>
+        </div>
+        <div class="click-prompt">▼ CLICK TO CONTINUE</div>
+    </div>
+
+    <!-- Interactive Story Choices -->
+    <div id="choice-overlay"></div>
+
+    <!-- History Log Modal -->
+    <div id="log-modal">
+        <h2 style="color: var(--accent-cyan); margin-bottom: 20px; font-family: var(--font-sans);">TRANSCRIPT HISTORY</h2>
+        <div id="log-content"></div>
+        <button class="btn-ui" id="btn-close-log" style="align-self: flex-end;">Close Log</button>
+    </div>
+</div>
+
+<script>
+/**
+ * Procedural Audio Synthesizer (Web Audio API)
+ * Generates dark ambient hums, rain noise, airlock whooshes, and heartbeats dynamically.
+ */
+class VNSystemAudio {
+    constructor() {
+        self = this;
+        this.ctx = null;
+        this.enabled = true;
+        this.noiseNode = null;
+        this.droneOsc = null;
+        this.gainNode = null;
+    }
+
+    init() {
+        if (!this.ctx) {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            this.ctx = new AudioCtx();
+            this.gainNode = this.ctx.createGain();
+            this.gainNode.gain.value = 0.15;
+            this.gainNode.connect(this.ctx.destination);
+            this.startAmbient();
+        }
+        if (this.ctx.state === 'suspended') {
+            this.ctx.resume();
+        }
+    }
+
+    toggleAudio() {
+        this.enabled = !this.enabled;
+        if (this.gainNode) {
+            this.gainNode.gain.value = this.enabled ? 0.15 : 0;
+        }
+        return this.enabled;
+    }
+
+    startAmbient() {
+        if (!this.ctx) return;
+        
+        // Dark Low Drone
+        this.droneOsc = this.ctx.createOscillator();
+        const droneGain = this.ctx.createGain();
+        this.droneOsc.type = 'sawtooth';
+        this.droneOsc.frequency.setValueAtTime(55, this.ctx.currentTime); // A1 note
+        
+        // Lowpass Filter for moody synth
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(180, this.ctx.currentTime);
+
+        droneGain.gain.value = 0.3;
+        this.droneOsc.connect(filter);
+        filter.connect(droneGain);
+        droneGain.connect(this.gainNode);
+        this.droneOsc.start();
+
+        // Procedural Rain / HVAC Ambient Noise
+        const bufferSize = this.ctx.sampleRate * 2;
+        const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+            output[i] = Math.random() * 2 - 1;
+        }
+
+        this.noiseNode = this.ctx.createBufferSource();
+        this.noiseNode.buffer = noiseBuffer;
+        this.noiseNode.loop = true;
+
+        const noiseFilter = this.ctx.createBiquadFilter();
+        noiseFilter.type = 'bandpass';
+        noiseFilter.frequency.setValueAtTime(800, this.ctx.currentTime);
+        noiseFilter.Q.setValueAtTime(1.0, this.ctx.currentTime);
+
+        const noiseGain = this.ctx.createGain();
+        noiseGain.gain.value = 0.08;
+
+        this.noiseNode.connect(noiseFilter);
+        noiseFilter.connect(noiseGain);
+        noiseGain.connect(this.gainNode);
+        this.noiseNode.start();
+    }
+
+    playAirlockWhoosh() {
+        if (!this.ctx || !this.enabled) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const g = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(120, now);
+        osc.frequency.exponentialRampToValueAtTime(40, now + 0.8);
+        g.gain.setValueAtTime(0.4, now);
+        g.gain.exponentialRampToValueAtTime(0.01, now + 0.8);
+        osc.connect(g);
+        g.connect(this.gainNode);
+        osc.start(now);
+        osc.stop(now + 0.8);
+    }
+
+    playHeartbeat() {
+        if (!this.ctx || !this.enabled) return;
+        const now = this.ctx.currentTime;
+        [0, 0.22].forEach(delay => {
+            const osc = this.ctx.createOscillator();
+            const g = this.ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(60, now + delay);
+            osc.frequency.exponentialRampToValueAtTime(30, now + delay + 0.15);
+            g.gain.setValueAtTime(0.6, now + delay);
+            g.gain.exponentialRampToValueAtTime(0.01, now + delay + 0.15);
+            osc.connect(g);
+            g.connect(this.gainNode);
+            osc.start(now + delay);
+            osc.stop(now + delay + 0.15);
+        });
+    }
+
+    playBeep() {
+        if (!this.ctx || !this.enabled) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const g = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(880, now);
+        g.gain.setValueAtTime(0.05, now);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+        osc.connect(g);
+        g.connect(this.gainNode);
+        osc.start(now);
+        osc.stop(now + 0.05);
+    }
+}
+
+/**
+ * Visual Canvas Particle Renderer (Rain & Atmosphere)
+ */
+class VisualEffects {
+    constructor(canvasId) {
+        this.canvas = document.getElementById(canvasId);
+        this.ctx = this.canvas.getContext('2d');
+        this.drops = [];
+        this.mode = 'rain'; // 'rain', 'fog', or 'none'
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+        this.initRain();
+        this.animate();
+    }
+
+    resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+    }
+
+    initRain() {
+        this.drops = [];
+        for (let i = 0; i < 120; i++) {
+            this.drops.push({
+                x: Math.random() * this.canvas.width,
+                y: Math.random() * this.canvas.height,
+                len: Math.random() * 18 + 10,
+                speed: Math.random() * 12 + 10,
+                opacity: Math.random() * 0.3 + 0.1
+            });
+        }
+    }
+
+    setMode(mode) {
+        this.mode = mode;
+    }
+
+    animate() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        if (this.mode === 'rain') {
+            this.ctx.strokeStyle = 'rgba(180, 210, 240, 0.4)';
+            this.ctx.lineWidth = 1;
+            for (let d of this.drops) {
+                this.ctx.beginPath();
+                this.ctx.moveTo(d.x, d.y);
+                this.ctx.lineTo(d.x - 2, d.y + d.len);
+                this.ctx.stroke();
+
+                d.y += d.speed;
+                d.x -= 1;
+
+                if (d.y > this.canvas.height) {
+                    d.y = -20;
+                    d.x = Math.random() * this.canvas.width;
+                }
+            }
+        }
+
+        requestAnimationFrame(() => this.animate());
+    }
+}
+
+/**
+ * Main Visual Novel Engine Data & Script Definition
+ */
+const CHAPTER_1_SCRIPT = [
+    // --- PROLOGUE: GEORGIA GRAVEYARD ---
+    {
+        bg: "linear-gradient(180deg, #020305 0%, #0c121e 100%)",
+        fx: "rain",
+        speaker: "Narrator",
+        avatar: "🌧️",
+        text: "The night was dark and quiet—thankfully. A lone figure trudged along, silhouetted against the moonlight, shovel in hand."
+    },
+    {
+        bg: "linear-gradient(180deg, #050810 0%, #111a2e 100%)",
+        fx: "rain",
+        speaker: "Clancy",
+        avatar: "🤐",
+        text: "“Good; maybe the ground won’t be so hard,” he thought, trying to make light of the work ahead to steady his nerves."
+    },
+    {
+        bg: "linear-gradient(180deg, #030408 0%, #0d1524 100%)",
+        fx: "rain",
+        speaker: "Narrator",
+        avatar: "🪦",
+        text: "He stepped across the threshold of the hallowed grounds as a drizzle began to fall. He could barely see among the various shapes surrounding him, but eventually, after some searching, he made his way to the freshly disturbed earth."
+    },
+    {
+        bg: "linear-gradient(180deg, #020305 0%, #151a22 100%)",
+        fx: "rain",
+        speaker: "Narrator",
+        avatar: "🪦",
+        text: "His shovel struck the soil, and he winced at the vibration of the handle as the head impacted the December loam of that Georgia graveyard."
+    },
+
+    // --- SCENE 1: AETERNA NOCTU LAB ---
+    {
+        bg: "linear-gradient(180deg, #0b111a 0%, #1c2838 100%)",
+        fx: "none",
+        speaker: "Clancy Harris",
+        avatar: "📋",
+        sfx: "airlock",
+        text: "“Hands off.” The command was a razor—cold and precise."
+    },
+    {
+        bg: "linear-gradient(180deg, #0e1724 0%, #1e2c3d 100%)",
+        fx: "none",
+        speaker: "Narrator",
+        avatar: "💼",
+        text: "Clancy didn't look up from his clipboard. “Do I rifle through your pockets while you’re working? Have you no shame?”"
+    },
+    {
+        bg: "linear-gradient(180deg, #0e1724 0%, #1e2c3d 100%)",
+        fx: "none",
+        speaker: "Narrator",
+        avatar: "💼",
+        text: "As a lead researcher for Aeterna Noctu LLC, he was ostensibly conducting research into more efficient methods of mapping neural pathways."
+    },
+    {
+        bg: "linear-gradient(180deg, #0b111a 0%, #203045 100%)",
+        fx: "none",
+        speaker: "Clancy Harris",
+        avatar: "💼",
+        text: "He set the clipboard down and moved the bag, its black leather and heavy clasp cool to the touch. “You do that again, and I promise I’ll have your badge before lunch,” he barked at the assistant. The woman jumped and quickly scuttled away."
+    },
+    {
+        bg: "linear-gradient(180deg, #0b111a 0%, #1e2a3a 100%)",
+        fx: "none",
+        speaker: "Assistant",
+        avatar: "👩‍🔬",
+        text: "Several moments later, another assistant approached, gently tapping his shoulder while he was bent over a slide. “Mister Harris? Miss Allans would like to talk to you.”"
+    },
+
+    // --- SCENE 2: CLARA ALLANS AIRLOCK OFFICE ---
+    {
+        bg: "linear-gradient(180deg, #152232 0%, #2a3c52 100%)",
+        fx: "none",
+        speaker: "Narrator",
+        avatar: "🚪",
+        sfx: "airlock",
+        text: "He stood from his stool, grumbling, and marched toward Miss Allans' private office. The imposing airlock slid open, and he stepped inside, only for it to seal behind him."
+    },
+    {
+        bg: "linear-gradient(180deg, #1a2738 0%, #2d425c 100%)",
+        fx: "none",
+        speaker: "Miss Clara Allans",
+        avatar: "🏢",
+        text: "“Mister Harris, please, take a seat. We have much to discuss.” She gestured to the lavish seats in front of her desk, and Harris, after an audible gulp, sat down."
+    },
+    {
+        bg: "linear-gradient(180deg, #1a2738 0%, #2d425c 100%)",
+        fx: "none",
+        speaker: "Miss Clara Allans",
+        avatar: "🏢",
+        text: "“So, Mister Harris, I read your reports on this quarter's research initiatives. In fact, I’ve already presented your findings to the board. When can the project be ready? Our shareholders won’t wait for something so impactful.”"
+    },
+    {
+        bg: "linear-gradient(180deg, #1a2738 0%, #2d425c 100%)",
+        fx: "none",
+        speaker: "Clancy Harris",
+        avatar: "😰",
+        panic: true,
+        text: "Her face was grim. He was being rushed. “It’s nowhere near ready, Miss Allans. Wouldn’t you prefer to put it through clinical trials first?” He sounded panicked, clutching the bag."
+    },
+    {
+        bg: "linear-gradient(180deg, #182434 0%, #304663 100%)",
+        fx: "none",
+        speaker: "Miss Clara Allans",
+        avatar: "🏢",
+        text: "“Clancy. Clancy, Clancy, Clancy. You won’t need trials if this is something you can replicate. The board has called full steam ahead, so we’re going full steam ahead.”"
+    },
+    {
+        bg: "linear-gradient(180deg, #131c29 0%, #283a52 100%)",
+        fx: "none",
+        speaker: "Clancy Harris",
+        avatar: "💼",
+        text: "Clancy gripped the bag tighter, its contents rattling, and gave a nod. “I see. I’ll assemble the team and try to breathe some morale into them,” he said nonchalantly, fighting the urge to flee."
+    },
+    {
+        bg: "linear-gradient(180deg, #0e1622 0%, #223247 100%)",
+        fx: "none",
+        speaker: "Narrator",
+        avatar: "💼",
+        sfx: "airlock",
+        text: "He knew what he was holding, sweating at the idea of Miss Allans asking for a peek inside. He did his best to keep up appearances as he left. “Thank you, Miss Allans. I’ll have another report for you soon.” He lied, shuffling backward from the frigid air of her climate-controlled room. The airlock opened with a whoosh."
+    },
+
+    // --- SCENE 3: CLANCY'S APARTMENT - NIGHT TO MORNING ---
+    {
+        bg: "linear-gradient(180deg, #0a0e17 0%, #141b29 100%)",
+        fx: "none",
+        speaker: "Narrator",
+        avatar: "🥃",
+        text: "Clancy sat in his armchair at home, fresh from work, and began to write. If he were going to do this, it had to be thought out—not some panicked rush. He compiled a list of all the assets he’d need from that hellhole, lightly hugging the bag, always near."
+    },
+    {
+        bg: "linear-gradient(180deg, #0a0e17 0%, #141b29 100%)",
+        fx: "none",
+        speaker: "Inner Monologue",
+        avatar: "🧠",
+        panic: true,
+        text: "This is insane. What am I doing? His mind lashed at him. His plan to steal the components for the procedure had thrilled him initially; why was he so full of anxiety now?"
+    },
+    {
+        bg: "linear-gradient(180deg, #070a12 0%, #101624 100%)",
+        fx: "none",
+        speaker: "Narrator",
+        avatar: "🥃",
+        text: "He stood, walked to the kitchen, and poured a glass of bourbon. The liquor was cold comfort against the fear gripping his heart, its talons a searing inferno of confusion and woe."
+    },
+    {
+        bg: "linear-gradient(180deg, #05070d 0%, #0d121f 100%)",
+        fx: "none",
+        speaker: "Narrator",
+        avatar: "🛌",
+        text: "He settled into bed, heart heavy, the bag nestled on the pillow next to him. He drifted off, a familiar face haunting his final moments of lucidity—a spectre of the past."
+    },
+    {
+        bg: "linear-gradient(180deg, #1c1a14 0%, #3d3522 100%)",
+        fx: "none",
+        speaker: "Narrator",
+        avatar: "🌅",
+        text: "In a flash, the first beams of sun grazed his half-lidded eyes. He awoke with a start and began his day, shuffling to the bathroom with the bare enthusiasm of someone tired of life."
+    },
+    {
+        bg: "linear-gradient(180deg, #181611 0%, #2b261d 100%)",
+        fx: "none",
+        speaker: "Clancy Harris",
+        avatar: "🥣",
+        text: "His morning had followed the same routine for years: a bowl of the same sugary cereal he’d enjoyed as a child. Something small to take away the sting."
+    },
+    {
+        bg: "linear-gradient(180deg, #181d24 0%, #2e3642 100%)",
+        fx: "none",
+        speaker: "Clancy Harris",
+        avatar: "💼",
+        text: "He eventually stood from his breakfast and made his way to the bathroom. The bag remained in tow, and he glanced at it. “You’re always so sweet this time of morning,” he murmured."
+    },
+    {
+        bg: "linear-gradient(180deg, #13171f 0%, #222933 100%)",
+        fx: "none",
+        speaker: "Narrator",
+        avatar: "🪞",
+        text: "He grimaced, knowing the words would receive no reciprocation. He was speaking to a bag. He banished the thought as a lapse in conviction, told himself to grow a spine, and put on his face."
+    },
+    {
+        bg: "linear-gradient(180deg, #13171f 0%, #222933 100%)",
+        fx: "none",
+        speaker: "Clancy Harris",
+        avatar: "🚿",
+        text: "His footfalls into the bathroom spoke of a reluctance to look at his own reflection. He turned the shower knob to a comfortable, warm temperature and sank in. “I can’t just get everything all at once,” he whispered to himself, leaning against the shower wall. “I must be like a mouse taking food from a grain silo, bit by bit.”"
+    },
+
+    // CHOICE POINT 1
+    {
+        bg: "linear-gradient(180deg, #191f2b 0%, #313c4f 100%)",
+        fx: "none",
+        speaker: "Clancy Harris",
+        avatar: "🪞",
+        text: "He buttoned his white shirt, adjusted his slacks, and finally built up the courage to look in the mirror. His eyes were sunken with light gray forming. He practiced a smile...",
+        choice: [
+            { text: "Attempt a warm, youthful smile.", target: 27 },
+            { text: "Slick back hair and brace for professional coldness.", target: 27 }
+        ]
+    },
+    {
+        bg: "linear-gradient(180deg, #191f2b 0%, #313c4f 100%)",
+        fx: "none",
+        speaker: "Clancy Harris",
+        avatar: "🪞",
+        text: "The smile felt plastic. “Good enough.” He left for work."
+    },
+
+    // --- SCENE 4: PARKING GARAGE & WET LAB HEIST ---
+    {
+        bg: "linear-gradient(180deg, #0a0d14 0%, #1a2333 100%)",
+        fx: "none",
+        speaker: "Narrator",
+        avatar: "🚗",
+        text: "His drive to the lab was uneventful; the bag buckled in for safety. A quiet pause hit Clancy as he pulled into the employee-only parking garage, thankful to be out of the California sun."
+    },
+    {
+        bg: "linear-gradient(180deg, #0a0d14 0%, #1a2333 100%)",
+        fx: "none",
+        speaker: "Narrator",
+        avatar: "😨",
+        panic: true,
+        text: "It was quickly replaced by panic as Miss Allans' car slid into a space not far away. He ducked his head, hoping to avoid her gaze and the resulting line of questioning."
+    },
+    {
+        bg: "linear-gradient(180deg, #0d121c 0%, #202b3c 100%)",
+        fx: "none",
+        speaker: "Narrator",
+        avatar: "💼",
+        text: "Thankfully, she passed by, unknowing. He held his bag to his chest and shuffled inside. He gave the woman behind the bulletproof glass a “friendly” smile, entered the airlock resigned to the dangerous hours ahead."
+    },
+    {
+        bg: "linear-gradient(180deg, #101824 0%, #233247 100%)",
+        fx: "none",
+        speaker: "Clancy Harris",
+        avatar: "🧪",
+        text: "He returned to his desk, checking the schedule with a smile. “Wet lab duty, perfect. I couldn’t have asked for a better first go at this.”"
+    },
+    {
+        bg: "linear-gradient(180deg, #121c2b 0%, #283952 100%)",
+        fx: "none",
+        speaker: "Narrator",
+        avatar: "🧪",
+        text: "He entered the wet lab, delivering the usual formal speech to his subordinates and ordering them to their workstations with a sharp bark. While executives scared him, he was at home in the lab."
+    },
+    {
+        bg: "linear-gradient(180deg, #121c2b 0%, #283952 100%)",
+        fx: "none",
+        speaker: "Narrator",
+        avatar: "🔬",
+        text: "The synthskin mentioned in the dossier was laid before him in sheets. He was to document texture and polymer density against human skin. “As soon as they leave for lunch, I’ll slip sheets into my bag until we have enough.”"
+    },
+    {
+        bg: "linear-gradient(180deg, #0c121d 0%, #1e2c40 100%)",
+        fx: "none",
+        speaker: "Inner Monologue",
+        avatar: "🔪",
+        panic: true,
+        text: "The interns left. He grabbed a scalpel and began cutting sheets. “Work slowly; you damage this, and this is all pointless.” His inner voice chimed in. The scalpel glided through the skin..."
+    },
+    {
+        bg: "linear-gradient(180deg, #1f0a10 0%, #451522 100%)",
+        fx: "none",
+        speaker: "Narrator",
+        avatar: "⚠️",
+        panic: true,
+        sfx: "airlock",
+        text: "The heavy magnetic latch of the wet-lab door disengaged with a dull, hydraulic thud. The cobra moved."
+    },
+    {
+        bg: "linear-gradient(180deg, #1f0a10 0%, #451522 100%)",
+        fx: "none",
+        speaker: "Narrator",
+        avatar: "🚪",
+        panic: true,
+        text: "Clancy’s hand froze, the blade buried a millimeter deep into the sterile mat. Through the vertical glass pane, a blur of a white lab coat hovered for one agonizing heartbeat... two... before a hand pulled it back outside. The lock clicked shut."
+    },
+    {
+        bg: "linear-gradient(180deg, #0f1724 0%, #233247 100%)",
+        fx: "none",
+        speaker: "Clancy Harris",
+        avatar: "😮‍💨",
+        text: "He tucked away the last sheet, snapped his bag closed, and took a seat back at his station with an audibly shaky sigh of relief."
+    },
+
+    // --- SCENE 5: LUNCH & GYRO INTERLUDE ---
+    {
+        bg: "linear-gradient(180deg, #1d170e 0%, #3d311c 100%)",
+        fx: "none",
+        speaker: "Narrator",
+        avatar: "🥙",
+        text: "He stood in line at a local gyro place and procured an overpriced meal. The cool grease bled through the paper bag, warming his palm. But the sun felt like an accusation. He couldn't eat. The thought of swallowing made his stomach turn."
+    },
+    {
+        bg: "linear-gradient(180deg, #0f1520 0%, #202c3e 100%)",
+        fx: "none",
+        speaker: "Clancy Harris",
+        avatar: "🚗",
+        text: "Inside his Audi, Clancy unbuckled the black leather bag. Inside, the stolen sheets of synthskin gleamed with an uncanny, pearlescent sheen, looking like the depiction of an angel."
+    },
+    {
+        bg: "linear-gradient(180deg, #0f1520 0%, #202c3e 100%)",
+        fx: "none",
+        speaker: "Clancy Harris",
+        avatar: "💼",
+        text: "He traced the smooth, synthetic epidermis. Cold. “Soon,” he whispered, his voice cracking in the enclosed space. “Just a few more pieces.”"
+    },
+
+    // --- SCENE 6: ACTUATOR THEFT & COWORKER INCIDENT ---
+    {
+        bg: "linear-gradient(180deg, #111a26 0%, #263850 100%)",
+        fx: "none",
+        speaker: "Narrator",
+        avatar: "⚙️",
+        text: "Back in the hardware section, Clancy tugged at synthetic musculature. Each electrical pulse from his ServoMetric caused a whir of activity. The break call hit. He began collecting actuators into his bag..."
+    },
+    {
+        bg: "linear-gradient(180deg, #1f1422 0%, #422947 100%)",
+        fx: "none",
+        speaker: "Female Coworker",
+        avatar: "🙋‍♀️",
+        text: "A warm set of hands gripped his shoulders. “Hello, Mister Harris! We were wondering if we could talk you into eating lunch with us!”"
+    },
+    {
+        bg: "linear-gradient(180deg, #1f1422 0%, #422947 100%)",
+        fx: "none",
+        speaker: "Clancy Harris",
+        avatar: "😡",
+        panic: true,
+        text: "Who was this nosy cow? Did she know? He brought himself up to his full size, looming over her. “EXCUSE ME?!” he bellowed. She practically ran out of the office."
+    },
+
+    // --- SCENE 7: FIRE ESCAPE BREAKDOWN ---
+    {
+        bg: "linear-gradient(180deg, #0a0c12 0%, #171d2b 100%)",
+        fx: "none",
+        speaker: "Narrator",
+        avatar: "🌃",
+        text: "That evening, sitting on the steel fire escape of his small California apartment, Clancy greedily ate a bowl of beef from a place of old heartbreak and wept. He hugged the leather bag tenderly and went inside."
+    },
+
+    // --- SCENE 8: OPTICAL INPUTS & ELEVATOR RIDE WITH CLARA ALLANS ---
+    {
+        bg: "linear-gradient(180deg, #0d121a 0%, #1e2838 100%)",
+        fx: "none",
+        speaker: "Clancy Harris",
+        avatar: "👁️",
+        text: "The following day, in his car, he eyed a jar pulled from his bag. A pair of bright blue synthetic optical inputs returned the stare. “The organ lab is going to be a nightmare...” he told the bag."
+    },
+    {
+        bg: "linear-gradient(180deg, #0a0e17 0%, #192336 100%)",
+        fx: "none",
+        speaker: "Narrator",
+        avatar: "🛗",
+        panic: true,
+        text: "In the parking garage, his heart stopped: Miss Clara Allans stepped into the elevator ahead of him, enjoying her morning latte. He took a deep breath. “Miss Allans! A pleasure as always.” (Trying too hard...)"
+    },
+    {
+        bg: "linear-gradient(180deg, #121a26 0%, #27364d 100%)",
+        fx: "none",
+        speaker: "Narrator",
+        avatar: "🛗",
+        text: "Clara Allans stood pristine in a cream power suit. She observed Clancy like a predator observing prey. “A good morning to you as well, Mister Harris. Enjoying the weather?”"
+    },
+    {
+        bg: "linear-gradient(180deg, #121a26 0%, #27364d 100%)",
+        fx: "none",
+        speaker: "Miss Clara Allans",
+        avatar: "🏢",
+        sfx: "airlock",
+        text: "Suddenly, the lift jolted! Clancy moved out of reflex to catch her. She leaned into his touch, resting against him. His stomach twisted with guilt and sorrow."
+    },
+    {
+        bg: "linear-gradient(180deg, #182230 0%, #304461 100%)",
+        fx: "none",
+        speaker: "Miss Clara Allans",
+        avatar: "💼",
+        text: "Clara took note of his grip on the leather bag. “You know, Clancy, you’ve carried that bag for a while now... Where did you get it? It’s genuinely fabulous. The leather is beautiful, and the clasp looks antique.”"
+    },
+    {
+        bg: "linear-gradient(180deg, #182230 0%, #304461 100%)",
+        fx: "none",
+        speaker: "Clancy Harris",
+        avatar: "💼",
+        text: "Clancy let his heartbeat slow. “Oh, it's an Italian leather, ma'am. Belonged to my grandfather, a war surgeon.”"
+    },
+
+    // --- SCENE 9: RESTROOM BREAKDOWN & END OF CHAPTER 1 ---
+    {
+        bg: "linear-gradient(180deg, #1a0f12 0%, #3d1c22 100%)",
+        fx: "none",
+        speaker: "Narrator",
+        avatar: "🚽",
+        panic: true,
+        text: "The lift stopped. Clancy rushed to the nearest employee restroom, slammed a stall door shut, set the bag on the floor, and vomited into the toilet, crying."
+    },
+    {
+        bg: "linear-gradient(180deg, #090c12 0%, #171f2e 100%)",
+        fx: "none",
+        speaker: "Clancy Harris",
+        avatar: "💼",
+        text: "He cleaned himself up, gasping for air in his office stairwell. “She knows... she was fucking with me back there.” He clutched the bag to his chest. The heist was only beginning."
+    },
+    {
+        bg: "#000000",
+        fx: "none",
+        speaker: "SYSTEM",
+        avatar: "END",
+        text: "— END OF CHAPTER 1 —\nThank you for playing. Quick Save available in navigation bar."
+    }
+];
+
+/**
+ * Visual Novel Engine Controller
+ */
+class VisualNovelEngine {
+    constructor(script) {
+        this.script = script;
+        this.currentIndex = 0;
+        this.typewriterSpeed = 22; // ms per char
+        this.isTyping = false;
+        this.autoPlay = false;
+        this.autoTimer = null;
+        this.historyLog = [];
+
+        this.audio = new VNSystemAudio();
+        this.vfx = new VisualEffects('fx-canvas');
+
+        // UI Element References
+        this.bgLayer = document.getElementById('bg-layer');
+        this.speakerName = document.getElementById('speaker-name');
+        this.dialogueText = document.getElementById('dialogue-text');
+        this.charFrame = document.getElementById('character-frame');
+        this.avatarIcon = document.getElementById('avatar-icon');
+        this.choiceOverlay = document.getElementById('choice-overlay');
+        this.panicOverlay = document.getElementById('panic-overlay');
+        this.flashOverlay = document.getElementById('flash-overlay');
+
+        this.initEvents();
+    }
+
+    initEvents() {
+        document.getElementById('dialogue-area').addEventListener('click', () => this.next());
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' || e.code === 'Enter') this.next();
+        });
+
+        // UI Header Buttons
+        document.getElementById('btn-audio').addEventListener('click', (e) => {
+            e.stopPropagation();
+            const enabled = this.audio.toggleAudio();
+            e.target.innerText = `Sound: ${enabled ? 'ON' : 'OFF'}`;
+        });
+
+        document.getElementById('btn-auto').addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.autoPlay = !this.autoPlay;
+            e.target.innerText = `Auto: ${this.autoPlay ? 'ON' : 'OFF'}`;
+            if (this.autoPlay) this.next();
+        });
+
+        document.getElementById('btn-save').addEventListener('click', (e) => {
+            e.stopPropagation();
+            localStorage.setItem('aeterna_noctu_save', this.currentIndex);
+            alert('Progress Quick-Saved!');
+        });
+
+        document.getElementById('btn-load').addEventListener('click', (e) => {
+            e.stopPropagation();
+            const saved = localStorage.getItem('aeterna_noctu_save');
+            if (saved !== null) {
+                this.currentIndex = parseInt(saved, 10);
+                this.renderScene();
+                alert('Progress Loaded!');
+            } else {
+                alert('No Quick Save found.');
+            }
+        });
+
+        document.getElementById('btn-log').addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.showLog();
+        });
+
+        document.getElementById('btn-close-log').addEventListener('click', () => {
+            document.getElementById('log-modal').style.display = 'none';
+        });
+    }
+
+    start() {
+        this.renderScene();
+    }
+
+    renderScene() {
+        this.audio.init();
+        if (this.currentIndex >= this.script.length) return;
+
+        const scene = this.script[this.currentIndex];
+
+        // Background & VFX
+        this.bgLayer.style.background = scene.bg;
+        this.vfx.setMode(scene.fx || 'none');
+
+        // Audio Effects
+        if (scene.sfx === 'airlock') this.audio.playAirlockWhoosh();
+        if (scene.panic) {
+            this.panicOverlay.classList.add('pulsing');
+            this.audio.playHeartbeat();
+        } else {
+            this.panicOverlay.classList.remove('pulsing');
+        }
+
+        // Speaker & Avatar Setup
+        this.speakerName.innerText = scene.speaker;
+        if (scene.avatar) {
+            this.avatarIcon.innerText = scene.avatar;
+            this.charFrame.style.opacity = '1';
+        } else {
+            this.charFrame.style.opacity = '0';
+        }
+
+        // Add to Transcript Log
+        this.historyLog.push({ speaker: scene.speaker, text: scene.text });
+
+        // Handle Typing Animation
+        this.typeText(scene.text, () => {
+            if (scene.choice) {
+                this.renderChoices(scene.choice);
+            } else if (this.autoPlay) {
+                this.autoTimer = setTimeout(() => this.next(), 2400);
+            }
+        });
+    }
+
+    typeText(text, callback) {
+        this.isTyping = true;
+        this.dialogueText.innerText = '';
+        let i = 0;
+
+        if (this.typeTimer) clearInterval(this.typeTimer);
+
+        this.typeTimer = setInterval(() => {
+            this.dialogueText.innerText += text.charAt(i);
+            if (i % 3 === 0) this.audio.playBeep();
+            i++;
+            if (i >= text.length) {
+                clearInterval(this.typeTimer);
+                this.isTyping = false;
+                if (callback) callback();
+            }
+        }, this.typewriterSpeed);
+    }
+
+    renderChoices(choices) {
+        this.choiceOverlay.innerHTML = '';
+        this.choiceOverlay.classList.add('active');
+
+        choices.forEach(ch => {
+            const btn = document.createElement('button');
+            btn.className = 'choice-btn';
+            btn.innerText = ch.text;
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.choiceOverlay.classList.remove('active');
+                this.currentIndex = ch.target;
+                this.renderScene();
+            });
+            this.choiceOverlay.appendChild(btn);
+        });
+    }
+
+    next() {
+        if (this.choiceOverlay.classList.contains('active')) return;
+
+        if (this.isTyping) {
+            // Fast-forward text
+            clearInterval(this.typeTimer);
+            this.dialogueText.innerText = this.script[this.currentIndex].text;
+            this.isTyping = false;
+            return;
+        }
+
+        if (this.autoTimer) clearTimeout(this.autoTimer);
+
+        this.currentIndex++;
+        if (this.currentIndex < this.script.length) {
+            this.renderScene();
+        }
+    }
+
+    showLog() {
+        const modal = document.getElementById('log-modal');
+        const content = document.getElementById('log-content');
+        content.innerHTML = '';
+
+        this.historyLog.forEach(entry => {
+            const div = document.createElement('div');
+            div.className = 'log-entry';
+            div.innerHTML = `<div class="log-speaker">${entry.speaker}</div><div class="log-text">${entry.text}</div>`;
+            content.appendChild(div);
+        });
+
+        modal.style.display = 'flex';
+    }
+}
+
+// Initialize VN Engine when loaded
+window.addEventListener('load', () => {
+    const vnApp = new VisualNovelEngine(CHAPTER_1_SCRIPT);
+    vnApp.start();
+});
+</script>
+</body>
+</html>
