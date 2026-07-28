@@ -35,7 +35,6 @@
             overflow: hidden;
         }
 
-        /* Main Game Stage */
         #game-container {
             position: relative;
             width: 100vw;
@@ -46,37 +45,25 @@
             background: #000;
         }
 
-        /* Background Visual Layer */
         #bg-layer {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover;
             background-position: center;
             transition: background 1.2s ease, filter 1s ease;
             z-index: 1;
         }
 
-        /* Procedural Canvas Background Overlay */
         #fx-canvas {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: 2;
             pointer-events: none;
         }
 
-        /* Vignette & Scanlines */
         .scanlines {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
             background-size: 100% 4px, 6px 100%;
             z-index: 3;
@@ -85,16 +72,12 @@
 
         .vignette {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             box-shadow: inset 0 0 160px rgba(0, 0, 0, 0.92);
             z-index: 4;
             pointer-events: none;
         }
 
-        /* Top Header Navigation Bar */
         #header-bar {
             position: relative;
             z-index: 10;
@@ -135,7 +118,6 @@
             color: #000;
         }
 
-        /* Atmospheric Location / Context Badge */
         #location-badge {
             position: absolute;
             bottom: 240px;
@@ -154,7 +136,6 @@
             transition: opacity 0.5s ease;
         }
 
-        /* Dialogue Box Area */
         #dialogue-area {
             position: relative;
             z-index: 10;
@@ -226,13 +207,9 @@
             50% { opacity: 0.8; }
         }
 
-        /* Choice Box Overlay */
         #choice-overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(5, 7, 10, 0.9);
             z-index: 20;
             display: flex;
@@ -272,13 +249,9 @@
             color: #fff;
         }
 
-        /* History Log Modal */
         #log-modal {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(5, 7, 10, 0.96);
             z-index: 30;
             display: none;
@@ -317,7 +290,6 @@
             line-height: 1.6;
         }
 
-        /* Heartbeat Panic Overlay */
         #panic-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -346,7 +318,6 @@
     <div class="vignette"></div>
     <div id="panic-overlay"></div>
 
-    <!-- Top UI Header -->
     <header id="header-bar">
         <div class="chapter-title">Aeterna Noctu LLC // Chapter 1</div>
         <div class="nav-buttons">
@@ -358,22 +329,18 @@
         </div>
     </header>
 
-    <!-- Context / Location Badge -->
     <div id="location-badge">[ LOCATION: GEORGIA GRAVEYARD ]</div>
 
-    <!-- Main Dialogue UI -->
     <div id="dialogue-area">
         <div>
             <div id="speaker-name">Narrator</div>
-            <div id="dialogue-text">Click anywhere or press SPACE to begin...</div>
+            <div id="dialogue-text">Click anywhere or press SPACE to enter...</div>
         </div>
         <div class="click-prompt">▼ CONTINUE</div>
     </div>
 
-    <!-- Interactive Story Choices -->
     <div id="choice-overlay"></div>
 
-    <!-- History Log Modal -->
     <div id="log-modal">
         <h2 style="color: var(--accent-cyan); margin-bottom: 24px; font-family: var(--font-sans); font-size: 1rem; letter-spacing: 2px;">TRANSCRIPT HISTORY</h2>
         <div id="log-content"></div>
@@ -383,10 +350,10 @@
 
 <script>
 /**
- * Procedural Somber Web Audio Engine
- * Generates 3 distinct atmospheric music tracks & cinematic SFX.
+ * Advanced Multi-Track Procedural Web Audio Engine
+ * Generates 6 structurally complex, multi-section compositions.
  */
-class SomberAudioEngine {
+class AdvancedSomberAudioEngine {
     constructor() {
         this.ctx = null;
         this.enabled = true;
@@ -400,7 +367,7 @@ class SomberAudioEngine {
             const AudioCtx = window.AudioContext || window.webkitAudioContext;
             this.ctx = new AudioCtx();
             this.gainNode = this.ctx.createGain();
-            this.gainNode.gain.value = 0.3;
+            this.gainNode.gain.value = 0.28;
             this.gainNode.connect(this.ctx.destination);
         }
         if (this.ctx.state === 'suspended') {
@@ -411,7 +378,7 @@ class SomberAudioEngine {
     toggleAudio() {
         this.enabled = !this.enabled;
         if (this.gainNode) {
-            this.gainNode.gain.value = this.enabled ? 0.3 : 0;
+            this.gainNode.gain.value = this.enabled ? 0.28 : 0;
         }
         return this.enabled;
     }
@@ -419,7 +386,6 @@ class SomberAudioEngine {
     playTrack(trackName) {
         if (!this.ctx || this.currentTrackName === trackName) return;
 
-        // Stop current playing music loop
         if (this.currentTrackNode) {
             try { this.currentTrackNode.stop(); } catch(e){}
         }
@@ -427,13 +393,12 @@ class SomberAudioEngine {
         this.currentTrackName = trackName;
         let buf = null;
 
-        if (trackName === 'loam') {
-            buf = this._renderDecemberLoamBuffer();
-        } else if (trackName === 'glass') {
-            buf = this._renderColdGlassBuffer();
-        } else if (trackName === 'report') {
-            buf = this._renderIncidentReportBuffer();
-        }
+        if (trackName === 'graveyard') buf = this._renderGraveyardTrack();
+        else if (trackName === 'lab') buf = this._renderLabTrack();
+        else if (trackName === 'office') buf = this._renderOfficeTrack();
+        else if (trackName === 'apartment') buf = this._renderApartmentTrack();
+        else if (trackName === 'heist') buf = this._renderHeistTrack();
+        else if (trackName === 'report') buf = this._renderReportTrack();
 
         if (buf) {
             this.currentTrackNode = this.ctx.createBufferSource();
@@ -444,112 +409,199 @@ class SomberAudioEngine {
         }
     }
 
-    // --- TRACK 1: "DECEMBER LOAM" (Somber, Sorrowful Piano & Synth Pad) ---
-    _renderDecemberLoamBuffer() {
+    // --- TRACK 1: "The December Soil" (C-Minor Mournful March) ---
+    _renderGraveyardTrack() {
         const sr = this.ctx.sampleRate;
         const bpm = 54;
         const beatDur = 60 / bpm;
-        const totalDur = beatDur * 16; // 16 beats loop
+        const totalDur = beatDur * 16; // 16 Bars
         const numSamples = Math.floor(sr * totalDur);
-
         const buf = this.ctx.createBuffer(2, numSamples, sr);
-        const l = buf.getChannelData(0);
-        const r = buf.getChannelData(1);
+        const l = buf.getChannelData(0), r = buf.getChannelData(1);
 
-        // Mournful F-Minor Chords (Fm -> Db -> Bbm -> C7)
-        const chordSeq = [
-            [174.61, 207.65, 261.63], // Fm (F3, Ab3, C4)
-            [138.59, 174.61, 207.65], // Db (Db3, F3, Ab3)
-            [116.54, 138.59, 174.61], // Bbm (Bbm2, Db3, F3)
-            [130.81, 164.81, 196.00]  // C (C3, E3, G3)
-        ];
-
-        // Soft Piano Melodic Notes
-        const pianoMelody = [349.23, 415.30, 523.25, 698.46, 523.25, 415.30, 349.23, 329.63];
+        const chordA = [[130.81, 155.56, 196.00], [116.54, 146.83, 174.61]]; // Cm -> Bb
+        const chordB = [[138.59, 174.61, 207.65], [130.81, 164.81, 196.00]]; // Ab -> G7
+        const melodyA = [261.63, 311.13, 392.00, 311.13, 261.63, 246.94, 293.66, 246.94];
+        const melodyB = [349.23, 415.30, 523.25, 415.30, 392.00, 311.13, 293.66, 261.63];
 
         for (let i = 0; i < numSamples; i++) {
             const t = i / sr;
             const bar = Math.floor(t / (beatDur * 4)) % 4;
-            const chord = chordSeq[bar];
+            const isSectionB = bar >= 2;
+            const chord = isSectionB ? chordB[bar % 2] : chordA[bar % 2];
+            const mel = isSectionB ? melodyB : melodyA;
 
-            // 1. Warm Soft Air Pad
+            // Voice 1: Mournful Sine Lead
+            const mStep = Math.floor(t / (beatDur / 2)) % mel.length;
+            const mFreq = mel[mStep];
+            const mEnv = Math.exp(-4 * (t % (beatDur / 2)));
+            const lead = Math.sin(2 * Math.PI * mFreq * t) * mEnv * 0.12;
+
+            // Voice 2: Counterpoint Harmony
+            const cFreq = mFreq * 0.75;
+            const counter = Math.sin(2 * Math.PI * cFreq * t) * mEnv * 0.04;
+
+            // Voice 3: Warm Polyphonic Pad
             let pad = 0;
-            for (let f of chord) {
-                pad += Math.sin(2 * Math.PI * f * t) * 0.04;
-            }
+            for (let f of chord) pad += Math.sin(2 * Math.PI * f * t) * 0.035;
 
-            // 2. Slow Mournful Piano Notes
-            const pStep = Math.floor(t / (beatDur * 2)) % pianoMelody.length;
-            const pFreq = pianoMelody[pStep];
-            const pT = t % (beatDur * 2);
-            const pEnv = Math.exp(-3.5 * pT);
-            const piano = Math.sin(2 * Math.PI * pFreq * t) * pEnv * 0.12;
+            // Voice 4: Low Bass
+            const bass = Math.sin(2 * Math.PI * (chord[0][0] / 2) * t) * 0.08;
 
-            // 3. Low Sub Air
-            const sub = Math.sin(2 * Math.PI * 43.65 * t) * 0.08;
-
-            const mix = pad + piano + sub;
+            const mix = lead + counter + pad + bass;
             l[i] = Math.max(-0.95, Math.min(0.95, mix));
-            r[i] = Math.max(-0.95, Math.min(0.95, mix * 0.98));
+            r[i] = Math.max(-0.95, Math.min(0.95, mix * 0.97));
         }
         return buf;
     }
 
-    // --- TRACK 2: "THE COLD GLASS" (Clinical Paranoia & Tension) ---
-    _renderColdGlassBuffer() {
+    // --- TRACK 2: "Clinical Mapping" (D-Minor Cold Tension) ---
+    _renderLabTrack() {
         const sr = this.ctx.sampleRate;
-        const bpm = 72;
+        const bpm = 78;
         const beatDur = 60 / bpm;
         const totalDur = beatDur * 16;
         const numSamples = Math.floor(sr * totalDur);
-
         const buf = this.ctx.createBuffer(2, numSamples, sr);
-        const l = buf.getChannelData(0);
-        const r = buf.getChannelData(1);
+        const l = buf.getChannelData(0), r = buf.getChannelData(1);
+
+        const arpA = [293.66, 349.23, 440.00, 587.33];
+        const arpB = [261.63, 329.63, 392.00, 523.25];
 
         for (let i = 0; i < numSamples; i++) {
             const t = i / sr;
+            const bar = Math.floor(t / (beatDur * 4)) % 4;
+            const arp = (bar % 2 === 0) ? arpA : arpB;
 
-            // 1. Low Sawtooth Filtered Drone (C2)
-            const droneSaw = 2 * (t * 65.41 - Math.floor(0.5 + t * 65.41));
-            const droneEnv = 0.5 + 0.5 * Math.sin(2 * Math.PI * 0.1 * t);
-            const drone = droneSaw * droneEnv * 0.06;
+            // 16th Note Neural Mapping Arpeggios
+            const step = Math.floor(t / (beatDur / 4)) % arp.length;
+            const aFreq = arp[step];
+            const aEnv = Math.exp(-12 * (t % (beatDur / 4)));
+            const leadSaw = 2 * (t * aFreq - Math.floor(0.5 + t * aFreq));
+            const lead = leadSaw * aEnv * 0.055;
 
-            // 2. Clinical Pulse Ticks (Clock/Heart rate monitor simulation)
-            const beatT = t % beatDur;
-            const tick = Math.sin(2 * Math.PI * 900 * beatT) * Math.exp(-40 * beatT) * 0.05;
+            // Walking 8th Note Bass
+            const bFreq = (bar % 2 === 0) ? 73.42 : 65.41;
+            const bEnv = Math.exp(-8 * (t % (beatDur / 2)));
+            const bass = Math.sin(2 * Math.PI * bFreq * t) * bEnv * 0.1;
 
-            // 3. Eerie High Glass Tones
-            const highT = t % (beatDur * 4);
-            const highFreq = (Math.floor(t / (beatDur * 4)) % 2 === 0) ? 1046.50 : 1108.73; // C6 to Db6
-            const glass = Math.sin(2 * Math.PI * highFreq * t) * Math.exp(-2 * highT) * 0.035;
+            // Clinical Clockwork Pulse
+            const tick = Math.sin(2 * Math.PI * 1200 * (t % beatDur)) * Math.exp(-50 * (t % beatDur)) * 0.03;
 
-            const mix = drone + tick + glass;
+            const mix = lead + bass + tick;
             l[i] = Math.max(-0.95, Math.min(0.95, mix));
             r[i] = Math.max(-0.95, Math.min(0.95, mix));
         }
         return buf;
     }
 
-    // --- TRACK 3: "INCIDENT REPORT AN-2026" (Sterile, Chilling Corporate Autopsy) ---
-    _renderIncidentReportBuffer() {
+    // --- TRACK 3: "Frigid Executive" (Eb-Minor Corporate Dread) ---
+    _renderOfficeTrack() {
         const sr = this.ctx.sampleRate;
-        const totalDur = 12.0;
+        const bpm = 65;
+        const beatDur = 60 / bpm;
+        const totalDur = beatDur * 16;
         const numSamples = Math.floor(sr * totalDur);
-
         const buf = this.ctx.createBuffer(2, numSamples, sr);
-        const l = buf.getChannelData(0);
-        const r = buf.getChannelData(1);
+        const l = buf.getChannelData(0), r = buf.getChannelData(1);
 
         for (let i = 0; i < numSamples; i++) {
             const t = i / sr;
+            const bar = Math.floor(t / (beatDur * 4)) % 4;
 
-            // Cold, Phase-Canceled Sterile Cluster
-            const tone1 = Math.sin(2 * Math.PI * 110.0 * t) * 0.05;
-            const tone2 = Math.sin(2 * Math.PI * 113.5 * t) * 0.05; // Slight dissonance
-            const hum = (Math.random() * 2 - 1) * 0.015; // Terminal HVAC hum
+            // Low Filtered Saw Drone
+            const saw = 2 * (t * 77.78 - Math.floor(0.5 + t * 77.78));
+            const drone = saw * 0.05;
 
-            const mix = tone1 + tone2 + hum;
+            // Chromatic High Pings
+            const pFreq = 622.25 + (bar * 30);
+            const pingEnv = Math.exp(-2.5 * (t % (beatDur * 2)));
+            const ping = Math.sin(2 * Math.PI * pFreq * t) * pingEnv * 0.04;
+
+            // Heartbeat Pressure Stabs
+            const pulseT = t % beatDur;
+            const pulse = Math.sin(2 * Math.PI * 50 * pulseT) * Math.exp(-15 * pulseT) * 0.12;
+
+            const mix = drone + ping + pulse;
+            l[i] = Math.max(-0.95, Math.min(0.95, mix));
+            r[i] = Math.max(-0.95, Math.min(0.95, mix));
+        }
+        return buf;
+    }
+
+    // --- TRACK 4: "Spectre on the Pillow" (F-Minor Tragic Lullaby) ---
+    _renderApartmentTrack() {
+        const sr = this.ctx.sampleRate;
+        const bpm = 50;
+        const beatDur = 60 / bpm;
+        const totalDur = beatDur * 16;
+        const numSamples = Math.floor(sr * totalDur);
+        const buf = this.ctx.createBuffer(2, numSamples, sr);
+        const l = buf.getChannelData(0), r = buf.getChannelData(1);
+
+        const mel = [349.23, 415.30, 523.25, 415.30, 349.23, 311.13, 261.63, 233.08];
+
+        for (let i = 0; i < numSamples; i++) {
+            const t = i / sr;
+            const step = Math.floor(t / (beatDur * 2)) % mel.length;
+            const f = mel[step];
+            const env = Math.exp(-2.5 * (t % (beatDur * 2)));
+
+            // Weeping Lead Voice
+            const lead = Math.sin(2 * Math.PI * f * t) * env * 0.11;
+            // Warm Sub Air
+            const sub = Math.sin(2 * Math.PI * 43.65 * t) * 0.07;
+
+            const mix = lead + sub;
+            l[i] = Math.max(-0.95, Math.min(0.95, mix));
+            r[i] = Math.max(-0.95, Math.min(0.95, mix * 0.96));
+        }
+        return buf;
+    }
+
+    // --- TRACK 5: "A Mouse in the Silo" (G-Minor Stealth & Jolt) ---
+    _renderHeistTrack() {
+        const sr = this.ctx.sampleRate;
+        const bpm = 96;
+        const beatDur = 60 / bpm;
+        const totalDur = beatDur * 16;
+        const numSamples = Math.floor(sr * totalDur);
+        const buf = this.ctx.createBuffer(2, numSamples, sr);
+        const l = buf.getChannelData(0), r = buf.getChannelData(1);
+
+        for (let i = 0; i < numSamples; i++) {
+            const t = i / sr;
+            const bT = t % (beatDur / 2);
+
+            // Stealth Bass Pulse
+            const bSaw = 2 * (t * 98.00 - Math.floor(0.5 + t * 98.00));
+            const bass = bSaw * Math.exp(-10 * bT) * 0.08;
+
+            // Razor Sine Lead
+            const lead = Math.sin(2 * Math.PI * 783.99 * t) * Math.exp(-20 * bT) * 0.035;
+
+            const mix = bass + lead;
+            l[i] = Math.max(-0.95, Math.min(0.95, mix));
+            r[i] = Math.max(-0.95, Math.min(0.95, mix));
+        }
+        return buf;
+    }
+
+    // --- TRACK 6: "Autopsy of a Theft" (A-Minor Sterile Corporate Autopsy) ---
+    _renderReportTrack() {
+        const sr = this.ctx.sampleRate;
+        const totalDur = 14.0;
+        const numSamples = Math.floor(sr * totalDur);
+        const buf = this.ctx.createBuffer(2, numSamples, sr);
+        const l = buf.getChannelData(0), r = buf.getChannelData(1);
+
+        for (let i = 0; i < numSamples; i++) {
+            const t = i / sr;
+            const tone1 = Math.sin(2 * Math.PI * 110.00 * t) * 0.045;
+            const tone2 = Math.sin(2 * Math.PI * 113.80 * t) * 0.045;
+            const staticHum = (Math.random() * 2 - 1) * 0.012;
+
+            const mix = tone1 + tone2 + staticHum;
             l[i] = Math.max(-0.95, Math.min(0.95, mix));
             r[i] = Math.max(-0.95, Math.min(0.95, mix));
         }
@@ -649,7 +701,7 @@ class SomberAudioEngine {
 }
 
 /**
- * Visual Canvas Particle Renderer (Rain & Atmosphere)
+ * Visual Canvas Particle Renderer
  */
 class VisualEffects {
     constructor(canvasId) {
@@ -712,14 +764,14 @@ class VisualEffects {
 }
 
 /**
- * Script Definition - Chapter 1 & Incident Report Epilogue
+ * Script Definition
  */
 const CHAPTER_1_SCRIPT = [
     // --- PROLOGUE: GEORGIA GRAVEYARD ---
     {
         bg: "linear-gradient(180deg, #020305 0%, #0c121e 100%)",
         fx: "rain",
-        bgm: "loam",
+        bgm: "graveyard",
         location: "[ LOCATION: COUNTY ROAD 4 // GEORGIA GRAVEYARD ]",
         speaker: "Narrator",
         text: "The night was dark and quiet—thankfully. A lone figure trudged along, silhouetted against the moonlight, shovel in hand."
@@ -727,7 +779,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #050810 0%, #111a2e 100%)",
         fx: "rain",
-        bgm: "loam",
+        bgm: "graveyard",
         location: "[ LOCATION: COUNTY ROAD 4 // GEORGIA GRAVEYARD ]",
         speaker: "Clancy",
         text: "“Good; maybe the ground won’t be so hard,” he thought, trying to make light of the work ahead to steady his nerves."
@@ -735,7 +787,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #030408 0%, #0d1524 100%)",
         fx: "rain",
-        bgm: "loam",
+        bgm: "graveyard",
         location: "[ LOCATION: COUNTY ROAD 4 // GEORGIA GRAVEYARD ]",
         speaker: "Narrator",
         text: "He stepped across the threshold of the hallowed grounds as a drizzle began to fall. He could barely see among the various shapes surrounding him, but eventually, after some searching, he made his way to the freshly disturbed earth."
@@ -743,7 +795,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #020305 0%, #151a22 100%)",
         fx: "rain",
-        bgm: "loam",
+        bgm: "graveyard",
         location: "[ LOCATION: COUNTY ROAD 4 // GEORGIA GRAVEYARD ]",
         speaker: "Narrator",
         sfx: "shovel",
@@ -754,7 +806,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #090d14 0%, #17202e 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "lab",
         location: "[ LOCATION: AETERNA NOCTU RESEARCH FACILITY ]",
         speaker: "Clancy Harris",
         text: "“Hands off.” The command was a razor—cold and precise."
@@ -762,7 +814,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #0c121c 0%, #1a2738 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "lab",
         location: "[ LOCATION: AETERNA NOCTU RESEARCH FACILITY ]",
         speaker: "Narrator",
         text: "Clancy didn't look up from his clipboard. “Do I rifle through your pockets while you’re working? Have you no shame?”"
@@ -770,7 +822,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #0c121c 0%, #1a2738 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "lab",
         location: "[ LOCATION: AETERNA NOCTU RESEARCH FACILITY ]",
         speaker: "Narrator",
         text: "As a lead researcher for Aeterna Noctu LLC, he was ostensibly conducting research into more efficient methods of mapping neural pathways."
@@ -778,7 +830,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #090d14 0%, #1c2a3d 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "lab",
         location: "[ LOCATION: AETERNA NOCTU RESEARCH FACILITY ]",
         speaker: "Clancy Harris",
         text: "He set the clipboard down and moved the bag, its black leather and heavy clasp cool to the touch. “You do that again, and I promise I’ll have your badge before lunch,” he barked at the assistant. The woman jumped and quickly scuttled away."
@@ -786,7 +838,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #090d14 0%, #182436 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "lab",
         location: "[ LOCATION: AETERNA NOCTU RESEARCH FACILITY ]",
         speaker: "Assistant",
         text: "Several moments later, another assistant approached, gently tapping his shoulder while he was bent over a slide. “Mister Harris? Miss Allans would like to talk to you.”"
@@ -796,7 +848,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #111a26 0%, #233448 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "office",
         location: "[ LOCATION: EXECUTIVE DIRECTORATE OFFICE ]",
         speaker: "Narrator",
         sfx: "airlock",
@@ -805,7 +857,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #152232 0%, #2a3d54 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "office",
         location: "[ LOCATION: EXECUTIVE DIRECTORATE OFFICE ]",
         speaker: "Miss Clara Allans",
         text: "“Mister Harris, please, take a seat. We have much to discuss.” She gestured to the lavish seats in front of her desk, and Harris, after an audible gulp, sat down."
@@ -813,7 +865,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #152232 0%, #2a3d54 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "office",
         location: "[ LOCATION: EXECUTIVE DIRECTORATE OFFICE ]",
         speaker: "Miss Clara Allans",
         text: "“So, Mister Harris, I read your reports on this quarter's research initiatives. In fact, I’ve already presented your findings to the board. When can the project be ready? Our shareholders won’t wait for something so impactful.”"
@@ -821,7 +873,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #152232 0%, #2a3d54 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "office",
         location: "[ LOCATION: EXECUTIVE DIRECTORATE OFFICE ]",
         speaker: "Clancy Harris",
         panic: true,
@@ -830,7 +882,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #121c2b 0%, #283a50 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "office",
         location: "[ LOCATION: EXECUTIVE DIRECTORATE OFFICE ]",
         speaker: "Miss Clara Allans",
         text: "“Clancy. Clancy, Clancy, Clancy. You won’t need trials if this is something you can replicate. The board has called full steam ahead, so we’re going full steam ahead.”"
@@ -838,7 +890,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #0e1622 0%, #202e42 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "office",
         location: "[ LOCATION: EXECUTIVE DIRECTORATE OFFICE ]",
         speaker: "Clancy Harris",
         text: "Clancy gripped the bag tighter, its contents rattling, and gave a nod. “I see. I’ll assemble the team and try to breathe some morale into them,” he said nonchalantly, fighting the urge to flee."
@@ -846,7 +898,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #0a0e17 0%, #1c2a3e 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "office",
         location: "[ LOCATION: AETERNA NOCTU RESEARCH FACILITY ]",
         speaker: "Narrator",
         sfx: "airlock",
@@ -857,7 +909,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #07090e 0%, #121824 100%)",
         fx: "none",
-        bgm: "loam",
+        bgm: "apartment",
         location: "[ LOCATION: CLANCY'S RESIDENCE // 01:14 AM ]",
         speaker: "Narrator",
         text: "Clancy sat in his armchair at home, fresh from work, and began to write. If he were going to do this, it had to be thought out—not some panicked rush. He compiled a list of all the assets he’d need from that hellhole, lightly hugging the bag, always near."
@@ -865,7 +917,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #07090e 0%, #121824 100%)",
         fx: "none",
-        bgm: "loam",
+        bgm: "apartment",
         location: "[ LOCATION: CLANCY'S RESIDENCE // 01:14 AM ]",
         speaker: "Inner Monologue",
         panic: true,
@@ -874,7 +926,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #05070a 0%, #0e131d 100%)",
         fx: "none",
-        bgm: "loam",
+        bgm: "apartment",
         location: "[ LOCATION: CLANCY'S RESIDENCE // 01:28 AM ]",
         speaker: "Narrator",
         text: "He stood, walked to the kitchen, and poured a glass of bourbon. The liquor was cold comfort against the fear gripping his heart, its talons a searing inferno of confusion and woe."
@@ -882,7 +934,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #030407 0%, #0a0e17 100%)",
         fx: "none",
-        bgm: "loam",
+        bgm: "apartment",
         location: "[ LOCATION: CLANCY'S RESIDENCE // 03:00 AM ]",
         speaker: "Narrator",
         text: "He settled into bed, heart heavy, the bag nestled on the pillow next to him. He drifted off, a familiar face haunting his final moments of lucidity—a spectre of the past."
@@ -890,7 +942,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #181611 0%, #302a1d 100%)",
         fx: "none",
-        bgm: "loam",
+        bgm: "apartment",
         location: "[ LOCATION: CLANCY'S RESIDENCE // 06:45 AM ]",
         speaker: "Narrator",
         text: "In a flash, the first beams of sun grazed his half-lidded eyes. He awoke with a start and began his day, shuffling to the bathroom with the bare enthusiasm of someone tired of life."
@@ -898,7 +950,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #14130e 0%, #242017 100%)",
         fx: "none",
-        bgm: "loam",
+        bgm: "apartment",
         location: "[ LOCATION: CLANCY'S RESIDENCE // 07:10 AM ]",
         speaker: "Clancy Harris",
         text: "His morning had followed the same routine for years: a bowl of the same sugary cereal he’d enjoyed as a child. Something small to take away the sting."
@@ -906,7 +958,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #12161f 0%, #222a36 100%)",
         fx: "none",
-        bgm: "loam",
+        bgm: "apartment",
         location: "[ LOCATION: CLANCY'S RESIDENCE // 07:30 AM ]",
         speaker: "Clancy Harris",
         text: "He eventually stood from his breakfast and made his way to the bathroom. The bag remained in tow, and he glanced at it. “You’re always so sweet this time of morning,” he murmured."
@@ -914,7 +966,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #0e121a 0%, #1a222e 100%)",
         fx: "none",
-        bgm: "loam",
+        bgm: "apartment",
         location: "[ LOCATION: CLANCY'S RESIDENCE // 07:32 AM ]",
         speaker: "Narrator",
         text: "He grimaced, knowing the words would receive no reciprocation. He was speaking to a bag. He banished the thought as a lapse in conviction, told himself to grow a spine, and put on his face."
@@ -922,17 +974,16 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #0e121a 0%, #1a222e 100%)",
         fx: "none",
-        bgm: "loam",
+        bgm: "apartment",
         location: "[ LOCATION: CLANCY'S RESIDENCE // 07:40 AM ]",
         speaker: "Clancy Harris",
         text: "His footfalls into the bathroom spoke of a reluctance to look at his own reflection. He turned the shower knob to a comfortable, warm temperature and sank in. “I can’t just get everything all at once,” he whispered to himself, leaning against the shower wall. “I must be like a mouse taking food from a grain silo, bit by bit.”"
     },
 
-    // CHOICE POINT 1
     {
         bg: "linear-gradient(180deg, #121824 0%, #263242 100%)",
         fx: "none",
-        bgm: "loam",
+        bgm: "apartment",
         location: "[ LOCATION: CLANCY'S RESIDENCE // 08:00 AM ]",
         speaker: "Clancy Harris",
         text: "He buttoned his white shirt, adjusted his slacks, and finally built up the courage to look in the mirror. His eyes were sunken with light gray forming. He practiced a smile...",
@@ -944,7 +995,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #121824 0%, #263242 100%)",
         fx: "none",
-        bgm: "loam",
+        bgm: "apartment",
         location: "[ LOCATION: CLANCY'S RESIDENCE // 08:02 AM ]",
         speaker: "Clancy Harris",
         text: "The smile felt plastic. “Good enough.” He left for work."
@@ -954,7 +1005,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #080b12 0%, #141c2b 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "heist",
         location: "[ LOCATION: CORPORATE PARKING STRUCTURE ]",
         speaker: "Narrator",
         text: "His drive to the lab was uneventful; the bag buckled in for safety. A quiet pause hit Clancy as he pulled into the employee-only parking garage, thankful to be out of the California sun."
@@ -962,7 +1013,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #080b12 0%, #141c2b 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "heist",
         location: "[ LOCATION: CORPORATE PARKING STRUCTURE ]",
         speaker: "Narrator",
         panic: true,
@@ -971,7 +1022,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #0a0e17 0%, #182436 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "heist",
         location: "[ LOCATION: SECURITY CHECKPOINT A-1 ]",
         speaker: "Narrator",
         text: "Thankfully, she passed by, unknowing. He held his bag to his chest and shuffled inside. He gave the woman behind the bulletproof glass a “friendly” smile, entered the airlock resigned to the dangerous hours ahead."
@@ -979,7 +1030,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #0d131f 0%, #1e2c40 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "heist",
         location: "[ LOCATION: RESEARCH DIVISION // WET LAB ]",
         speaker: "Clancy Harris",
         text: "He returned to his desk, checking the schedule with a smile. “Wet lab duty, perfect. I couldn’t have asked for a better first go at this.”"
@@ -987,7 +1038,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #0d131f 0%, #1e2c40 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "heist",
         location: "[ LOCATION: RESEARCH DIVISION // WET LAB ]",
         speaker: "Narrator",
         text: "He entered the wet lab, delivering the usual formal speech to his subordinates and ordering them to their workstations with a sharp bark. While executives scared him, he was at home in the lab."
@@ -995,7 +1046,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #0d131f 0%, #1e2c40 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "heist",
         location: "[ LOCATION: RESEARCH DIVISION // WET LAB ]",
         speaker: "Narrator",
         text: "The synthskin mentioned in the dossier was laid before him in sheets. He was to document texture and polymer density against human skin. “As soon as they leave for lunch, I’ll slip sheets into my bag until we have enough.”"
@@ -1003,7 +1054,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #090d14 0%, #162130 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "heist",
         location: "[ LOCATION: RESEARCH DIVISION // WET LAB ]",
         speaker: "Inner Monologue",
         panic: true,
@@ -1012,7 +1063,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #1c080d 0%, #3a111a 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "heist",
         location: "[ LOCATION: RESEARCH DIVISION // WET LAB ]",
         speaker: "Narrator",
         panic: true,
@@ -1022,7 +1073,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #1c080d 0%, #3a111a 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "heist",
         location: "[ LOCATION: RESEARCH DIVISION // WET LAB ]",
         speaker: "Narrator",
         panic: true,
@@ -1031,7 +1082,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #0c121c 0%, #1d2a3d 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "heist",
         location: "[ LOCATION: RESEARCH DIVISION // WET LAB ]",
         speaker: "Clancy Harris",
         text: "He tucked away the last sheet, snapped his bag closed, and took a seat back at his station with an audibly shaky sigh of relief."
@@ -1041,7 +1092,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #17120a 0%, #302615 100%)",
         fx: "none",
-        bgm: "loam",
+        bgm: "apartment",
         location: "[ LOCATION: OFF-SITE // GYRO RESTAURANT ]",
         speaker: "Narrator",
         text: "He stood in line at a local gyro place and procured an overpriced meal. The cool grease bled through the paper bag, warming his palm. But the sun felt like an accusation. He couldn't eat. The thought of swallowing made his stomach turn."
@@ -1049,7 +1100,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #0a0d14 0%, #17202e 100%)",
         fx: "none",
-        bgm: "loam",
+        bgm: "apartment",
         location: "[ LOCATION: PERSONAL VEHICLE // AUDI ]",
         speaker: "Clancy Harris",
         text: "Inside his Audi, Clancy unbuckled the black leather bag. Inside, the stolen sheets of synthskin gleamed with an uncanny, pearlescent sheen, looking like the depiction of an angel."
@@ -1057,7 +1108,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #0a0d14 0%, #17202e 100%)",
         fx: "none",
-        bgm: "loam",
+        bgm: "apartment",
         location: "[ LOCATION: PERSONAL VEHICLE // AUDI ]",
         speaker: "Clancy Harris",
         text: "He traced the smooth, synthetic epidermis. Cold. “Soon,” he whispered, his voice cracking in the enclosed space. “Just a few more pieces.”"
@@ -1067,7 +1118,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #0d131f 0%, #1e2c40 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "heist",
         location: "[ LOCATION: HARDWARE TESTING WING ]",
         speaker: "Narrator",
         text: "Back in the hardware section, Clancy tugged at synthetic musculature. Each electrical pulse from his ServoMetric caused a whir of activity. The break call hit. He began collecting actuators into his bag..."
@@ -1075,7 +1126,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #170d18 0%, #331a36 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "heist",
         location: "[ LOCATION: HARDWARE TESTING WING ]",
         speaker: "Female Coworker",
         text: "A warm set of hands gripped his shoulders. “Hello, Mister Harris! We were wondering if we could talk you into eating lunch with us!”"
@@ -1083,7 +1134,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #170d18 0%, #331a36 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "heist",
         location: "[ LOCATION: HARDWARE TESTING WING ]",
         speaker: "Clancy Harris",
         panic: true,
@@ -1094,7 +1145,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #06080d 0%, #111724 100%)",
         fx: "none",
-        bgm: "loam",
+        bgm: "apartment",
         location: "[ LOCATION: APARTMENT FIRE ESCAPE // NIGHT ]",
         speaker: "Narrator",
         text: "That evening, sitting on the steel fire escape of his small California apartment, Clancy greedily ate a bowl of beef from a place of old heartbreak and wept. He hugged the leather bag tenderly and went inside."
@@ -1104,7 +1155,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #090d14 0%, #16202f 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "heist",
         location: "[ LOCATION: PERSONAL VEHICLE // AUDI ]",
         speaker: "Clancy Harris",
         text: "The following day, in his car, he eyed a jar pulled from his bag. A pair of bright blue synthetic optical inputs returned the stare. “The organ lab is going to be a nightmare...” he told the bag."
@@ -1112,7 +1163,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #070a10 0%, #141f2e 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "heist",
         location: "[ LOCATION: FREIGHT ELEVATOR B-4 ]",
         speaker: "Narrator",
         panic: true,
@@ -1121,7 +1172,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #0c121a 0%, #1d2b3c 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "heist",
         location: "[ LOCATION: FREIGHT ELEVATOR B-4 ]",
         speaker: "Narrator",
         text: "Clara Allans stood pristine in a cream power suit. She observed Clancy like a predator observing prey. “A good morning to you as well, Mister Harris. Enjoying the weather?”"
@@ -1129,7 +1180,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #0c121a 0%, #1d2b3c 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "heist",
         location: "[ LOCATION: FREIGHT ELEVATOR B-4 ]",
         speaker: "Miss Clara Allans",
         sfx: "elevator",
@@ -1138,7 +1189,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #101824 0%, #243548 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "heist",
         location: "[ LOCATION: FREIGHT ELEVATOR B-4 ]",
         speaker: "Miss Clara Allans",
         text: "Clara took note of his grip on the leather bag. “You know, Clancy, you’ve carried that bag for a while now... Where did you get it? It’s genuinely fabulous. The leather is beautiful, and the clasp looks antique.”"
@@ -1146,7 +1197,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #101824 0%, #243548 100%)",
         fx: "none",
-        bgm: "glass",
+        bgm: "heist",
         location: "[ LOCATION: FREIGHT ELEVATOR B-4 ]",
         speaker: "Clancy Harris",
         text: "Clancy let his heartbeat slow. “Oh, it's an Italian leather, ma'am. Belonged to my grandfather, a war surgeon.”"
@@ -1156,7 +1207,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #170a0d 0%, #33131a 100%)",
         fx: "none",
-        bgm: "loam",
+        bgm: "apartment",
         location: "[ LOCATION: FACILITY RESTROOM ]",
         speaker: "Narrator",
         panic: true,
@@ -1165,7 +1216,7 @@ const CHAPTER_1_SCRIPT = [
     {
         bg: "linear-gradient(180deg, #070a10 0%, #131d2b 100%)",
         fx: "none",
-        bgm: "loam",
+        bgm: "apartment",
         location: "[ LOCATION: B-LEVEL STAIRWELL ]",
         speaker: "Clancy Harris",
         text: "He cleaned himself up, gasping for air in his office stairwell. “She knows... she was fucking with me back there.” He clutched the bag to his chest. The heist was only beginning."
@@ -1250,10 +1301,9 @@ class VisualNovelEngine {
         this.autoTimer = null;
         this.historyLog = [];
 
-        this.audio = new SomberAudioEngine();
+        this.audio = new AdvancedSomberAudioEngine();
         this.vfx = new VisualEffects('fx-canvas');
 
-        // UI Element References
         this.bgLayer = document.getElementById('bg-layer');
         this.speakerName = document.getElementById('speaker-name');
         this.dialogueText = document.getElementById('dialogue-text');
@@ -1322,16 +1372,13 @@ class VisualNovelEngine {
 
         const scene = this.script[this.currentIndex];
 
-        // Background & VFX
         this.bgLayer.style.background = scene.bg;
         this.vfx.setMode(scene.fx || 'none');
 
-        // BGM Switcher
         if (scene.bgm) {
             this.audio.playTrack(scene.bgm);
         }
 
-        // Dynamic SFX Triggers
         if (scene.sfx === 'airlock') this.audio.playAirlockWhoosh();
         if (scene.sfx === 'shovel') this.audio.playShovelStrike();
         if (scene.sfx === 'elevator') this.audio.playElevatorJolt();
@@ -1343,7 +1390,6 @@ class VisualNovelEngine {
             this.panicOverlay.classList.remove('pulsing');
         }
 
-        // Document Mode vs Standard Mode UI Styling
         if (scene.documentMode) {
             this.dialogueArea.classList.add('document-mode');
             this.dialogueText.classList.add('mono');
@@ -1352,7 +1398,6 @@ class VisualNovelEngine {
             this.dialogueText.classList.remove('mono');
         }
 
-        // Location Badge Setup
         if (scene.location) {
             this.locationBadge.innerText = scene.location;
             this.locationBadge.style.opacity = '1';
@@ -1361,11 +1406,8 @@ class VisualNovelEngine {
         }
 
         this.speakerName.innerText = scene.speaker;
-
-        // Add to Transcript Log
         this.historyLog.push({ speaker: scene.speaker, text: scene.text });
 
-        // Handle Typing Animation
         this.typeText(scene.text, () => {
             if (scene.choice) {
                 this.renderChoices(scene.choice);
@@ -1446,7 +1488,6 @@ class VisualNovelEngine {
     }
 }
 
-// Initialize VN Engine when loaded
 window.addEventListener('load', () => {
     const vnApp = new VisualNovelEngine(CHAPTER_1_SCRIPT);
     vnApp.start();
