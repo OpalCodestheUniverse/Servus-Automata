@@ -270,6 +270,7 @@
         .mystic-text span {
             opacity: 0;
             animation: fadeInLetter 0.01s forwards;
+            display: inline-block;
         }
 
         @keyframes fadeInLetter {
@@ -636,13 +637,15 @@
             let globalDelay = 0;
 
             document.querySelectorAll('.mystic-text').forEach((element) => {
-                const text = element.textContent.trim();
+                // Collapses raw template literal/HTML linebreaks & extra whitespaces
+                const text = element.textContent.replace(/\s+/g, ' ').trim();
                 element.innerHTML = '';
                 
                 [...text].forEach((char, i) => {
                     const span = document.createElement('span');
-                    span.textContent = char === ' ' ? '\u00A0' : char;
-                    span.style.animationDelay = `${globalDelay + (i * 0.015)}s`; // Optimized speed for clean navigation response
+                    // Uses regular space character to allow normal browser line-wrapping
+                    span.textContent = char;
+                    span.style.animationDelay = `${globalDelay + (i * 0.015)}s`;
                     element.appendChild(span);
                 });
 
