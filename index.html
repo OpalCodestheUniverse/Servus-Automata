@@ -4,91 +4,662 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servus Automata | LOG1C</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --bg-color: #0b0c10;
+            --panel-bg: #11131a;
+            --accent-red: #da2929;
+            --accent-blue: #4f8cf1;
+            --text-color: #d1d5db;
+            --text-muted: #6b7280;
+            --border-color: #242936;
+            --font-mono: 'Courier New', Courier, monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-mono);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Subtle Scanline CRT overlay */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 50%);
+            z-index: 9999;
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+
+        /* Top Warning Banner */
+        .security-banner {
+            background-color: var(--accent-red);
+            color: #000;
+            text-align: center;
+            font-weight: bold;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #000;
+            z-index: 100;
+        }
+
+        /* Main Header */
+        header.archive-header {
+            background-color: var(--panel-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .brand-zone {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .archive-title {
+            font-size: 1.6rem;
+            color: var(--text-color);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .terminal-status {
+            font-size: 0.75rem;
+            text-align: right;
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-red);
+            border-radius: 50%;
+            margin-right: 6px;
+            box-shadow: 0 0 8px var(--accent-red);
+        }
+
+        /* Main Workspace */
+        .workspace {
+            display: flex;
+            flex: 1;
+            min-height: calc(100vh - 120px);
+        }
+
+        /* Sidebar / Index Navigation */
+        .index-nav {
+            width: 280px;
+            background-color: var(--panel-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .nav-section-title {
+            padding: 15px 20px 5px 20px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .nav-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-item:hover {
+            background-color: rgba(218, 41, 41, 0.03);
+            border-left-color: var(--accent-red);
+        }
+
+        .nav-item.active {
+            background-color: rgba(218, 41, 41, 0.08);
+            border-left-color: var(--accent-red);
+        }
+
+        .nav-meta {
+            font-size: 0.7rem;
+            color: var(--accent-red);
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+
+        .nav-title {
+            font-size: 0.95rem;
+            font-weight: bold;
+        }
+
+        /* Document Viewport */
+        .viewport {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            background-color: var(--bg-color);
+        }
+
+        .document-wrapper {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        /* Dynamic Loading Decrypt Screen */
+        .decryption-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            color: var(--accent-red);
+            font-size: 0.9rem;
+        }
+
+        .decryption-spinner {
+            width: 30px;
+            height: 30px;
+            border: 2px solid rgba(218, 41, 41, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--accent-red);
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Document Styling */
+        .doc-section {
+            margin-bottom: 35px;
+        }
+
+        .doc-meta {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            font-size: 0.85rem;
+        }
+
+        .doc-meta td {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .doc-meta td.label {
+            font-weight: bold;
+            color: var(--text-muted);
+            width: 150px;
+            background-color: rgba(255, 255, 255, 0.02);
+            text-transform: uppercase;
+        }
+
+        .doc-header {
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .doc-title-main {
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            color: var(--text-color);
+        }
+
+        .doc-subtitle-section {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--accent-red);
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        /* Original Text Animation Styling */
+        .mystic-text span {
+            opacity: 0;
+            animation: fadeInLetter 0.01s forwards;
+        }
+
+        @keyframes fadeInLetter {
+            to { opacity: 1; }
+        }
+
+        /* Lists and Features */
+        .post-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .post-item {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+        }
+
+        .post-link {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 5px;
+        }
+
+        .post-excerpt {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Redaction markup styled like secure file */
+        .redacted-block {
+            background-color: #111;
+            color: #111;
+            padding: 0 4px;
+            user-select: none;
+            cursor: help;
+        }
+
+        /* Contact Transmission Form */
+        .contact-form {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 12px;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-red);
+        }
+
+        .form-btn {
+            background: transparent;
+            color: var(--accent-red);
+            border: 1px solid var(--accent-red);
+            padding: 12px;
+            width: 100%;
+            font-family: var(--font-mono);
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .form-btn:hover {
+            background-color: var(--accent-red);
+            color: #000;
+        }
+
+        footer.archive-footer {
+            background-color: var(--panel-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 15px 30px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Responsive Layout breakpoint */
+        @media (max-width: 768px) {
+            .workspace {
+                flex-direction: column;
+            }
+            .index-nav {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                max-height: 220px;
+            }
+            .viewport {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
-<body class="archive-body"> <div class="archive-container" style="margin-top: 50px; margin-bottom: 50px;">
-   <header class="archive-header">
-    <h1 class="archive-title mystic-text">Servus Automata</h1>
-    <p class="subtitle mystic-text">An easy way to contact LOG1C and view his various projects.</p>
-</header>
+<body class="archive-body">
 
-        <nav class="index-nav" style="margin-bottom: 50px;">
-            <a href="recipes.html" class="read-more-btn mystic-text" style="margin: 5px; display: inline-block;">Recipes</a>
-            <a href="gamereviews.html" class="read-more-btn mystic-text" style="margin: 5px; display: inline-block;">Game Reviews</a>
-            <a href="writing.html" class="read-more-btn mystic-text" style="margin: 5px; display: inline-block;">Writing</a>
-            <a href="blog.html" class="read-more-btn mystic-text" style="margin: 5px; display: inline-block;">Blog</a>
-        </nav>
-
-        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 40px 0;">
-
-        <section class="features-dark">
-            <h2 class="archive-title mystic-text" style="font-size: 2.5rem;">Why Hire Me?</h2>
-            
-            <div class="post-list">
-                <article class="post-item">
-                    <h2 class="post-link mystic-text">Reliable</h2>
-                    <p class="post-excerpt mystic-text">I will remain in consistent communication with you until our business has concluded. 
-                        No more flakey fiverr coders, get a real coder today.</p>
-                </article>
-
-                <article class="post-item">
-                    <h2 class="post-link mystic-text">Responsive Designs</h2>
-                    <p class="post-excerpt mystic-text">From websites to automation scripts, my work is clean, concise, and most of all, responsive.</p>
-                </article>
-
-                <article class="post-item">
-                    <h2 class="post-link mystic-text">Versatile</h2>
-                    <p class="post-excerpt mystic-text">I have literal years of experience in customer interaction and hobby coding.</p>
-                </article>
-            </div>
-        </section>
-
-    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 40px 0;">
-
-<section class="contact-section">
-    <h2 class="archive-title mystic-text" style="font-size: 2.5rem;">Communicate</h2>
-    <p class="subtitle mystic-text">Direct transmissions to LOG1C</p>
-    
-    <form action="https://script.google.com/macros/s/AKfycbxnB4eel5WBl61cljUVpzMPsU5tWRZAVPGBV3qF7M4Bw-SFNZ67Zu4vDKNmBg_F0XuF/exec" method="POST" class="contact-form">
-        <div class="form-group">
-            <input type="text" name="name" placeholder="Name/Alias" required>
-        </div>
-        <div class="form-group">
-            <input type="email" name="_replyto" placeholder="Your Email" required>
-        </div>
-        <div class="form-group">
-            <textarea name="message" rows="5" placeholder="Your Message..." required></textarea>
-        </div>
-        <button type="submit" class="read-more-btn" style="background: transparent; cursor: pointer; width: 100%;">Initiate Transmission</button>
-    </form>
-</section>
-    
-        <footer class="archive-footer">
-            <p>&copy; 2025 LOG1C LLC. All rights reserved.</p>
-        </footer>
+    <!-- Classified Security Banner -->
+    <div class="security-banner">
+        SECURE CLASSIFIED ARCHIVE // AUTHORIZED LOG1C DIRECTORIES ONLY
     </div>
 
-    <script>
-let globalDelay = 0;
+    <!-- Header Block -->
+    <header class="archive-header">
+        <div class="brand-zone">
+            <h1 class="archive-title">Servus Automata</h1>
+            <p class="subtitle">An easy way to contact LOG1C and view his various projects.</p>
+        </div>
+        <div class="terminal-status">
+            <span class="status-indicator"></span>
+            AETERNA NOCTU SECURE LINK // UPLINK: OK
+        </div>
+    </header>
 
-// Targets everything you want to animate sequentially
-document.querySelectorAll('.mystic-text').forEach((element) => {
-    const text = element.textContent.trim();
-    element.textContent = '';
-    
-    [...text].forEach((char, i) => {
-        const span = document.createElement('span');
-        span.textContent = char === ' ' ? '\u00A0' : char;
+    <div class="workspace">
         
-        // Sequential delay: previous elements + current letter offset
-        span.style.animationDelay = `${globalDelay + (i * 0.04)}s`;
-        element.appendChild(span);
-    });
+        <!-- Left panel navigation structured like index directory files -->
+        <nav class="index-nav">
+            <div class="nav-section-title">Directory Assets</div>
+            
+            <a href="#" class="nav-item active" data-target="about">
+                <span class="nav-meta">SYS-INFO_001</span>
+                <span class="nav-title">ABOUT</span>
+            </a>
+            
+            <a href="#" class="nav-item" data-target="projects">
+                <span class="nav-meta">DEV-LOG_089</span>
+                <span class="nav-title">PROJECTS</span>
+            </a>
 
-    // Add to the total delay so the next block waits
-    globalDelay += (text.length * 0.04) + 0.6; 
-});
-</script>
+            <a href="#" class="nav-item" data-target="decklists">
+                <span class="nav-meta">CONF-SYS_404</span>
+                <span class="nav-title">DECKLISTS</span>
+            </a>
 
+            <a href="#" class="nav-item" data-target="files">
+                <span class="nav-meta">INCIDENT_REC_HARRIS_C</span>
+                <span class="nav-title">RECOVERED FILES</span>
+            </a>
+        </nav>
+
+        <!-- Right viewport loading active documents -->
+        <main class="viewport">
+            
+            <div id="decryptScreen" class="decryption-screen">
+                <div class="decryption-spinner"></div>
+                <div>PARSING DATA PACKETS...</div>
+            </div>
+
+            <div id="docContainer" class="document-wrapper">
+                <!-- Content injected dynamically via JavaScript -->
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="archive-footer">
+        <p>&copy; 2026 LOG1C LLC / Aeterna Noctu LLC. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Data containing all directory layouts, stories, and the original form structure
+        const database = {
+            about: `
+                <div class="doc-header">
+                    <h2 class="doc-title-main mystic-text">About LOG1C</h2>
+                    <table class="doc-meta">
+                        <tr>
+                            <td class="label">FILE_ID</td>
+                            <td>LOG1C-INFO-001</td>
+                        </tr>
+                        <tr>
+                            <td class="label">STATUS</td>
+                            <td>ACTIVE / FULLY RESPONSIVE</td>
+                        </tr>
+                        <tr>
+                            <td class="label">SPECIALTY</td>
+                            <td>AUTOMATION / STYLIZED WEB LAYOUTS</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="doc-section">
+                    <h3 class="doc-subtitle-section mystic-text">Why Hire Me?</h3>
+                    <div class="post-list">
+                        <article class="post-item">
+                            <h4 class="post-link mystic-text">Reliable</h4>
+                            <p class="post-excerpt mystic-text">I will remain in consistent communication with you until our business has concluded. No more flakey fiverr coders, get a real coder today.</p>
+                        </article>
+
+                        <article class="post-item">
+                            <h4 class="post-link mystic-text">Responsive Designs</h4>
+                            <p class="post-excerpt mystic-text">From websites to automation scripts, my work is clean, concise, and most of all, responsive.</p>
+                        </article>
+
+                        <article class="post-item">
+                            <h4 class="post-link mystic-text">Versatile</h4>
+                            <p class="post-excerpt mystic-text">I have literal years of experience in customer interaction and hobby coding.</p>
+                        </article>
+                    </div>
+                </div>
+
+                <div class="doc-section">
+                    <h3 class="doc-subtitle-section mystic-text">Direct Transmission</h3>
+                    <p class="subtitle mystic-text" style="margin-bottom: 15px;">Secure communication portal directly to LOG1C.</p>
+                    
+                    <form action="https://script.google.com/macros/s/AKfycbxnB4eel5WBl61cljUVpzMPsU5tWRZAVPGBV3qF7M4Bw-SFNZ67Zu4vDKNmBg_F0XuF/exec" method="POST" class="contact-form">
+                        <div class="form-group">
+                            <input type="text" name="name" placeholder="Name/Alias" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="_replyto" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" rows="5" placeholder="Your Message..." required></textarea>
+                        </div>
+                        <button type="submit" class="form-btn">Initiate Transmission</button>
+                    </form>
+                </div>
+            `,
+            projects: `
+                <div class="doc-header">
+                    <h2 class="doc-title-main mystic-text">Active Projects</h2>
+                    <table class="doc-meta">
+                        <tr>
+                            <td class="label">NODE_ID</td>
+                            <td>DEV-LOG_089</td>
+                        </tr>
+                        <tr>
+                            <td class="label">SUB-MODULES</td>
+                            <td>RECIPES / REVIEWS / WRITING / BLOG</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="doc-section">
+                    <h3 class="doc-subtitle-section mystic-text">Resource Manifests</h3>
+                    <div class="post-list">
+                        <article class="post-item">
+                            <h4 class="post-link mystic-text"><a href="recipes.html" style="color: inherit; text-decoration: none;">Recipes &rarr;</a></h4>
+                            <p class="post-excerpt mystic-text">A compilation of culinary protocols, standard processes, and raw ingredient formulas.</p>
+                        </article>
+
+                        <article class="post-item">
+                            <h4 class="post-link mystic-text"><a href="gamereviews.html" style="color: inherit; text-decoration: none;">Game Reviews &rarr;</a></h4>
+                            <p class="post-excerpt mystic-text">Critical structural analysis of contemporary interactive media, systems, and mechanics.</p>
+                        </article>
+
+                        <article class="post-item">
+                            <h4 class="post-link mystic-text"><a href="writing.html" style="color: inherit; text-decoration: none;">Writing Archive &rarr;</a></h4>
+                            <p class="post-excerpt mystic-text">Creative documents, short transcripts, and narrative assets.</p>
+                        </article>
+
+                        <article class="post-item">
+                            <h4 class="post-link mystic-text"><a href="blog.html" style="color: inherit; text-decoration: none;">Blog Posts &rarr;</a></h4>
+                            <p class="post-excerpt mystic-text">Raw text logs, real-time thoughts, and general status updates on development.</p>
+                        </article>
+                    </div>
+                </div>
+            `,
+            decklists: `
+                <div class="doc-header">
+                    <h2 class="doc-title-main mystic-text">Strategic Decklists</h2>
+                    <table class="doc-meta">
+                        <tr>
+                            <td class="label">ARCHIVE_REF</td>
+                            <td>CONF-SYS_404</td>
+                        </tr>
+                        <tr>
+                            <td class="label">INTEGRITY</td>
+                            <td>DECK_ARRAY_STABLE</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="doc-section">
+                    <h3 class="doc-subtitle-section mystic-text">Active Deck Configurations</h3>
+                    <p class="mystic-text" style="margin-bottom: 15px;">Card cataloguing and loadouts verified for execution.</p>
+                    <div class="post-list">
+                        <article class="post-item">
+                            <h4 class="post-link mystic-text">Deck Alpha (Prototype)</h4>
+                            <p class="post-excerpt mystic-text">Engineered for quick response actions, low latency, and efficient board-state dominance.</p>
+                        </article>
+
+                        <article class="post-item">
+                            <h4 class="post-link mystic-text">Deck Beta (Control)</h4>
+                            <p class="post-excerpt mystic-text">A passive defense protocol designed to lock down variables and safely contain threats over long intervals.</p>
+                        </article>
+                    </div>
+                </div>
+            `,
+            files: `
+                <div class="doc-header">
+                    <h2 class="doc-title-main mystic-text">Recovered Incident Logs</h2>
+                    <table class="doc-meta">
+                        <tr>
+                            <td class="label">INCIDENT_ID</td>
+                            <td>REC_HARRIS_C</td>
+                        </tr>
+                        <tr>
+                            <td class="label">SUBJECT</td>
+                            <td>CLANCY HARRIS (RESEARCHER)</td>
+                        </tr>
+                        <tr>
+                            <td class="label">PROJECT</td>
+                            <td>AEGIS - NEURAL PATHWAY EXPLORATION</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="doc-section">
+                    <h3 class="doc-subtitle-section mystic-text">Recovered Log File 1-1</h3>
+                    <p class="mystic-text" style="margin-bottom: 15px; font-style: italic;">The following was reconstructed from a personal journal entry dated Dec 2025.</p>
+                    
+                    <p class="mystic-text" style="margin-bottom: 15px;">The night was dark and quiet—thankfully. A lone figure trudged along, silhouetted against the moonlight, shovel in hand. Stepping across the threshold of the grounds just as a drizzle began to fall, he thought, "Ground should be softer, at least," trying to make light of the work ahead to steady his nerves. He could barely see clearly among the dark shapes surrounding him. A brief search led him directly to his resting place. His shovel struck the soil; he winced at the handle's vibration as the head struck the December loam of that Georgia graveyard. Instantly, the warm wood of the handle was replaced with the chill of a steel pen.</p>
+
+                    <p class="mystic-text" style="margin-bottom: 15px;">"Excuse me."</p>
+
+                    <p class="mystic-text" style="margin-bottom: 15px;">Clancy didn't look up from his clipboard. "Do I rifle through your pockets while you're working?" Clancy clutched the black leather bag to his chest, spinning toward her suddenly. He was the head of one of the most prestigious <span class="redacted-block">Aeterna Noctu LLC</span> projects: an exploration of mapping neural pathways. Setting the clipboard down, he moved the leather satchel, its dark hide and heavy clasp cool to the touch. "You do that again, and I promise I'll have your badge before lunch," he barked at the assistant. The startled woman jumped, quickly scuttling away.</p>
+                </div>
+
+                <div class="doc-section">
+                    <h3 class="doc-subtitle-section mystic-text">Corporate Surveillance Log 1-2</h3>
+                    <p class="mystic-text" style="margin-bottom: 15px; font-style: italic;">Transcription of audio recovered from Director Clara Allans' private office suite.</p>
+                    
+                    <p class="mystic-text" style="margin-bottom: 15px;">"So, Mister Harris, I read your reports on this quarter's initiatives. In fact, I've already presented your findings to the board. When can the project be ready? Our shareholders won't wait." Her face was grim. He was being rushed. "It's nowhere near ready, Miss Allans. Wouldn't you prefer to put it through clinical trials first?" His voice strained, his fingers tightening around the satchel. "Clancy. Clancy, Clancy, Clancy. You won't need trials if you can replicate your preliminary testing. The commissions board has called full steam ahead, so we're going full steam ahead."</p>
+                    
+                    <p class="mystic-text" style="margin-bottom: 15px;">Clancy gripped the handle tighter, its contents rattling as he nodded. "I see. I'll assemble the team, trying to breathe some morale into them," he said, fighting the urge to flee. He knew what he was holding, sweating at the idea of Miss Allans asking for a peek inside...</p>
+                </div>
+
+                <div class="doc-section">
+                    <h3 class="doc-subtitle-section mystic-text">Critical Internal Investigation Note</h3>
+                    <p class="mystic-text" style="margin-bottom: 15px;">Once the hour arrived, his subordinates began to shuffle from the room, loudly discussing lunch plans. Clancy tried to eavesdrop, but it was a drone compared to the buzzing in his head. His muscles tensed; the moment the last intern finally left, he got to work. Grabbing a scalpel, he located the roll of polymer and proceeded to cut as many very neat sheets as he could, watching the door as if it were a cobra, poised to strike...</p>
+                    <p class="mystic-text" style="margin-bottom: 15px; color: var(--accent-red); font-weight: bold;">[AMENDMENT: INCIDENT SUSAN B. DETECTED. SYSTEM RECORDS SHOW INCOMPLETE ACCESS RECLASSIFIED BY USER: CLANCY_HARRIS. AUDIT IS PENDING UNDER SPECIAL PROTOCOLS.]</p>
+                </div>
+            `
+        };
+
+        const docContainer = document.getElementById('docContainer');
+        const decryptScreen = document.getElementById('decryptScreen');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        // Function to run the typing animation on demand
+        function runMysticText() {
+            let globalDelay = 0;
+
+            document.querySelectorAll('.mystic-text').forEach((element) => {
+                const text = element.textContent.trim();
+                element.innerHTML = '';
+                
+                [...text].forEach((char, i) => {
+                    const span = document.createElement('span');
+                    span.textContent = char === ' ' ? '\u00A0' : char;
+                    span.style.animationDelay = `${globalDelay + (i * 0.015)}s`; // Sped up slightly for better navigation response
+                    element.appendChild(span);
+                });
+
+                globalDelay += (text.length * 0.015) + 0.1; 
+            });
+        }
+
+        // Handle navigation changes with clean visual loading
+        navItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                navItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+
+                const target = this.getAttribute('data-target');
+
+                // Visual transition for decryption
+                docContainer.style.display = 'none';
+                decryptScreen.style.display = 'flex';
+
+                setTimeout(() => {
+                    decryptScreen.style.display = 'none';
+                    docContainer.innerHTML = database[target];
+                    docContainer.style.display = 'block';
+                    runMysticText();
+                }, 350);
+            });
+        });
+
+        // Initialize with default state
+        docContainer.innerHTML = database.about;
+        runMysticText();
+    </script>
 </body>
 </html>
