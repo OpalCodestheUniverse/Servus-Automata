@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servus Automata | LOG1C</title>
+    <title>LOG1C | Interactive Book</title>
     <style>
         :root {
-            --bg-color: #060709;
-            --book-cover: #12141c;
-            --book-border: #2a2e3d;
-            --page-bg: #0d0f16;
-            --page-line: rgba(255, 255, 255, 0.03);
-            --accent-red: #da2929;
-            --accent-red-glow: rgba(218, 41, 41, 0.4);
-            --text-color: #d1d5db;
-            --text-bright: #f3f4f6;
-            --text-muted: #6b7280;
-            --font-mono: 'Consolas', 'Menlo', 'Monaco', 'Courier New', monospace;
+            --bg-color: #0f1115;
+            --book-bg: #181a20;
+            --page-bg: #20232c;
+            --page-border: #2d313d;
+            --accent-gold: #d4a359;
+            --text-main: #e2e4e9;
+            --text-muted: #8b92a2;
+            --font-serif: 'Georgia', 'Times New Roman', serif;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'Consolas', 'Monaco', monospace;
         }
 
         * {
@@ -27,886 +26,696 @@
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: var(--font-mono);
+            color: var(--text-main);
+            font-family: var(--font-sans);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             overflow-x: hidden;
-            position: relative;
-            perspective: 2000px;
-            background-image: 
-                radial-gradient(circle at 50% 50%, rgba(218, 41, 41, 0.08) 0%, transparent 70%),
-                linear-gradient(var(--page-line) 1px, transparent 1px),
-                linear-gradient(90deg, var(--page-line) 1px, transparent 1px);
-            background-size: 100% 100%, 30px 30px, 30px 30px;
+            background-image: radial-gradient(circle at 50% 30%, #1a1d26 0%, var(--bg-color) 80%);
         }
 
-        /* Scanline Overlay */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
-            z-index: 9999;
-            background-size: 100% 4px;
-            pointer-events: none;
-        }
-
-        /* Top Warning Banner */
-        .security-banner {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background-color: var(--accent-red);
-            color: #000;
-            text-align: center;
-            font-weight: bold;
-            padding: 6px 12px;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            border-bottom: 2px solid #000;
-            z-index: 1000;
-            box-shadow: 0 0 15px var(--accent-red-glow);
-        }
-
-        /* Main Book Wrapper Scene */
-        .book-stage {
+        /* Top Header & Chapter Nav */
+        header {
             width: 100%;
             max-width: 1100px;
-            height: 720px;
-            margin-top: 40px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .brand-logo {
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
+
+        .chapter-nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        .chapter-btn {
+            background: transparent;
+            border: 1px solid var(--page-border);
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: var(--font-sans);
+        }
+
+        .chapter-btn:hover, .chapter-btn.active {
+            color: var(--text-main);
+            border-color: var(--accent-gold);
+            background-color: rgba(212, 163, 89, 0.1);
+        }
+
+        /* Book Perspective Stage */
+        .stage {
+            perspective: 2000px;
+            width: 100%;
+            max-width: 1050px;
+            height: 640px;
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
+            margin: 10px 0;
         }
 
         /* 3D Book Container */
         .book {
-            width: 1000px;
-            height: 660px;
+            width: 960px;
+            height: 600px;
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 1s ease;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            background-color: var(--book-bg);
         }
 
-        /* Spine details */
-        .book-spine {
+        /* Center Spine Crease */
+        .spine {
             position: absolute;
             left: 50%;
             top: 0;
-            width: 30px;
+            width: 20px;
             height: 100%;
-            background: linear-gradient(90deg, #090a0e, #1a1d29, #090a0e);
-            transform: translateX(-50%) translateZ(-10px);
-            border-radius: 4px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
-            z-index: 5;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, rgba(0,0,0,0.4), rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.4));
+            z-index: 15;
+            pointer-events: none;
         }
 
-        /* Book Pages Container */
-        .book-pages {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            position: relative;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 0, 0, 0.8);
-            border-radius: 6px;
-            overflow: hidden;
-        }
-
-        /* Left and Right Pages */
-        .page {
+        /* Static Page Display Sides */
+        .page-side {
+            position: absolute;
+            top: 0;
             width: 50%;
             height: 100%;
             background-color: var(--page-bg);
-            border: 1px solid var(--book-border);
-            padding: 35px 30px;
+            border: 1px solid var(--page-border);
+            padding: 40px 45px;
             overflow-y: auto;
-            position: relative;
-            background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);
-            background-size: 100% 24px;
-        }
-
-        .page-left {
-            border-right: 2px solid #060709;
-            box-shadow: inset -15px 0 25px rgba(0,0,0,0.6);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
-        .page-right {
-            border-left: 2px solid #060709;
-            box-shadow: inset 15px 0 25px rgba(0,0,0,0.6);
+        .left-side {
+            left: 0;
+            border-radius: 6px 0 0 6px;
+            border-right: 1px solid rgba(0,0,0,0.5);
+            box-shadow: inset -15px 0 20px rgba(0,0,0,0.2);
         }
 
-        /* 3D Front Cover (Swings Open) */
-        .book-cover-front {
+        .right-side {
+            right: 0;
+            border-radius: 0 6px 6px 0;
+            border-left: 1px solid rgba(0,0,0,0.5);
+            box-shadow: inset 15px 0 20px rgba(0,0,0,0.2);
+        }
+
+        /* 3D ANIMATED FLIPPING LEAF */
+        .flipping-leaf {
             position: absolute;
             top: 0;
             right: 0;
             width: 50%;
             height: 100%;
-            background: linear-gradient(135deg, #161822 0%, #0d0e14 100%);
-            border: 2px solid var(--book-border);
-            border-left: 6px solid var(--accent-red);
-            border-radius: 0 6px 6px 0;
             transform-origin: left center;
             transform-style: preserve-3d;
-            transition: transform 1.4s cubic-bezier(0.645, 0.045, 0.355, 1);
-            z-index: 50;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 40px;
-            box-shadow: -10px 10px 30px rgba(0,0,0,0.8);
-            cursor: pointer;
+            z-index: 20;
+            pointer-events: none;
+            display: none;
         }
 
-        .book-cover-front::before {
+        .flipping-leaf.active {
+            display: block;
+        }
+
+        .leaf-face {
+            position: absolute;
+            inset: 0;
+            background-color: var(--page-bg);
+            border: 1px solid var(--page-border);
+            padding: 40px 45px;
+            backface-visibility: hidden;
+            overflow: hidden;
+        }
+
+        .leaf-front {
+            border-radius: 0 6px 6px 0;
+            box-shadow: inset 15px 0 20px rgba(0,0,0,0.2);
+        }
+
+        .leaf-back {
+            transform: rotateY(180deg);
+            border-radius: 6px 0 0 6px;
+            box-shadow: inset -15px 0 20px rgba(0,0,0,0.2);
+        }
+
+        /* INTERACTIVE CORNER PEELS (PAGE TURN TRIGGERS) */
+        .corner-peel {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            z-index: 30;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .corner-peel::before {
             content: "";
             position: absolute;
-            inset: 12px;
-            border: 1px dashed rgba(218, 41, 41, 0.3);
-            pointer-events: none;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            transition: all 0.2s ease;
         }
 
-        /* Cover Content */
-        .cover-emblem {
-            width: 80px;
-            height: 80px;
-            border: 2px solid var(--accent-red);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent-red);
-            font-size: 1.8rem;
+        /* Top Right / Bottom Right (Next Page) */
+        .corner-peel.top-right { top: 0; right: 0; }
+        .corner-peel.top-right::before {
+            top: 0; right: 0;
+            border-width: 0 25px 25px 0;
+            border-color: transparent var(--accent-gold) transparent transparent;
+            opacity: 0.4;
+        }
+
+        .corner-peel.bottom-right { bottom: 0; right: 0; }
+        .corner-peel.bottom-right::before {
+            bottom: 0; right: 0;
+            border-width: 0 0 25px 25px;
+            border-color: transparent transparent var(--accent-gold) transparent;
+            opacity: 0.4;
+        }
+
+        /* Top Left / Bottom Left (Prev Page) */
+        .corner-peel.top-left { top: 0; left: 0; }
+        .corner-peel.top-left::before {
+            top: 0; left: 0;
+            border-width: 25px 25px 0 0;
+            border-color: var(--accent-gold) transparent transparent transparent;
+            opacity: 0.4;
+        }
+
+        .corner-peel.bottom-left { bottom: 0; left: 0; }
+        .corner-peel.bottom-left::before {
+            bottom: 0; left: 0;
+            border-width: 25px 0 0 25px;
+            border-color: transparent transparent transparent var(--accent-gold);
+            opacity: 0.4;
+        }
+
+        .corner-peel:hover::before {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        .corner-peel.disabled {
+            display: none !important;
+        }
+
+        /* Typography & Page Content Styling */
+        .page-header {
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 12px;
             margin-bottom: 20px;
-            box-shadow: 0 0 20px var(--accent-red-glow);
-            animation: pulseGlow 2s infinite alternate;
         }
 
-        @keyframes pulseGlow {
-            from { box-shadow: 0 0 10px var(--accent-red-glow); }
-            to { box-shadow: 0 0 25px var(--accent-red-glow), inset 0 0 10px var(--accent-red-glow); }
-        }
-
-        .cover-title {
+        .page-title {
+            font-family: var(--font-serif);
             font-size: 1.8rem;
-            color: var(--text-bright);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            text-align: center;
-            margin-bottom: 10px;
+            color: var(--text-main);
+            font-weight: normal;
         }
 
-        .cover-subtitle {
-            font-size: 0.8rem;
-            color: var(--accent-red);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 30px;
-        }
-
-        .cover-prompt {
-            background-color: var(--accent-red);
-            color: #000;
-            font-weight: bold;
-            padding: 10px 20px;
+        .page-subtitle {
             font-size: 0.85rem;
-            letter-spacing: 2px;
+            color: var(--accent-gold);
             text-transform: uppercase;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px var(--accent-red-glow);
-        }
-
-        .cover-prompt:hover {
-            background-color: #fff;
-            box-shadow: 0 0 25px rgba(255,255,255,0.8);
-        }
-
-        /* Book Open State */
-        .book.open .book-cover-front {
-            transform: rotateY(-180deg);
-            pointer-events: none;
-        }
-
-        /* Left Page Header & Index */
-        .brand-zone {
-            border-bottom: 1px solid var(--book-border);
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
-
-        .archive-title {
-            font-size: 1.4rem;
-            color: var(--text-bright);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .subtitle {
-            font-size: 0.75rem;
-            color: var(--text-muted);
+            letter-spacing: 1px;
             margin-top: 4px;
         }
 
-        .terminal-status {
-            font-size: 0.7rem;
-            border: 1px solid var(--book-border);
-            padding: 6px 10px;
-            background: rgba(0,0,0,0.4);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-        }
-
-        .status-indicator {
-            width: 8px;
-            height: 8px;
-            background-color: var(--accent-red);
-            border-radius: 50%;
-            margin-right: 8px;
-            box-shadow: 0 0 8px var(--accent-red);
-        }
-
-        .index-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .nav-item {
-            padding: 12px 15px;
-            background-color: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--book-border);
-            border-left: 3px solid transparent;
-            cursor: pointer;
-            text-decoration: none;
-            color: var(--text-color);
-            transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .nav-item:hover, .nav-item.active {
-            background-color: rgba(218, 41, 41, 0.1);
-            border-left-color: var(--accent-red);
-            transform: translateX(4px);
-        }
-
-        .nav-meta {
-            font-size: 0.65rem;
-            color: var(--accent-red);
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        .nav-title {
-            font-size: 0.9rem;
-            font-weight: bold;
-            color: var(--text-bright);
-        }
-
-        .reopen-btn {
-            background: transparent;
-            border: 1px solid var(--book-border);
-            color: var(--text-muted);
-            padding: 8px;
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: all 0.2s ease;
-        }
-
-        .reopen-btn:hover {
-            color: var(--accent-red);
-            border-color: var(--accent-red);
-        }
-
-        /* Document Formatting on Right Page */
-        .document-wrapper {
-            position: relative;
-        }
-
-        .doc-header {
-            border-bottom: 1px dashed var(--book-border);
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
-
-        .doc-title-main {
-            font-size: 1.5rem;
-            text-transform: uppercase;
-            color: var(--text-bright);
-        }
-
-        .doc-meta {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-            font-size: 0.75rem;
-        }
-
-        .doc-meta td {
-            padding: 6px 10px;
-            border: 1px solid var(--book-border);
-        }
-
-        .doc-meta td.label {
-            font-weight: bold;
-            color: var(--text-muted);
-            width: 120px;
-            background-color: rgba(255, 255, 255, 0.02);
-        }
-
-        .doc-subtitle-section {
+        .content-body {
             font-size: 0.95rem;
-            font-weight: bold;
-            color: var(--accent-red);
-            text-transform: uppercase;
-            border-bottom: 1px solid var(--book-border);
-            padding-bottom: 4px;
-            margin: 20px 0 12px 0;
+            line-height: 1.7;
+            color: var(--text-main);
         }
 
-        .post-list {
+        .content-body p {
+            margin-bottom: 16px;
+        }
+
+        .content-body p.story-text {
+            font-family: var(--font-serif);
+            font-size: 0.98rem;
+            line-height: 1.8;
+            color: #d1d5db;
+        }
+
+        .section-heading {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            color: var(--accent-gold);
+            margin: 20px 0 10px 0;
+        }
+
+        /* Lists and Cards */
+        .card-grid {
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
-        .post-item {
-            background-color: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--book-border);
-            padding: 12px;
+        .card-item {
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--page-border);
+            padding: 14px;
+            border-radius: 4px;
         }
 
-        .post-link {
-            font-size: 0.95rem;
-            margin-bottom: 6px;
-            color: var(--text-bright);
-        }
-
-        .post-excerpt {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-        }
-
-        .story-p {
-            margin-bottom: 16px;
-            line-height: 1.8;
-            font-size: 0.85rem;
-            color: var(--text-bright);
-        }
-
-        .redacted-block {
-            background-color: #000;
-            color: #000;
-            padding: 0 4px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            user-select: none;
-        }
-
-        /* Form styling */
-        .contact-form {
-            background-color: rgba(0, 0, 0, 0.4);
-            border: 1px solid var(--book-border);
-            padding: 20px;
-            margin-top: 15px;
-        }
-
-        .form-group {
-            margin-bottom: 12px;
-        }
-
-        .form-group input, .form-group textarea {
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            border: 1px solid var(--book-border);
-            color: var(--text-bright);
-            padding: 10px;
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-        }
-
-        .form-group input:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: var(--accent-red);
-        }
-
-        .form-btn {
-            background: transparent;
-            color: var(--accent-red);
-            border: 1px solid var(--accent-red);
-            padding: 10px;
-            width: 100%;
-            font-family: var(--font-mono);
-            cursor: pointer;
-            text-transform: uppercase;
+        .card-title {
             font-weight: bold;
-            font-size: 0.8rem;
-            transition: all 0.2s ease;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            font-size: 0.95rem;
         }
 
-        .form-btn:hover {
-            background-color: var(--accent-red);
-            color: #000;
-        }
-
-        /* REAL-TIME TEXT FILLING ANIMATION ENGINE */
-        .fill-char {
-            display: inline;
-            opacity: 0;
-            animation: fillInChar 0.01s forwards;
-        }
-
-        @keyframes fillInChar {
-            to { opacity: 1; }
-        }
-
-        /* Writing Indicator Cursor */
-        .ink-cursor {
-            display: inline-block;
-            width: 8px;
-            height: 15px;
-            background-color: var(--accent-red);
-            margin-left: 2px;
-            vertical-align: middle;
-            box-shadow: 0 0 8px var(--accent-red);
-            animation: blinkCursor 0.6s infinite alternate;
-        }
-
-        @keyframes blinkCursor {
-            from { opacity: 1; }
-            to { opacity: 0; }
-        }
-
-        footer.archive-footer {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 0.7rem;
+        .card-desc {
+            font-size: 0.85rem;
             color: var(--text-muted);
         }
 
-        /* Page Flip Audio / Effect Overlay */
-        .page-flip-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(13, 15, 22, 0.95);
-            z-index: 40;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s ease;
+        /* Contact Form */
+        .contact-form {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent-red);
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .form-control {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--page-border);
+            border-radius: 4px;
+            padding: 10px;
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+        }
+
+        .submit-btn {
+            background-color: var(--accent-gold);
+            color: #000;
+            border: none;
+            padding: 10px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+        }
+
+        .page-footer-num {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 15px;
+            font-family: var(--font-mono);
+        }
+
+        footer {
+            padding: 15px;
             font-size: 0.8rem;
-            letter-spacing: 2px;
+            color: var(--text-muted);
+            text-align: center;
         }
 
-        .page-flip-overlay.active {
-            opacity: 1;
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 900px) {
-            .book-stage {
+        /* Responsive Layout fallback */
+        @media (max-width: 980px) {
+            .stage {
                 height: auto;
-                padding: 10px;
             }
             .book {
                 width: 100%;
                 height: auto;
-            }
-            .book-pages {
                 flex-direction: column;
             }
-            .page {
+            .page-side {
+                position: relative;
                 width: 100%;
-                height: auto;
-                min-height: 400px;
+                min-height: 450px;
             }
-            .book-cover-front {
-                display: none; /* Auto-opens flat on mobile devices */
+            .corner-peel, .flipping-leaf {
+                display: none !important;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Classified Security Banner -->
-    <div class="security-banner">
-        SECURE CLASSIFIED ARCHIVE // AUTHORIZED LOG1C DIRECTORIES ONLY
-    </div>
+    <!-- Header & Chapter Jump Navigation -->
+    <header>
+        <a href="#" class="brand-logo" onclick="goToPage(0); return false;">LOG1C</a>
+        <nav class="chapter-nav">
+            <button class="chapter-btn" id="nav-fictions" onclick="goToPage(1)">Fictions</button>
+            <button class="chapter-btn" id="nav-projects" onclick="goToPage(2)">Projects</button>
+            <button class="chapter-btn" id="nav-decklists" onclick="goToPage(3)">Decklists</button>
+            <button class="chapter-btn" id="nav-about" onclick="goToPage(4)">About</button>
+        </nav>
+    </header>
 
-    <!-- 3D Book Stage -->
-    <div class="book-stage">
-        <div class="book" id="grimoireBook">
+    <!-- Main Book Stage -->
+    <div class="stage">
+        <div class="book" id="book">
             
-            <div class="book-spine"></div>
+            <div class="spine"></div>
 
-            <!-- Front Cover (Initial Closed State) -->
-            <div class="book-cover-front" id="bookCover" onclick="openBook()">
-                <div class="cover-emblem">&#9733;</div>
-                <h1 class="cover-title">Servus Automata</h1>
-                <p class="cover-subtitle">LOG1C Classified Ledger</p>
-                <button class="cover-prompt">Unseal Dossier</button>
+            <!-- Page Corners (Click to turn page) -->
+            <div class="corner-peel top-left" onclick="turnPrev()" title="Previous Page"></div>
+            <div class="corner-peel bottom-left" onclick="turnPrev()" title="Previous Page"></div>
+            <div class="corner-peel top-right" onclick="turnNext()" title="Next Page"></div>
+            <div class="corner-peel bottom-right" onclick="turnNext()" title="Next Page"></div>
+
+            <!-- Static Left Page -->
+            <div class="page-side left-side" id="leftSide">
+                <div id="leftContent"></div>
+                <div class="page-footer-num" id="leftPageNum">Page 1</div>
             </div>
 
-            <!-- Opened Book Pages -->
-            <div class="book-pages">
-                
-                <!-- Left Page: System Navigation & Index -->
-                <div class="page page-left">
-                    <div>
-                        <div class="brand-zone">
-                            <h1 class="archive-title">Servus Automata</h1>
-                            <p class="subtitle">LOG1C Contact Portal & Project Archive</p>
-                        </div>
-
-                        <div class="terminal-status">
-                            <span class="status-indicator"></span>
-                            AETERNA NOCTU LINK // STATUS: OK
-                        </div>
-
-                        <nav class="index-nav">
-                            <a href="#" class="nav-item active" data-target="about">
-                                <span class="nav-meta">SYS-INFO_001</span>
-                                <span class="nav-title">ABOUT LOG1C</span>
-                            </a>
-                            
-                            <a href="#" class="nav-item" data-target="projects">
-                                <span class="nav-meta">DEV-LOG_089</span>
-                                <span class="nav-title">PROJECT MANIFESTS</span>
-                            </a>
-
-                            <a href="#" class="nav-item" data-target="decklists">
-                                <span class="nav-meta">CONF-SYS_404</span>
-                                <span class="nav-title">DECK CONFIGURATIONS</span>
-                            </a>
-
-                            <a href="#" class="nav-item" data-target="files">
-                                <span class="nav-meta">INCIDENT_REC_HARRIS_C</span>
-                                <span class="nav-title">RECOVERED DOSSIER</span>
-                            </a>
-                        </nav>
-                    </div>
-
-                    <button class="reopen-btn" onclick="closeBook()">[ Close Archive ]</button>
-                </div>
-
-                <!-- Right Page: Dynamic Page Content where text fills itself in -->
-                <div class="page page-right">
-                    <div id="pageFlipOverlay" class="page-flip-overlay">TURNING PAGE...</div>
-                    <div id="docContainer" class="document-wrapper">
-                        <!-- Content dynamically rendered and typed in real time -->
-                    </div>
-                </div>
-
+            <!-- Static Right Page -->
+            <div class="page-side right-side" id="rightSide">
+                <div id="rightContent"></div>
+                <div class="page-footer-num" id="rightPageNum">Page 2</div>
             </div>
+
+            <!-- 3D Flipping Animated Leaf Overlay -->
+            <div class="flipping-leaf" id="flippingLeaf">
+                <div class="leaf-face leaf-front" id="leafFront"></div>
+                <div class="leaf-face leaf-back" id="leafBack"></div>
+            </div>
+
         </div>
     </div>
 
-    <footer class="archive-footer">
-        <p>&copy; 2026 LOG1C LLC / Aeterna Noctu LLC. All rights reserved.</p>
+    <footer>
+        &copy; 2026 LOG1C. Click page corners or chapter links to turn pages.
     </footer>
 
     <script>
-        // Database containing original content structures
-        const database = {
-            about: `
-                <div class="doc-header">
-                    <h2 class="doc-title-main auto-fill">About LOG1C</h2>
-                    <table class="doc-meta">
-                        <tr>
-                            <td class="label">FILE_ID</td>
-                            <td class="auto-fill">LOG1C-INFO-001</td>
-                        </tr>
-                        <tr>
-                            <td class="label">STATUS</td>
-                            <td class="auto-fill">ACTIVE / FULLY RESPONSIVE</td>
-                        </tr>
-                        <tr>
-                            <td class="label">SPECIALTY</td>
-                            <td class="auto-fill">AUTOMATION / STYLIZED WEB LAYOUTS</td>
-                        </tr>
-                    </table>
+        // BOOK DATA STRUCTURE (6 Pages arranged across 3 spreads)
+        const pages = [
+            /* Page 0: Cover / Table of Contents */
+            `
+                <div class="page-header">
+                    <h1 class="page-title">LOG1C</h1>
+                    <p class="page-subtitle">Interactive Works & Archive</p>
                 </div>
-
-                <div class="doc-section">
-                    <h3 class="doc-subtitle-section auto-fill">Why Hire Me?</h3>
-                    <div class="post-list">
-                        <article class="post-item">
-                            <h4 class="post-link auto-fill">Reliable</h4>
-                            <p class="post-excerpt auto-fill">I will remain in consistent communication with you until our business has concluded. No more flakey fiverr coders, get a real coder today.</p>
-                        </article>
-
-                        <article class="post-item">
-                            <h4 class="post-link auto-fill">Responsive Designs</h4>
-                            <p class="post-excerpt auto-fill">From websites to automation scripts, my work is clean, concise, and most of all, responsive.</p>
-                        </article>
-
-                        <article class="post-item">
-                            <h4 class="post-link auto-fill">Versatile</h4>
-                            <p class="post-excerpt auto-fill">I have literal years of experience in customer interaction and hobby coding.</p>
-                        </article>
+                <div class="content-body">
+                    <p>Welcome. This digital book contains collected writings, project manifests, game strategy decklists, and contact details.</p>
+                    
+                    <h3 class="section-heading">Table of Contents</h3>
+                    <div class="card-grid">
+                        <div class="card-item" style="cursor:pointer;" onclick="goToPage(1)">
+                            <div class="card-title">1. Fictions &rarr;</div>
+                            <div class="card-desc">Recovered incident logs & creative short stories.</div>
+                        </div>
+                        <div class="card-item" style="cursor:pointer;" onclick="goToPage(2)">
+                            <div class="card-title">2. Projects &rarr;</div>
+                            <div class="card-desc">Recipes, game reviews, blog posts, and tools.</div>
+                        </div>
+                        <div class="card-item" style="cursor:pointer;" onclick="goToPage(3)">
+                            <div class="card-title">3. Decklists &rarr;</div>
+                            <div class="card-desc">Strategic deck configurations and tactical loadouts.</div>
+                        </div>
+                        <div class="card-item" style="cursor:pointer;" onclick="goToPage(4)">
+                            <div class="card-title">4. About LOG1C &rarr;</div>
+                            <div class="card-desc">Hire me, skills overview, and direct transmission portal.</div>
+                        </div>
                     </div>
                 </div>
+            `,
 
-                <div class="doc-section">
-                    <h3 class="doc-subtitle-section auto-fill">Direct Transmission</h3>
-                    <p class="subtitle auto-fill" style="margin-bottom: 12px;">Secure communication portal directly to LOG1C.</p>
+            /* Page 1: FICTIONS */
+            `
+                <div class="page-header">
+                    <h1 class="page-title">Fictions</h1>
+                    <p class="page-subtitle">Recovered Incident Logs: Clancy Harris</p>
+                </div>
+                <div class="content-body">
+                    <p class="story-text">The night was dark and quiet—thankfully. A lone figure trudged along, silhouetted against the moonlight, shovel in hand. Stepping across the threshold of the grounds just as a drizzle began to fall, he thought, "Ground should be softer, at least," trying to make light of the work ahead to steady his nerves.</p>
+
+                    <p class="story-text">His shovel struck the soil; he winced at the handle's vibration as the head struck the December loam of that Georgia graveyard. Instantly, the warm wood of the handle was replaced with the chill of a steel pen.</p>
+
+                    <p class="story-text">"Excuse me." Clancy didn't look up from his clipboard. "Do I rifle through your pockets while you're working?" Clancy clutched the black leather bag to his chest. He was the head of one of the most prestigious research projects: an exploration of mapping neural pathways.</p>
+                </div>
+            `,
+
+            /* Page 2: PROJECTS */
+            `
+                <div class="page-header">
+                    <h1 class="page-title">Projects</h1>
+                    <p class="page-subtitle">Development & Resource Manifests</p>
+                </div>
+                <div class="content-body">
+                    <div class="card-grid">
+                        <div class="card-item">
+                            <div class="card-title"><a href="recipes.html" style="color:inherit; text-decoration:none;">Recipes &rarr;</a></div>
+                            <div class="card-desc">Compilation of culinary protocols, standard processes, and raw ingredient formulas.</div>
+                        </div>
+                        <div class="card-item">
+                            <div class="card-title"><a href="gamereviews.html" style="color:inherit; text-decoration:none;">Game Reviews &rarr;</a></div>
+                            <div class="card-desc">Critical structural analysis of contemporary interactive media, systems, and mechanics.</div>
+                        </div>
+                        <div class="card-item">
+                            <div class="card-title"><a href="writing.html" style="color:inherit; text-decoration:none;">Writing Archive &rarr;</a></div>
+                            <div class="card-desc">Creative documents, short transcripts, and narrative assets.</div>
+                        </div>
+                        <div class="card-item">
+                            <div class="card-title"><a href="blog.html" style="color:inherit; text-decoration:none;">Blog Posts &rarr;</a></div>
+                            <div class="card-desc">Raw text logs, real-time thoughts, and general status updates on development.</div>
+                        </div>
+                    </div>
+                </div>
+            `,
+
+            /* Page 3: DECKLISTS */
+            `
+                <div class="page-header">
+                    <h1 class="page-title">Decklists</h1>
+                    <p class="page-subtitle">Strategic Configurations</p>
+                </div>
+                <div class="content-body">
+                    <p>Card cataloguing and loadouts verified for execution.</p>
+                    <div class="card-grid">
+                        <div class="card-item">
+                            <div class="card-title">Deck Alpha (Prototype)</div>
+                            <div class="card-desc">Engineered for quick response actions, low latency, and efficient board-state dominance.</div>
+                        </div>
+                        <div class="card-item">
+                            <div class="card-title">Deck Beta (Control)</div>
+                            <div class="card-desc">A passive defense protocol designed to lock down variables and safely contain threats over long intervals.</div>
+                        </div>
+                    </div>
+                </div>
+            `,
+
+            /* Page 4: ABOUT */
+            `
+                <div class="page-header">
+                    <h1 class="page-title">About LOG1C</h1>
+                    <p class="page-subtitle">Hire Me & Contact</p>
+                </div>
+                <div class="content-body">
+                    <p><strong>Reliable:</strong> Consistent communication until our business concludes. Get a real coder today.</p>
+                    <p><strong>Responsive Designs:</strong> Clean, concise, and responsive websites and automation scripts.</p>
                     
+                    <h3 class="section-heading">Contact Transmission</h3>
                     <form action="https://script.google.com/macros/s/AKfycbxnB4eel5WBl61cljUVpzMPsU5tWRZAVPGBV3qF7M4Bw-SFNZ67Zu4vDKNmBg_F0XuF/exec" method="POST" class="contact-form">
-                        <div class="form-group">
-                            <input type="text" name="name" placeholder="Name/Alias" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" name="_replyto" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea name="message" rows="4" placeholder="Your Message..." required></textarea>
-                        </div>
-                        <button type="submit" class="form-btn">Initiate Transmission</button>
+                        <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                        <input type="email" name="_replyto" class="form-control" placeholder="Your Email" required>
+                        <textarea name="message" rows="3" class="form-control" placeholder="Your Message..." required></textarea>
+                        <button type="submit" class="submit-btn">Send Message</button>
                     </form>
                 </div>
             `,
-            projects: `
-                <div class="doc-header">
-                    <h2 class="doc-title-main auto-fill">Active Projects</h2>
-                    <table class="doc-meta">
-                        <tr>
-                            <td class="label">NODE_ID</td>
-                            <td class="auto-fill">DEV-LOG_089</td>
-                        </tr>
-                        <tr>
-                            <td class="label">SUB-MODULES</td>
-                            <td class="auto-fill">RECIPES / REVIEWS / WRITING / BLOG</td>
-                        </tr>
-                    </table>
+
+            /* Page 5: CREDITS */
+            `
+                <div class="page-header">
+                    <h1 class="page-title">Colophon</h1>
+                    <p class="page-subtitle">End of Archive</p>
                 </div>
-
-                <div class="doc-section">
-                    <h3 class="doc-subtitle-section auto-fill">Resource Manifests</h3>
-                    <div class="post-list">
-                        <article class="post-item">
-                            <h4 class="post-link"><a href="recipes.html" class="auto-fill" style="color: inherit; text-decoration: none;">Recipes &rarr;</a></h4>
-                            <p class="post-excerpt auto-fill">A compilation of culinary protocols, standard processes, and raw ingredient formulas.</p>
-                        </article>
-
-                        <article class="post-item">
-                            <h4 class="post-link"><a href="gamereviews.html" class="auto-fill" style="color: inherit; text-decoration: none;">Game Reviews &rarr;</a></h4>
-                            <p class="post-excerpt auto-fill">Critical structural analysis of contemporary interactive media, systems, and mechanics.</p>
-                        </article>
-
-                        <article class="post-item">
-                            <h4 class="post-link"><a href="writing.html" class="auto-fill" style="color: inherit; text-decoration: none;">Writing Archive &rarr;</a></h4>
-                            <p class="post-excerpt auto-fill">Creative documents, short transcripts, and narrative assets.</p>
-                        </article>
-
-                        <article class="post-item">
-                            <h4 class="post-link"><a href="blog.html" class="auto-fill" style="color: inherit; text-decoration: none;">Blog Posts &rarr;</a></h4>
-                            <p class="post-excerpt auto-fill">Raw text logs, real-time thoughts, and general status updates on development.</p>
-                        </article>
-                    </div>
-                </div>
-            `,
-            decklists: `
-                <div class="doc-header">
-                    <h2 class="doc-title-main auto-fill">Strategic Decklists</h2>
-                    <table class="doc-meta">
-                        <tr>
-                            <td class="label">ARCHIVE_REF</td>
-                            <td class="auto-fill">CONF-SYS_404</td>
-                        </tr>
-                        <tr>
-                            <td class="label">INTEGRITY</td>
-                            <td class="auto-fill">DECK_ARRAY_STABLE</td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="doc-section">
-                    <h3 class="doc-subtitle-section auto-fill">Active Deck Configurations</h3>
-                    <p class="auto-fill" style="margin-bottom: 12px; font-size:0.8rem;">Card cataloguing and loadouts verified for execution.</p>
-                    <div class="post-list">
-                        <article class="post-item">
-                            <h4 class="post-link auto-fill">Deck Alpha (Prototype)</h4>
-                            <p class="post-excerpt auto-fill">Engineered for quick response actions, low latency, and efficient board-state dominance.</p>
-                        </article>
-
-                        <article class="post-item">
-                            <h4 class="post-link auto-fill">Deck Beta (Control)</h4>
-                            <p class="post-excerpt auto-fill">A passive defense protocol designed to lock down variables and safely contain threats over long intervals.</p>
-                        </article>
-                    </div>
-                </div>
-            `,
-            files: `
-                <div class="doc-header">
-                    <h2 class="doc-title-main auto-fill">Recovered Incident Logs</h2>
-                    <table class="doc-meta">
-                        <tr>
-                            <td class="label">INCIDENT_ID</td>
-                            <td class="auto-fill">REC_HARRIS_C</td>
-                        </tr>
-                        <tr>
-                            <td class="label">SUBJECT</td>
-                            <td class="auto-fill">CLANCY HARRIS (RESEARCHER)</td>
-                        </tr>
-                        <tr>
-                            <td class="label">PROJECT</td>
-                            <td class="auto-fill">AEGIS - NEURAL PATHWAY EXPLORATION</td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="doc-section">
-                    <h3 class="doc-subtitle-section auto-fill">Recovered Log File 1-1</h3>
-                    <p class="auto-fill story-p" style="font-style: italic; color: var(--text-muted);">The following was reconstructed from a personal journal entry dated Dec 2025.</p>
-                    
-                    <p class="auto-fill story-p">The night was dark and quiet—thankfully. A lone figure trudged along, silhouetted against the moonlight, shovel in hand. Stepping across the threshold of the grounds just as a drizzle began to fall, he thought, "Ground should be softer, at least," trying to make light of the work ahead to steady his nerves. He could barely see clearly among the dark shapes surrounding him. A brief search led him directly to his resting place. His shovel struck the soil; he winced at the handle's vibration as the head struck the December loam of that Georgia graveyard. Instantly, the warm wood of the handle was replaced with the chill of a steel pen.</p>
-
-                    <p class="auto-fill story-p">"Excuse me."</p>
-
-                    <p class="auto-fill story-p">Clancy didn't look up from his clipboard. "Do I rifle through your pockets while you're working?" Clancy clutched the black leather bag to his chest, spinning toward her suddenly. He was the head of one of the most prestigious <span class="redacted-block">Aeterna Noctu LLC</span> projects: an exploration of mapping neural pathways. Setting the clipboard down, he moved the leather satchel, its dark hide and heavy clasp cool to the touch. "You do that again, and I promise I'll have your badge before lunch," he barked at the assistant. The startled woman jumped, quickly scuttling away.</p>
-                </div>
-
-                <div class="doc-section">
-                    <h3 class="doc-subtitle-section auto-fill">Corporate Surveillance Log 1-2</h3>
-                    <p class="auto-fill story-p" style="font-style: italic; color: var(--text-muted);">Transcription of audio recovered from Director Clara Allans' private office suite.</p>
-                    
-                    <p class="auto-fill story-p">"So, Mister Harris, I read your reports on this quarter's initiatives. In fact, I've already presented your findings to the board. When can the project be ready? Our shareholders won't wait." Her face was grim. He was being rushed. "It's nowhere near ready, Miss Allans. Wouldn't you prefer to put it through clinical trials first?" His voice strained, his fingers tightening around the satchel. "Clancy. Clancy, Clancy, Clancy. You won't need trials if you can replicate your preliminary testing. The commissions board has called full steam ahead, so we're going full steam ahead."</p>
-                    
-                    <p class="auto-fill story-p">Clancy gripped the handle tighter, its contents rattling as he nodded. "I see. I'll assemble the team, trying to breathe some morale into them," he said, fighting the urge to flee. He knew what he was holding, sweating at the idea of Miss Allans asking for a peek inside...</p>
-                </div>
-
-                <div class="doc-section">
-                    <h3 class="doc-subtitle-section auto-fill">Critical Internal Investigation Note</h3>
-                    <p class="auto-fill story-p">Once the hour arrived, his subordinates began to shuffle from the room, loudly discussing lunch plans. Clancy tried to eavesdrop, but it was a drone compared to the buzzing in his head. His muscles tensed; the moment the last intern finally left, he got to work. Grabbing a scalpel, he located the roll of polymer and proceeded to cut as many very neat sheets as he could, watching the door as if it were a cobra, poised to strike...</p>
-                    <p class="auto-fill story-p" style="color: var(--accent-red); font-weight: bold;">[AMENDMENT: INCIDENT SUSAN B. DETECTED. SYSTEM RECORDS SHOW INCOMPLETE ACCESS RECLASSIFIED BY USER: CLANCY_HARRIS. AUDIT IS PENDING UNDER SPECIAL PROTOCOLS.]</p>
+                <div class="content-body">
+                    <p>Thank you for exploring this collection.</p>
+                    <p>Designed with clean responsive layouts, CSS 3D transforms, and custom page flip mechanics.</p>
+                    <br>
+                    <button class="submit-btn" style="width:100%;" onclick="goToPage(0)">Return to Table of Contents</button>
                 </div>
             `
-        };
+        ];
 
-        const grimoireBook = document.getElementById('grimoireBook');
-        const docContainer = document.getElementById('docContainer');
-        const pageFlipOverlay = document.getElementById('pageFlipOverlay');
-        const navItems = document.querySelectorAll('.nav-item');
-        let currentAnimationTimer = null;
+        // State Management
+        let currentSpread = 0; // 0 = (Page 0 & 1), 1 = (Page 2 & 3), 2 = (Page 4 & 5)
+        let isAnimating = false;
 
-        // Open Book Function
-        function openBook() {
-            grimoireBook.classList.add('open');
+        const leftSide = document.getElementById('leftSide');
+        const rightSide = document.getElementById('rightSide');
+        const leftContent = document.getElementById('leftContent');
+        const rightContent = document.getElementById('rightContent');
+        const leftPageNum = document.getElementById('leftPageNum');
+        const rightPageNum = document.getElementById('rightPageNum');
+
+        const flippingLeaf = document.getElementById('flippingLeaf');
+        const leafFront = document.getElementById('leafFront');
+        const leafBack = document.getElementById('leafBack');
+
+        // Render current spread static content
+        function renderSpread() {
+            const leftIdx = currentSpread * 2;
+            const rightIdx = currentSpread * 2 + 1;
+
+            leftContent.innerHTML = pages[leftIdx] || '';
+            rightContent.innerHTML = pages[rightIdx] || '';
+
+            leftPageNum.textContent = `Page ${leftIdx + 1}`;
+            rightPageNum.textContent = `Page ${rightIdx + 1}`;
+
+            updateCornersAndNav();
+        }
+
+        // Update active menu buttons and hide corner triggers at limits
+        function updateCornersAndNav() {
+            const leftCorners = document.querySelectorAll('.top-left, .bottom-left');
+            const rightCorners = document.querySelectorAll('.top-right, .bottom-right');
+
+            // Hide previous corners on first page
+            leftCorners.forEach(c => c.classList.toggle('disabled', currentSpread === 0));
+
+            // Hide next corners on last page
+            const maxSpreads = Math.ceil(pages.length / 2);
+            rightCorners.forEach(c => c.classList.toggle('disabled', currentSpread >= maxSpreads - 1));
+
+            // Nav active state
+            document.querySelectorAll('.chapter-btn').forEach(btn => btn.classList.remove('active'));
+            if (currentSpread === 0) document.getElementById('nav-fictions')?.classList.add('active');
+            if (currentSpread === 1) document.getElementById('nav-projects')?.classList.add('active');
+            if (currentSpread === 1 && false) document.getElementById('nav-decklists')?.classList.add('active');
+            if (currentSpread === 2) document.getElementById('nav-about')?.classList.add('active');
+        }
+
+        // 3D PAGE TURN NEXT (Forward Animation)
+        function turnNext() {
+            if (isAnimating || (currentSpread + 1) * 2 >= pages.length) return;
+            isAnimating = true;
+
+            const currentRightIdx = currentSpread * 2 + 1;
+            const nextLeftIdx = (currentSpread + 1) * 2;
+            const nextRightIdx = (currentSpread + 1) * 2 + 1;
+
+            // Prepare dynamic leaf
+            leafFront.innerHTML = pages[currentRightIdx] || '';
+            leafBack.innerHTML = pages[nextLeftIdx] || '';
+
+            // Put next right page on underlying static right side
+            rightContent.innerHTML = pages[nextRightIdx] || '';
+            rightPageNum.textContent = `Page ${nextRightIdx + 1}`;
+
+            // Reset transform & show leaf
+            flippingLeaf.style.transition = 'none';
+            flippingLeaf.style.transform = 'rotateY(0deg)';
+            flippingLeaf.classList.add('active');
+
+            // Force reflow and animate rotateY(0deg -> -180deg)
+            void flippingLeaf.offsetWidth;
+            flippingLeaf.style.transition = 'transform 0.7s cubic-bezier(0.645, 0.045, 0.355, 1)';
+            flippingLeaf.style.transform = 'rotateY(-180deg)';
+
             setTimeout(() => {
-                loadAndFillContent('about');
-            }, 800);
+                currentSpread++;
+                renderSpread();
+                flippingLeaf.classList.remove('active');
+                isAnimating = false;
+            }, 700);
         }
 
-        // Close Book Function
-        function closeBook() {
-            grimoireBook.classList.remove('open');
-        }
+        // 3D PAGE TURN PREVIOUS (Backtrack Animation)
+        function turnPrev() {
+            if (isAnimating || currentSpread <= 0) return;
+            isAnimating = true;
 
-        // TEXT FILLING ENGINE
-        function triggerTextFillAnimation() {
-            if (currentAnimationTimer) clearInterval(currentAnimationTimer);
+            const prevSpread = currentSpread - 1;
+            const prevLeftIdx = prevSpread * 2;
+            const prevRightIdx = prevSpread * 2 + 1;
+            const currentLeftIdx = currentSpread * 2;
 
-            const fillElements = docContainer.querySelectorAll('.auto-fill');
-            let totalDelay = 0;
+            // Prepare dynamic leaf starting from left side (-180deg)
+            leafFront.innerHTML = pages[prevRightIdx] || '';
+            leafBack.innerHTML = pages[currentLeftIdx] || '';
 
-            fillElements.forEach((element) => {
-                const rawText = element.textContent.replace(/\s+/g, ' ').trim();
-                element.innerHTML = ''; // Clear existing text
+            // Put previous left page on underlying static left side
+            leftContent.innerHTML = pages[prevLeftIdx] || '';
+            leftPageNum.textContent = `Page ${prevLeftIdx + 1}`;
 
-                // Create word spans to ensure clean text-wrapping
-                const words = rawText.split(' ');
-                
-                words.forEach((word, wIdx) => {
-                    const wordSpan = document.createElement('span');
-                    wordSpan.style.display = 'inline-block';
-                    wordSpan.style.whiteSpace = 'nowrap';
+            // Set initial rotation on left side (-180deg)
+            flippingLeaf.style.transition = 'none';
+            flippingLeaf.style.transform = 'rotateY(-180deg)';
+            flippingLeaf.classList.add('active');
 
-                    [...word].forEach((char) => {
-                        const charSpan = document.createElement('span');
-                        charSpan.textContent = char;
-                        charSpan.className = 'fill-char';
-                        charSpan.style.animationDelay = `${totalDelay}s`;
-                        wordSpan.appendChild(charSpan);
-                        totalDelay += 0.008; // Typing speed per character
-                    });
-
-                    element.appendChild(wordSpan);
-
-                    if (wIdx < words.length - 1) {
-                        const spaceSpan = document.createElement('span');
-                        spaceSpan.textContent = ' ';
-                        element.appendChild(spaceSpan);
-                        totalDelay += 0.008;
-                    }
-                });
-
-                totalDelay += 0.04; // Delay between sections
-            });
-
-            // Append glowing ink cursor to the document
-            const cursor = document.createElement('span');
-            cursor.className = 'ink-cursor';
-            docContainer.appendChild(cursor);
-
-            // Remove cursor after completion
-            setTimeout(() => {
-                if (cursor.parentNode) cursor.parentNode.removeChild(cursor);
-            }, (totalDelay + 0.5) * 1000);
-        }
-
-        // Dynamic Content Switching with Page Flip Overlay
-        function loadAndFillContent(target) {
-            pageFlipOverlay.classList.add('active');
+            // Force reflow and animate rotateY(-180deg -> 0deg)
+            void flippingLeaf.offsetWidth;
+            flippingLeaf.style.transition = 'transform 0.7s cubic-bezier(0.645, 0.045, 0.355, 1)';
+            flippingLeaf.style.transform = 'rotateY(0deg)';
 
             setTimeout(() => {
-                docContainer.innerHTML = database[target];
-                pageFlipOverlay.classList.remove('active');
-                triggerTextFillAnimation();
-            }, 300);
+                currentSpread--;
+                renderSpread();
+                flippingLeaf.classList.remove('active');
+                isAnimating = false;
+            }, 700);
         }
 
-        // Navigation Handler
-        navItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                if (!grimoireBook.classList.contains('open')) {
-                    openBook();
+        // Direct Navigation to specific page index
+        function goToPage(targetPageIndex) {
+            const targetSpread = Math.floor(targetPageIndex / 2);
+            if (targetSpread === currentSpread || isAnimating) return;
+
+            if (targetSpread > currentSpread) {
+                turnNext();
+                if (targetSpread > currentSpread + 1) {
+                    setTimeout(() => goToPage(targetPageIndex), 750);
                 }
+            } else {
+                turnPrev();
+                if (targetSpread < currentSpread - 1) {
+                    setTimeout(() => goToPage(targetPageIndex), 750);
+                }
+            }
+        }
 
-                navItems.forEach(i => i.classList.remove('active'));
-                this.classList.add('active');
-
-                const target = this.getAttribute('data-target');
-                loadAndFillContent(target);
-            });
-        });
-
-        // Auto Open Book on page load after a brief delay
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                openBook();
-            }, 600);
-        });
+        // Initial Load
+        renderSpread();
     </script>
 </body>
 </html>
